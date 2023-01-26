@@ -1,0 +1,73 @@
+{% extends "Theme/Users/User/layoutlogin.html.twig" %}
+{% block meta %}
+	{{ parent() }}
+	<meta name="author" content="Sprint-pay"/>
+	<meta name="description" content="{{ site }} - Connexion"/>
+{% endblock %}
+
+{% block title %}
+	{{ parent() }} | Connexion
+{% endblock %}
+
+{% block userblog_body %}
+<section class="main">
+
+    <div class="bottom-grid">
+        <div class="logo">
+            <h1> <a href="">Connexion Cotation Global</a></h1>
+        </div>
+    </div>
+    <div class="content-w3ls">
+        <div class="text-center icon">
+            <img src="{{ asset('logintemplate/images/logoglobal.png') }}" alt="" style="height: 80px;">
+        </div>
+
+        <div class="content-bottom">
+            <form action="#" method="post" class="my-login-validation">
+                <div class="field-group">
+                    <span class="fa fa-user" aria-hidden="true"></span>
+                    <div class="wthree-field">
+                        <input name="text1" id="validationDefaultUsername" type="text" value="" placeholder="Username" required>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <span class="fa fa-lock" aria-hidden="true"></span>
+                    <div class="wthree-field">
+                        <input name="password" id="myInput" type="Password" placeholder="Password">
+                    </div>
+                </div>
+                <div class="wthree-field">
+                    <button type="submit" class="btn" style="background-color: #1b4889; text-transform: capitalize;">Connexion</button>
+                </div>
+                <ul class="list-login">
+                    <li class="switch-agileits">
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round" style="width: 35px;"></span>
+                            <span>Gardez la session active ?</span>
+                        </label>
+                    </li>
+                    <li class="clearfix"></li>
+                </ul>
+                
+                <ul class="list-login-bottom" style="margin-top: 20px;
+                display: inline-block;
+                text-align: center;
+                width: 100%;">
+                    <li class="">
+                        <a href="{{ path('users_adminuser_accueil_admin_dashboard') }}" class="" style="text-transform: capitalize;">Mot de passe oublié ?</a>
+                    </li>
+                    <li class="clearfix"></li>
+                </ul>
+            </form>
+        </div>
+    </div>
+    <div class="copyright">
+        <p>© {{ "now"|date('Y') }} Cotation Global. All rights reserved | Design by <a href="http://sprint-pay.com" target="_blank">Sprint-pay</a> </p>
+    </div>
+</section>
+{% endblock %}
+
+{% block javascripttemplate %}
+
+{% endblock %}

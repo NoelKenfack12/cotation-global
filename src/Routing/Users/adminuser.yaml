@@ -1,0 +1,93 @@
+users_adminuser_accueil_admin_dashboard:
+    path: /admin/dashboard
+    controller: App\Controller\Users\Adminuser\AccueiladminController::accueiladmin
+    requirements:
+        id: \d+
+users_adminuser_form_pays_continent:
+    path: /form/pays/continent/{page}
+    controller: App\Controller\Produit\Service\ContinentController:payscontinent
+    defaults:
+        page: 1
+    requirements:
+        page: \d+
+users_adminuser_adding_pays_localite_user:
+    path: /adding/pays/localite/user
+    controller: App\Controller\Produit\Service\PaysController:ajouterpays
+users_adminuser_update_content_continent12:
+    path: /user/update/val/continent/{id}
+    controller: App\Controller\Produit\Service\ContinentController:updatecontinent
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_modif_pays_localisation_user:
+    path: /modif/pays/localisation/user/{id}
+    controller: App\Controller\Produit\Service\PaysController:modificationpays
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_localisation_supprimer_continent:
+    path: /user/localisation/supprimer/continent/{id}
+    controller: App\Controller\Produit\Service\ContinentController:supprimercontinent
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_drop_country_user_local:
+    path: /drop/country/user/local/{id}
+    controller: App\Controller\Produit\Service\PaysController:dropcountryuser
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_villes_organisations:
+    path: /admin/villes/organisations
+    controller: App\Controller\Users\Localisation\OrganisationController:listeorganisation
+users_adminuser_users_organisation:
+    path: /admin/users/organisation
+    controller: App\Controller\Users\Localisation\UserorganisationController:listeuserorganisation
+users_adminuser_type_produit:
+    path: /admin/type/produit
+    controller: App\Controller\Produit\Produit\TypeproduitController:listetypeproduit
+users_adminuser_gestion_organisations:
+    path: /admin/dashboard/organisations/{id}
+    controller: App\Controller\Users\Localisation\OrganisationController:gestionorganisations
+    requirements:
+        id: \d+
+users_adminuser_cotation_global:
+    path: /admin/cotation/global
+    controller: App\Controller\Produit\Produit\PanierController:cotationglobal
+users_adminuser_cotation_organisation:
+    path: /admin/cotation/organisation/{id}
+    controller: App\Controller\Produit\Produit\PanierController:cotationorganisation
+    requirements:
+        id: \d+
+users_adminuser_services_organisation:
+    path: /admin/cotation/services/organisation/{id}
+    controller: App\Controller\Produit\Produit\ProduitorganisationController:servicesorganisation
+    requirements:
+        id: \d+
+users_adminuser_services_targe_organisation:
+    path: /admin/cotation/services/targe/organisation/{id}
+    controller: App\Controller\Produit\Produit\ProduitorganisationController:servicestargeorganisation
+    requirements:
+        id: \d+
+users_adminuser_type_organisation:
+    path: /admin/type/organisation
+    controller: App\Controller\Users\Localisation\TypeorganisationController:typeorganisation
+users_adminuser_nouvelle_cotation:
+    path: /admin/nouvelle/cotation/{id}
+    controller: App\Controller\Produit\Produit\PanierController:nouvellecotation
+    requirements:
+        id: \d+
+users_adminuser_cotation_description:
+    path: /admin/cotation/description/{id}
+    controller: App\Controller\Produit\Produit\PanierController:cotationdescription
+    requirements:
+        id: \d+
+users_adminuser_tarification_cotation:
+    path: /admin/tarification/cotation/{id}
+    controller: App\Controller\Produit\Produit\PanierController:tarificationcotation
+    requirements:
+        id: \d+

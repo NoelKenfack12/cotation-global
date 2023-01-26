@@ -1,0 +1,98 @@
+
+<!-- partial:../../partials/_sidebar.html -->
+<nav class="sidebar sidebar-offcanvas" id="sidebar2">
+
+</nav>
+<nav class="sidebar sidebar-offcanvas" id="sidebar" style="box-shadow: 0 19px 38px rgb(0 0 0 / 30%), 0 15px 12px rgb(0 0 0 / 22%);
+background: #fff;">
+<ul class="nav">
+    <li class="nav-item">
+        <div class="d-flex sidebar-profile" style="background: #1e4a8b;">
+            <div class="sidebar-profile-image">
+                <img src="{{ asset('templatedash/images/co.png') }}" alt="image" />
+                <span class="sidebar-status-indicator"></span>
+            </div>
+            <div class="sidebar-profile-name">
+                <p class="sidebar-name">
+                    {% if app.user != null %}{{ app.user.name(50) }}{% else %}Admin{% endif %}
+                </p>
+                <p class="sidebar-designation">
+                    Entreposage Yaoundé
+                </p>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('users_adminuser_accueil_admin_dashboard') }}">
+            <i class="typcn typcn-device-desktop menu-icon"></i>
+            <span class="menu-title">Tableau de bord</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('users_adminuser_cotation_global') }}">
+            <i class="typcn typcn-device-desktop menu-icon"></i>
+            <span class="menu-title">Cotations</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('users_adminuser_type_organisation') }}">
+            <i class="typcn typcn-device-desktop menu-icon"></i>
+            <span class="menu-title">Organisations (par type)</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('users_adminuser_form_pays_continent') }}">
+            <i class="typcn typcn-device-desktop menu-icon"></i>
+            <span class="menu-title">Pays & Continent</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('users_adminuser_villes_organisations') }}">
+            <i class="typcn typcn-device-desktop menu-icon"></i>
+            <span class="menu-title">Organisations & Villes</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('users_adminuser_users_organisation') }}">
+            <i class="typcn typcn-device-desktop menu-icon"></i>
+            <span class="menu-title">Utilisateurs</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('users_adminuser_type_produit') }}">
+            <i class="typcn typcn-device-desktop menu-icon"></i>
+            <span class="menu-title">Catalogue de services</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="">
+            <i class="typcn typcn-device-desktop menu-icon"></i>
+            <span class="menu-title">Clients</span>
+        </a>
+    </li>
+    
+    <!-- li class="nav-item">
+        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <i class="typcn typcn-briefcase menu-icon"></i>
+            <span class="menu-title">UI Elements</span>
+            <i class="typcn typcn-chevron-right menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-basic">
+            <ul class="nav flex-column sub-menu">
+            <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/buttons.html">Buttons</a></li>
+            <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/dropdowns.html">Dropdowns</a></li>
+            <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/typography.html">Typography</a></li>
+            </ul>
+        </div>
+    </li -->
+</ul>
+
+</nav>
+<!-- partial -->

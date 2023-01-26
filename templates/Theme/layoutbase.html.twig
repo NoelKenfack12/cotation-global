@@ -1,0 +1,327 @@
+<html lang="zxx">
+
+<head>
+  <meta charset="utf-8">
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>{% block title %}{{ site }}{% endblock %}</title>
+  
+  {% block meta %} {% endblock %}
+  {% block stylesheets %}
+  <!-- Favicons -->
+  <link href="{{ asset('template/assets/img/favicon.png') }}" rel="icon">
+  <link href="{{ asset('template/assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ asset('template/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('template/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ asset('template/assets/vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ asset('template/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('template/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{ asset('templatedash/css/bootstrap-icons.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+  <!-- Template Main CSS File -->
+  <link href="{{ asset('template/assets/css/main.css') }}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Impact - v1.0.0
+  * Template URL: https://bootstrapmade.com/impact-bootstrap-business-website-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <script src="{{ asset('templatedash/js/vendor.bundle.base.js') }}"></script>
+  <style>
+    .topbar {
+      background: #60c176;
+    }
+    .hero {
+      background: #2fa84b;
+    }
+    .header{
+        background-color: #2fa84b;
+    }
+    .hero .icon-box {
+      background: #60c176;
+      box-shadow: 0 0 29px 0 #60c176;
+      border: 7px solid #60c176;
+    }
+    @media (min-width: 1280px){
+      .navbar .dropdown ul {
+          display: block;
+          position: absolute;
+          right: 0px;
+          left: initial;
+      }
+    }
+    .contact .info-container {
+    background-color: #2fa84b;
+    }
+    .contact .info-item {
+    background-color: #60c176;
+    }
+    .contact .php-email-form {
+      border: 4px solid #2ea54a;
+    }
+    .contact .php-email-form button[type=submit] {
+    background: #2fa84b;
+    }
+    .pricing .icon {
+    background: #2fa84b;
+    }
+    .pricing .featured {
+        border: 3px solid #2fa84b;
+    }
+    .btn-get-call-action {
+        font-family: var(--font-primary);
+        font-weight: 500;
+        font-size: 15px;
+        letter-spacing: 1px;
+        display: inline-block;
+        padding: 14px 40px;
+        border-radius: 50px;
+        transition: 0.3s;
+        color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 15px rgb(0 0 0 / 8%);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+    }
+    .clients .swiper {
+        padding: 10px 0;
+        height: 100px!important;
+    }
+    .swiper-wrapper{
+      height: 350px!important;
+    }
+
+    .stats-counter .stats-item .purecounter {
+        background: var(--color-secondary);
+        margin-right: 15px;
+        padding: 10px!important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        min-width: 50px;
+        color: #fff;
+    }
+    .page-title-section{
+      background: #2fa84b;
+    }
+
+    .navbar-dark .navbar-nav .nav-link {
+        color: #fff!important;
+    }
+
+    .menu-dropdown-dld{
+        padding: 5px 15px;
+        font-family: Muli-Regular;
+        font-size: 14px;
+        color: #282828;
+    }
+
+
+    .nav-pills-custom .nav-link {
+        color: #aaa;
+        background: #fff;
+        position: relative;
+    }
+
+    .nav-pills-custom .nav-link.active {
+        color: #45b649;
+        background: #fff;
+    }
+
+
+    /* Add indicator arrow for the active tab */
+    @media (min-width: 992px) {
+        .nav-pills-custom .nav-link::before {
+            content: '';
+            display: block;
+            border-top: 8px solid transparent;
+            border-left: 10px solid #fff;
+            border-bottom: 8px solid transparent;
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            transform: translateY(-50%);
+            opacity: 0;
+        }
+    }
+
+    .nav-pills-custom .nav-link.active::before {
+        opacity: 1;
+    }
+    .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+        color: #fff;
+        background-color: #0064ff!important;
+    }
+    @media (min-width: 992px){
+      .nav-pills-custom .nav-link::before {
+          border-left: 10px solid #0064ff!important;
+      }
+    }
+
+    .fancybox__caption{
+      width: 100%!important;
+      text-align: center!important;
+    }
+    .blog-pagination ul li a{
+      padding-top: 8px;
+    }
+
+/**********************Begin form Select ********************/
+.search-select-form{
+  display: block;
+  position: sticky;
+  z-index: 9;
+  width: 100%;
+}
+.search-select-form input,
+.search-select-form button.filter-select {
+  font-family: palatino;
+  font-size: 12pt;
+}
+
+.search-select-form input {
+  width: 100%;
+  height: 30px;
+  padding: 3px;
+  border: 1px solid #DDE1E4;
+}
+
+.search-select-form select {
+  width: 100%;
+  position: absolute;
+  left: -17px;
+  margin: 0;
+  border: 1px solid #DDE1E4;
+  border-top: none;
+  font-size: 9pt;
+  left: 0px;
+  z-index: 9;
+}
+
+.search-select-form datalist {
+  display: none;
+}
+
+.search-select-form option {
+  padding: 3px;
+}
+
+.search-select-form option:hover {
+  background-color: #11E8EA;
+}
+
+.search-select-form button.filter-select {
+  width: 30px;
+  height: 38px;
+  border: 1px solid #DDE1E4;
+  border-left: none;
+  background-color: #11E8EA;
+  cursor: pointer;
+  position: absolute;
+  right: 0px;
+  z-index: 7;
+}
+
+.search-select-form h3,
+.search-select-form h4 {
+  text-align: center;
+}
+/* to hide datalist arrow in webkit */
+
+.search-select-form input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+/**********************End form Select ********************/
+
+
+
+.tab-content {
+  padding: 0;
+}
+
+.card {
+  border-radius: 0 0 0.25rem 0.25rem;
+  border-top: 0;
+}
+
+.nav-tabs {
+  height: 42px;
+  padding: 0;
+  position: relative;
+}
+.nav-tabs .nav-item {
+  margin-left: 0;
+}
+.nav-tabs .nav-item a {
+  color: black;
+  display: block;
+  padding: 8px 25px;
+}
+.nav-tabs .nav-item.overflow-tab {
+  background-color: white;
+  display: none;
+  position: absolute;
+  right: 0;
+  width: 150px;
+  z-index: 1;
+}
+.nav-tabs .nav-item.overflow-tab a {
+  border: 1px solid lightgray;
+  border-radius: 0;
+  padding: 6px 10px;
+}
+.nav-tabs .nav-item.overflow-tab a:hover, .nav-tabs .nav-item.overflow-tab a:focus, .nav-tabs .nav-item.overflow-tab a:active, .nav-tabs .nav-item.overflow-tab a.active {
+  background-color: lightgray;
+}
+.nav-tabs .nav-item.overflow-tab:last-child {
+  border-radius: 0 0 0 4px;
+}
+.nav-tabs .nav-item.overflow-tab-action {
+  position: absolute;
+  right: 0;
+}
+  </style>
+  {% endblock %}
+</head>
+
+<body>
+ 
+  {{ render(controller("App\\Controller\\General\\Template\\MenuController:menubare", {'position': 'offerts'})) }}
+  {% block body %}
+        
+  {% endblock %}
+  {{ render(controller("App\\Controller\\General\\Template\\MenuController:footer", {'position': 'offerts'})) }}
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ asset('template/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('template/assets/vendor/aos/aos.js') }}"></script>
+  <script src="{{ asset('template/assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+  <script src="{{ asset('template/assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+  <script src="{{ asset('template/assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="{{ asset('template/assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+  <script src="{{ asset('template/assets/vendor/php-email-form/validate.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{{ asset('template/assets/js/main.js') }}"></script>
+
+  <script type="text/javascript">
+
+    {% block javascript %}
+
+    {% endblock %}
+  </script>
+</body>
+</html>

@@ -1,0 +1,545 @@
+{% extends "Theme/Users/User/layoutbase.html.twig" %}
+{% block meta %}
+	{{ parent() }}
+	<meta name="keywords" content="{{ site }}, "/>
+	<meta name="author" content="Noel Kenfack"/>
+	<meta name="description" content="{{ site }}" />
+{% endblock %}
+
+{% block title %}
+	{{ parent() }} - Bienvenue sur le portail web {{ site }}
+{% endblock %}
+
+{% block userblog_body %}
+
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="hero">
+  <div class="container position-relative">
+    {% if slide != null %}
+    <div class="row gy-5" data-aos="fade-in">
+      <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
+        <h2>{{ slide.title }}</h2>
+        <p>{{ slide.description }}</p>
+        <div class="d-flex justify-content-center justify-content-lg-start">
+          <a href="{{ slide.link }}" class="btn-get-started">Nous contactez</a>
+          <a href="{{ slide.videolink }}" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>En savoir plus</span></a>
+        </div>
+      </div>
+      <div class="col-lg-6 order-1 order-lg-2">
+        <img src="{{ vich_uploader_asset(slide) }}" class="img-fluid" alt="{{ slide.title }}" data-aos="zoom-out" data-aos-delay="100">
+      </div>
+    </div>
+    {% else %}
+    <div class="row gy-5" data-aos="fade-in">
+      <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
+        <h2>Bien être optimal pour la <span>pérennisation</span> d'une productivité croissante.</h2>
+        <p>Nous proposons aux travailleurs des mesures préventives personnalisées qui peuvent être mises en œuvre de manière durable ; l'état de bien-être des travailleurs est ainsi maintenu.</p>
+        <div class="d-flex justify-content-center justify-content-lg-start">
+          <a href="{{ path('produit_service_contacts') }}" class="btn-get-started">Nous contactez</a>
+          <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>En savoir plus</span></a>
+        </div>
+      </div>
+      <div class="col-lg-6 order-1 order-lg-2">
+        <img src="{{ asset('template/assets/img/hero-img.svg') }}" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100">
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="icon-boxes position-relative">
+    <div class="container position-relative">
+      <div class="row gy-4 mt-5">
+        {% set liste_param = aboutParam.getFirstItems() %}
+        {% for param in liste_param|slice(0,4) %}
+        <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="icon-box">
+            <div class="icon"><i class="bi bi-easel"></i></div>
+            <h4 class="title">
+              <a href="{% if param.article != null %}{{ path('produit_service_detail_about_param_description', {'id': param.id }) }}{% endif %}" class="stretched-link">
+                {{ param.valeur }}
+                
+                <div class="mt-3"><span style="font-size: 12px; text-decoration: underline;">En savoir plus</span></div>
+              </a>
+            </h4>
+          </div>
+        </div>
+        <!--End Icon Box -->
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Hero Section -->
+
+<main id="main">
+
+
+  <!-- ======= Clients Section ======= -->
+  <section id="clients" class="clients">
+    <div class="container" data-aos="zoom-out">
+      <div class="clients-slider swiper">
+        <div class="swiper-wrapper align-items-center">
+          {% for imgpartenaire in liste_partenaire %}
+          <a href="{{ imgpartenaire.link }}"  class="swiper-slide" target="_blank"><img src="{{ vich_uploader_asset(imgpartenaire) }}" class="img-fluid" alt=""></a>
+          {% else %}
+          <a href="" class="swiper-slide"><img src="{{ asset('template/assets/img/clients/client-1.png') }}" class="img-fluid" alt=""></a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section><!-- End Clients Section -->
+
+  <!-- ======= Stats Counter Section ======= -->
+  <section id="stats-counter" class="stats-counter">
+    <div class="container" data-aos="fade-up">
+
+      <div class="row gy-4 align-items-center">
+
+        <div class="col-lg-6">
+          <img src="{{ asset('template/assets/img/stats-img.svg') }}" alt="" class="img-fluid">
+        </div>
+
+        <div class="col-lg-6">
+          <h1>Chiffres clés</h1>
+          <div class="stats-item d-flex align-items-center">
+            <span data-purecounter-start="0" data-purecounter-end="12" data-purecounter-duration="1" class="purecounter"></span>
+            <p><strong>%</strong>  de la baisse de productivité est liés aux accidents de travail</p>
+          </div><!-- End Stats Item -->
+
+          <div class="stats-item d-flex align-items-center">
+            <span data-purecounter-start="0" data-purecounter-end="8" data-purecounter-duration="1" class="purecounter"></span>
+            <p><strong>%</strong> de la baisse de productivité est liés aux maladies liées au travail </p>
+          </div><!-- End Stats Item -->
+
+          <div class="stats-item d-flex align-items-center">
+            <span data-purecounter-start="0" data-purecounter-end="10" data-purecounter-duration="1" class="purecounter"></span>
+            <p><strong>Entreprises</strong> nous ont déjà fait confiance pour résoudre ce manque à ganger</p>
+          </div><!-- End Stats Item -->
+
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End Stats Counter Section -->
+
+
+  <!-- ======= Our Services Section ======= -->
+  <section id="services" class="services sections-bg">
+    <div class="container" data-aos="fade-up">
+
+      {% if aboutService != null %}
+      <div class="section-header">
+        <h2>{{ aboutService.title }}</h2>
+        <p>{{ aboutService.valeur }}</p>
+      </div>
+      {% else %}
+      <div class="section-header">
+        <h2>Nos Services</h2>
+        <p>{{ site }} c'est 8 ans d'expérience dans le domaine de la santé au travail. Nous vous accompagnons avec les services suivants</p>
+      </div>
+      {% endif %}
+
+      {{ render(controller("App\\Controller\\Produit\\Service\\ServiceController:topservices", {'limit': 6})) }}
+
+      <div class="text-center mt-3">
+        <a href="{{ path('produit_service_services') }}" class="readmore stretched-link">Afficher la liste complète <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+    </div>
+  </section><!-- End Our Services Section -->
+
+  <!-- ======= Testimonials Section ======= -->
+  <section id="testimonials" class="testimonials">
+    <div class="container" data-aos="fade-up">
+      {% if aboutTestimonial != null %}
+      <div class="section-header">
+        <h2>{{ aboutTestimonial.title }}</h2>
+        <p>{{ aboutTestimonial.valeur }}</p>
+      </div>
+      {% else %}
+      <div class="section-header">
+        <h2>Testimonials</h2>
+        <p>Voluptatem quibusdam ut ullam perferendis repellat non ut consequuntur est eveniet deleniti fignissimos eos quam</p>
+      </div>
+      {% endif %}
+
+      <div class="slides-3 swiper" data-aos="fade-up" data-aos-delay="100">
+        <div class="swiper-wrapper">
+          {% for testimonial in liste_testimonial %}
+          <div class="swiper-slide">
+            <div class="testimonial-wrap">
+              <div class="testimonial-item">
+                <div class="d-flex align-items-center">
+                  <img src="{{ vich_uploader_asset(testimonial) }}" class="testimonial-img flex-shrink-0" alt="{{ testimonial.autorName }}">
+                  <div>
+                    <h3>{{ testimonial.autorName }}</h3>
+                    <h4>{{ testimonial.autorPoste }}</h4>
+                    <div class="stars">
+                      <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    </div>
+                  </div>
+                </div>
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  {{ testimonial.description }}
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
+              </div>
+            </div>
+          </div><!-- End testimonial item -->
+          {% else %}
+          <div class="swiper-slide">
+            <div class="testimonial-wrap">
+              <div class="testimonial-item">
+                <div class="d-flex align-items-center">
+                  <img src="{{ asset('template/assets/img/testimonials/testimonials-2.jpg') }}" class="testimonial-img flex-shrink-0" alt="">
+                  <div>
+                    <h3>Sara Wilsson</h3>
+                    <h4>Designer</h4>
+                    <div class="stars">
+                      <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    </div>
+                  </div>
+                </div>
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
+              </div>
+            </div>
+          </div><!-- End testimonial item -->
+          {% endfor %}
+
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+
+    </div>
+  </section><!-- End Testimonials Section -->
+
+  <!-- ======= Portfolio Section ======= -->
+  <section id="portfolio" class="portfolio" style="background: #2fa84b;">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-header" style="padding-bottom: 0px;">
+        {% if aboutCalltoaction != null %}
+        <h2 style="color: #fff;">{{ aboutCalltoaction.title }}</h2>
+        <p style="color: #fff;">{{ aboutCalltoaction.valeur }}</p>
+        <div class="text-center mt-4">
+          <a href="{{ aboutCalltoaction.link }}" class="btn-get-call-action">Toutes nos interventions</a>
+        </div>
+        {% else %}
+        <h2 style="color: #fff;">Nos interventions sur le terrain</h2>
+        <p style="color: #fff;">Quam sed id excepturi ccusantium dolorem ut quis dolores nisi llum nostrum enim velit qui ut et autem uia reprehenderit sunt deleniti</p>
+        <div class="text-center mt-4">
+          <a href="{{ path('produit_service_galery') }}" class="btn-get-call-action">En savoir plus</a>
+        </div>
+        {% endif %}
+        
+      </div>
+
+    </div>
+  </section><!-- End Portfolio Section -->
+
+  <!-- ======= Our Team Section ======= -->
+  <section id="team" class="team">
+    <div class="container" data-aos="fade-up">
+
+      {% if aboutDetailteam != null %}
+      <div class="section-header">
+        <h2>{{ aboutDetailteam.title }}</h2>
+        <p>{{ aboutDetailteam.valeur }}</p>
+      </div>
+      {% else %}
+      <div class="section-header">
+        <h2>Our Team</h2>
+        <p>Nulla dolorum nulla nesciunt rerum facere sed ut inventore quam porro nihil id ratione ea sunt quis dolorem dolore earum</p>
+      </div>
+      {% endif %}
+
+      <div class="row gy-4">
+
+        {% for team in liste_team %}
+        <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+          <div class="member">
+            <img src="{{ vich_uploader_asset(team) }}" class="img-fluid" alt="">
+            <h4>{{ team.autorName }}</h4>
+            <span>{{ team.autorPoste }}</span>
+            <div class="social">
+              {% if team.twitter != null %}
+              <a href="{{ team.twitter }}" target="_blank"><i class="bi bi-twitter"></i></a>
+              {% endif %}
+              {% if team.facebook != null %}
+              <a href="{{ team.facebook }}" target="_blank"><i class="bi bi-facebook"></i></a>
+              {% endif %}
+              {% if team.linkedIn != null %}
+              <a href="{{ team.linkedIn }}" target="_blank"><i class="bi bi-instagram"></i></a>
+              {% endif %}
+              {% if team.youtube != null %}
+              <a href="{{ team.youtube }}" target="_blank"><i class="bi bi-instagram"></i></a>
+              {% endif %}
+              {% if team.instagram != null %}
+              <a href="{{ team.instagram }}" target="_blank"><i class="bi bi-instagram"></i></a>
+              {% endif %}
+            </div>
+          </div>
+        </div><!-- End Team Member -->
+        {% else %}
+        <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+          <div class="member">
+            <img src="{{ asset('template/assets/img/team/team-2.jpg') }}" class="img-fluid" alt="">
+            <h4>Sarah Jhinson</h4>
+            <span>Marketing</span>
+            <div class="social">
+              <a href=""><i class="bi bi-twitter"></i></a>
+              <a href=""><i class="bi bi-facebook"></i></a>
+              <a href=""><i class="bi bi-instagram"></i></a>
+              <a href=""><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+        </div><!-- End Team Member -->
+        {% endfor %}
+
+      </div>
+
+    </div>
+  </section><!-- End Our Team Section -->
+
+  <!-- ======= Pricing Section ======= -->
+  <section id="pricing" class="pricing sections-bg">
+    <div class="container" data-aos="fade-up">
+
+      {% if aboutPricing != null %}
+      <div class="section-header">
+        <h2>{{ aboutPricing.title }}</h2>
+        <p>{{ aboutPricing.valeur }}</p>
+      </div>
+      {% else %}
+      <div class="section-header">
+        <h2>Pricing</h2>
+        <p>Aperiam dolorum et et wuia molestias qui eveniet numquam nihil porro incidunt dolores placeat sunt id nobis omnis tiledo stran delop</p>
+      </div>
+      {% endif %}
+
+      <div class="row g-4 py-lg-5" data-aos="zoom-out" data-aos-delay="100">
+
+        {% for produit in liste_produit %}
+        <div class="col-lg-4">
+          <div class="pricing-item {% if produit.choixauteur == true %}featured{% endif %}">
+            <h3>{{ produit.nom }}</h3>
+            <div class="icon">
+              <i class="bi bi-box"></i>
+            </div>
+            <h4><sup>{{ devise }}</sup>{{ produit.newprise }}<span> / {{ produit.rapport }}</span></h4>
+            <ul>
+              {% set list_caract = produit.getListeCaracteristiqueProduit() %}
+              {% for caract in list_caract %}
+              <li class="{% if caract.isChecked == false %}na{% endif %}"><i class="{% if caract.isChecked == false %}bi bi-x{% else %}bi bi-check{% endif %}"></i> {% if caract.isChecked == false %} <span>{{ caract.caracteristique.nom }}</span>{% else %}{{ caract.caracteristique.nom }}{% endif %}  </li>
+              {% endfor %}
+            </ul>
+            <div class="text-center"><a href="#" class="buy-btn">Commandez</a></div>
+          </div>
+        </div><!-- End Pricing Item -->
+        {% endfor %}
+
+      </div>
+
+    </div>
+  </section><!-- End Pricing Section -->
+
+  <!-- ======= Frequently Asked Questions Section ======= -->
+  <section id="faq" class="faq">
+    <div class="container" data-aos="fade-up">
+
+      <div class="row gy-4">
+
+        <div class="col-lg-4">
+          
+          {% if aboutFaq != null %}
+          <div class="content px-xl-5">
+            <h3>{{ aboutFaq.title|raw }}</h3>
+            <p>
+              {{ aboutFaq.valeur }}
+            </p>
+          </div>
+
+          {% else %}
+          <div class="content px-xl-5">
+            <h3>Frequently Asked <strong>Questions</strong></h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
+            </p>
+          </div>
+          {% endif %}
+
+        </div>
+
+        <div class="col-lg-8">
+
+          <div class="accordion accordion-flush" id="faqlist" data-aos="fade-up" data-aos-delay="100">
+
+            {% for faq in liste_faq|slice(0,7) %}
+            <div class="accordion-item">
+              <h3 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-{{ faq.id }}">
+                  <span class="num">{{ loop.index }}.</span>
+                  {{ faq.question }}
+                </button>
+              </h3>
+              <div id="faq-content-{{ faq.id }}" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                <div class="accordion-body">
+                  {{ faq.response }}
+                </div>
+              </div>
+            </div><!-- # Faq item-->
+            {% else %}
+            <div class="accordion-item">
+              <h3 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-2">
+                  <span class="num">2.</span>
+                  Qu'est-ce qu'un accident du travail (ou un accident lié au travail) ? 
+                </button>
+              </h3>
+              <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                <div class="accordion-body">
+                  Un accident du travail, tout comme une maladie professionnelle, résulte de l'interaction entre le travailleur et le danger. Ici, l'interaction produit des effets négatifs de façon soudaine et non sur une longue période. C'est pourquoi on dit qu'il s'agit d'un accident simplement parce que les dommages subis par le corps sont soudains.
+                </div>
+              </div>
+            </div><!-- # Faq item-->
+            {% endfor %}
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End Frequently Asked Questions Section -->
+
+  <!-- ======= Recent Blog Posts Section ======= -->
+  <section id="recent-posts" class="recent-posts sections-bg">
+    <div class="container" data-aos="fade-up">
+
+      {% if aboutBlog != null %}
+      <div class="section-header">
+        <h2>{{ aboutBlog.title }}</h2>
+        <p>{{ aboutBlog.valeur }}</p>
+      </div>
+      {% else %}
+      <div class="section-header">
+        <h2>Recent Blog Posts</h2>
+        <p>Aperiam dolorum et et wuia molestias qui eveniet numquam nihil porro incidunt dolores placeat sunt id nobis omnis tiledo stran delop</p>
+      </div>
+      {% endif %}
+
+      <div class="row gy-4">
+        {% for article in liste_blog %}
+        <div class="col-xl-4 col-md-6">
+          <article>
+
+            <div class="post-img">
+              <img src="{% if article.imgarticle != null  %}{{ vich_uploader_asset(article.imgarticle) }}{% else %}{{ asset('template/assets/img/blog/blog-3.jpg') }}{% endif %}" alt="" class="img-fluid">
+            </div>
+
+            <p class="post-category">{{ article.typearticle.name }}</p>
+
+            <h2 class="title">
+              <a href="{{ path('produit_service_description_article_blog', {'id': article.id }) }}">{{ article.title }}</a>
+            </h2>
+
+            <div class="d-flex align-items-center">
+              <img src="{{ asset('template/images/co.png') }}" alt="" class="img-fluid post-author-img flex-shrink-0">
+              <div class="post-meta">
+                <p class="post-author">{{ article.user.name(50) }}</p>
+                <p class="post-date">
+                  <time datetime="2022-01-01">{{ article.createdAt|date('d') }} {{ article.createdAt|date('M') }} {{ article.createdAt|date('Y') }}</time>
+                </p>
+              </div>
+            </div>
+          </article>
+        </div><!-- End post list item -->
+        {% else %}
+        <div class="col-xl-4 col-md-6">
+          <article>
+            <div class="post-img">
+              <img src="{{ asset('template/assets/img/blog/blog-3.jpg') }}" alt="" class="img-fluid">
+            </div>
+
+            <p class="post-category">Entertainment</p>
+
+            <h2 class="title">
+              <a href="#!">Possimus soluta ut id suscipit ea ut in quo quia et soluta</a>
+            </h2>
+
+            <div class="d-flex align-items-center">
+              <img src="{{ asset('template/assets/img/blog/blog-author-3.jpg') }}" alt="" class="img-fluid post-author-img flex-shrink-0">
+              <div class="post-meta">
+                <p class="post-author">Mark Dower</p>
+                <p class="post-date">
+                  <time datetime="2022-01-01">Jun 22, 2022</time>
+                </p>
+              </div>
+            </div>
+
+          </article>
+        </div><!-- End post list item -->
+        {% endfor %}
+      </div><!-- End recent posts list -->
+      
+
+    </div>
+  </section><!-- End Recent Blog Posts Section -->
+
+  <!-- ======= Contact Section ======= -->
+  <section id="contact" class="contact">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-header">
+        {% if aboutIntervention != null %}
+        <h2>{{ aboutIntervention.title }}</h2>
+        <p>{{ aboutIntervention.valeur }}</p>
+        {% else %}
+        <h2>Nos interventions</h2>
+        <p>Nulla dolorum nulla nesciunt rerum facere sed ut inventore quam porro nihil id ratione ea sunt quis dolorem dolore earum</p>
+        {% endif %}
+      </div>
+
+      <div class="grid imglist">
+        {% for intervention in liste_intervention|slice(0,2) %}
+          {% set liste_images = intervention.getFirstImages() %}
+          {% if loop.index == 1 %}
+            <div class="row padding-bottom--sm">
+                {% for itemIng in liste_images|slice(0,3) %}
+                <a class="col col--4" data-fancybox="demo" data-src="{{ vich_uploader_asset(itemIng) }}" data-caption="{{ itemIng.title }}"><img src="{{ vich_uploader_asset(itemIng) }}" style="max-width: 100%;"></a>
+                {% endfor %}
+            </div>
+          {% elseif(loop.index == 2) %}
+            <div class="row mt-4">
+              {% for itemIng in liste_images|slice(0,3) %}
+                <a class="col col--4" data-fancybox="demo" data-src="{{ vich_uploader_asset(itemIng) }}" data-caption="{{ itemIng.title }}"><img src="{{ vich_uploader_asset(itemIng) }}" style="max-width: 100%;"></a>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+    </div>
+  </section><!-- End Contact Section -->
+
+</main><!-- End #main -->
+
+{% endblock %}
+
+{% block javascripttemplate %}
+
+Fancybox.bind('[data-fancybox="demo"]', {
+  caption: function (fancybox, carousel, slide) {
+    return (
+      `${slide.index + 1} / ${carousel.slides.length} <br />` + slide.caption
+    );
+  },
+});
+
+{% endblock %}

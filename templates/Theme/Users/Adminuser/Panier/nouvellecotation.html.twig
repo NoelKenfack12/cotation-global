@@ -1,0 +1,174 @@
+{% extends "Theme/Users/Adminuser/layoutbaseorg.html.twig" %}
+{% block meta %}
+	{{ parent() }}
+	<meta name="author" content="Sprint-pay"/>
+	<meta name="description" content="{{ site }} - Connexion"/>
+{% endblock %}
+
+{% block title %}
+	{{ parent() }} | Connexion
+{% endblock %}
+
+{% block userblog_body %}
+<section class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
+    <section style="min-height: 98px; padding: 15px 50px; background: #1e4a8b; color: #fff; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Enregistrement d'une nouvelle cotation</h1>
+                <div>
+                    <span class="bi bi-geo-alt"></span> Global - Buéa - Entrepot
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+<div class="container" style="min-height: calc(100vh - 150px);">
+    <ul class="breadcrumb_" itemprop="breadcrumb_">
+      <li><a href="#">Tableau de bord</a></li>
+      <li><a href="#">Cotations</a></li>
+      <li><h1>Nouvelle cotation</h1></li>
+    </ul>
+
+    <div class="mt-2 mb-2">
+        <ul class="tabs-step">
+            <li class="active">
+                <a href="#">
+                    <strong>Identification de l'opération</strong>
+                    <div>re</div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <strong>Description du contenu</strong>
+                    <div>re</div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <strong>Cotation</strong>
+                    <div>re</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <form action="{{ path('users_adminuser_cotation_description', {'id': 1}) }}" method="post">
+    <div class="mb-3" style="background: #fff; padding: 20px; min-height: 400px;">
+        <h3>Liste cotation</h3>
+        <hr/>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <label for="client-name">Sélectionnez le type d'opération</label>
+                <select name="typeop" class="form-control input-lg" id="client-name">
+                    <option value="">Groupage</option>
+                    <option value="">Entreposage</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="client-name">Sélectionnez le titre de transport</label>
+                <select name="typeop" class="form-control input-lg" id="client-name">
+                    <option value="">Transport Maritime</option>
+                    <option value="">Aérien</option>
+                    <option value="">Lettre de voiture</option>
+                </select>
+            </div>
+
+            <div class="col-md-12 mt-4 mb-4">
+                <div style="border: 1px dashed #999; background: #e8eff9; padding: 15px; border-radius: 10px;">
+                    <h3>Attributs spécifiques</h3>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="input-key">B/L : Transport Maritime</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" name="" id="input-key" class="form-control" placeholder="valeur"/>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            <label for="input-key">LTA : Aérien</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" name="" id="input-key" class="form-control" placeholder="valeur"/>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            <label for="input-key">LV : Lettre de voiture</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" name="" id="input-key" class="form-control" placeholder="valeur"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="client-name">Sélectionnez le Régime</label>
+                <select name="typeop" class="form-control input-lg" id="client-name">
+                    <option value="">EDD</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label for="group_name" class="col-form-label">Activer les attibuts optionnels</label>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <label class="toggle-switch-1">
+                            <input type="checkbox" checked="">
+                            <span>
+                                <i></i>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 mt-4 mb-4">
+                <div style="border: 1px dashed #999; background: #e8eff9; padding: 15px; border-radius: 10px;">
+                    <h3>Attributs spécifiques</h3>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="input-key"> TD : Tarif douanier</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" name="" id="input-key" class="form-control" placeholder="valeur"/>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            <label for="input-key">Clé</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" name="" id="input-key" class="form-control" placeholder="valeur"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="mt-3 text-right " style="background: #fff; padding: 20px;">
+        <button type="submit" class="btn btn-primary">
+            Enregistrer et continuer <span class="bi bi-arrow-return-right"></span>
+        </button>
+    </div>
+</form>
+
+</div>
+<!-- content-wrapper ends -->
+
+  
+{% endblock %}
+
+{% block javascripttemplate %}
+
+{% endblock %}

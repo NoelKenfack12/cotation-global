@@ -1,0 +1,17 @@
+users_user_accueil:
+    path: /
+    controller: App\Controller\Users\User\SecurityController::login
+users_user_newsletter_souscription:
+    path: /newsletter/souscription
+    controller: App\Controller\Users\User\NewsletterController::souscriptionnewsletter
+login:
+    path: /login
+    controller: App\Controller\Users\User\SecurityController::login
+users_user_inscription_user:
+    path: /inscription/user
+    controller: App\Controller\Users\User\UserController:inscriptionuser
+users_user_ajout_super_admin:
+    path: /ajouter/super/admin
+    controller: App\Controller\Users\User\UserController::ajouteradmin
+    requirements:
+        id: \d+

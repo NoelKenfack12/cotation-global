@@ -1,0 +1,184 @@
+  
+  <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{% block title %}{{ site }}{% endblock %}</title>
+  {% block meta %} {% endblock %}
+  {% block stylesheets %}
+  <!-- base:css -->
+  <link rel="stylesheet" href="{{ asset('templatedash/typicons.font/font/typicons.css') }}">
+  <link rel="stylesheet" href="{{ asset('templatedash/css/vendor.bundle.base.css') }}">
+  <!-- endinject -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{{ asset('templatedash/css/style.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('templatedash/css/bootstrap-icons.css') }}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="{{ asset('templatedash/images/favicon.png') }}" />
+  {% endblock %}
+  <script src="{{ asset('templatedash/js/vendor.bundle.base.js') }}"></script>
+  <!-- endinject -->
+
+  <link rel="stylesheet" href="{{ asset('plugins/notify/themes/alertify.core.css') }}" />
+  <link rel="stylesheet" href="{{ asset('plugins/notify/themes/alertify.default.css') }}" id="toggleCSS" />
+
+  <link rel="stylesheet" href="{{ asset('templatedash/css/custom.css') }}" />
+  <script src="{{ asset('plugins/notify/lib/alertify.min.js') }}"></script>
+	<script>
+		function resetNotif() {
+			$("#toggleCSS").attr("href", "{{ asset('plugins/notify/themes/alertify.default.css') }}");
+			alertify.set({
+				labels : {
+					ok     : "OK",
+					cancel : "Cancel"
+				},
+				delay : 5000,
+				buttonReverse : false,
+				buttonFocus   : "ok"
+			});
+		}
+	</script>
+
+  <style>
+.card-solde-total{
+	height: 180px;
+	font-family: Arial;
+	font-size: 13px;
+	font-weight: 400;
+	text-align: center;
+	line-height: 18px;
+	color: #0C51A0;
+	background-color: #1e4a8b;
+	background-repeat: repeat;
+	background-position: left top;
+	border: 1px solid #27ABA6;
+	border-radius: 4px;
+	box-shadow: 0px 1px 5px 0px #D4D8DE;
+}
+.card-stat-sub-title{
+	display: block;
+	font-family: Muli-Regular;
+	font-size: 11px;
+	color: #333333;
+	white-space: nowrap;
+}
+.action-tb-link{
+  text-decoration: none!important;
+}
+
+.card-dash-csu{
+  font-family: Arial;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #333333;
+  background-color: #FFFFFF;
+  background-repeat: repeat;
+  background-position: left top;
+  border: 1px solid #F1F3F9;
+  border-radius: 4px;
+  box-shadow: 0px 1px 5px 0px #D4D8DE;
+  position: sticky;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+}
+.card-dash-csu-relative{
+  font-family: Arial;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #333333;
+  background-color: #FFFFFF;
+  background-repeat: repeat;
+  background-position: left top;
+  border: 1px solid #F1F3F9;
+  border-radius: 4px;
+  box-shadow: 0px 1px 5px 0px #D4D8DE;
+  position: relative;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+}
+.md-card-dash{
+  min-height: 181px!important;
+  height: auto;
+}
+.stat-item-card{
+  font-family: Muli-Bold; font-size: 21px; color: #333333; margin-top: 20px;
+}
+.libele-item-card{
+  font-family: Muli-Regular;font-size: 13px;color:#999999;
+}
+.pink-text-1 {
+  color: #3fb65f !important;
+}
+.pink-text-2 {
+  color: #0064d2 !important;
+}
+.pink-text-3 {
+  color: #e53238 !important;
+}
+.pink-text-4 {
+  color: #ff9600 !important;
+}
+.pink-text-0{
+  color: #B2B2B2!important;
+}
+.more-infos{
+  font-family: Muli-Bold;font-size: 13px;color: #52C969; position: absolute; bottom: 10px; right: 15px; text-decoration: none!important;
+}
+.more-infos-top{
+  font-family: Muli-Bold;font-size: 13px;color: #52C969; position: absolute; top: 10px; right: 15px; text-decoration: none!important;
+}
+
+.bp-legende-dash{
+	display: inline-block; height: 10px; width: 10px; border-radius: 50%;
+}
+
+.bp-legende1{
+	background: #0080FF!important;
+}
+
+.bp-legende2{
+	background: #D4D8DE!important;
+}
+
+.bp-legende3{
+	background: #52C969!important;
+}
+  </style>
+</head>
+
+<body>
+  <div class="container-scroller">
+      {{ render(controller("App\\Controller\\General\\Template\\MenuController:menubare", {'position': 'dash'})) }}
+      <div class="container-fluid page-body-wrapper">
+          {{ render(controller("App\\Controller\\General\\Template\\MenuController:menuleft", {'position': 'dash'})) }}
+          <div class="main-panel" style="background: #e8eff9;">
+              {% block body %}
+                  
+              {% endblock %}
+              {{ render(controller("App\\Controller\\General\\Template\\MenuController:footer", {'position': 'dash'})) }}
+          </div>
+      </div>
+  </div>
+  
+  <!-- inject:js -->
+  <script src="{{ asset('templatedash/js/off-canvas.js') }}"></script>
+  <script src="{{ asset('templatedash/js/hoverable-collapse.js') }}"></script>
+  
+  <!-- script src="{{ asset('templatedash/js/template.js') }}"></script-->
+  <script src="{{ asset('templatedash/js/settings.js') }}"></script>
+  <script src="{{ asset('templatedash/js/todolist.js') }}"></script>
+  <!-- endinject -->
+
+  <script type="text/javascript">
+    {% block javascript %}
+
+    {% endblock %}
+  </script>
+</body>
+
+</html>

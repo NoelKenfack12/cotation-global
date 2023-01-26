@@ -1,0 +1,655 @@
+{% extends "Theme/Users/Adminuser/layoutbaseorg.html.twig" %}
+{% block meta %}
+	{{ parent() }}
+	<meta name="author" content="Sprint-pay"/>
+	<meta name="description" content="{{ site }} - Connexion"/>
+{% endblock %}
+
+{% block title %}
+	{{ parent() }} | Connexion
+{% endblock %}
+
+{% block userblog_body %}
+<section class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
+    <section style="min-height: 98px; padding: 15px 50px; background: #1e4a8b; color: #fff; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Enregistrement d'une nouvelle cotation</h1>
+                <div>
+                    <span class="bi bi-geo-alt"></span> Global - Buéa - Entrepot
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+<div class="container" style="min-height: calc(100vh - 150px);">
+    <ul class="breadcrumb_" itemprop="breadcrumb_">
+      <li><a href="#">Tableau de bord</a></li>
+      <li><a href="#">Cotations</a></li>
+      <li><h1>Nouvelle cotation</h1></li>
+    </ul>
+
+    <div class="mt-2 mb-2">
+        <ul class="tabs-step">
+            <li class="active">
+                <a href="#">
+                    <strong>Identification de l'opération</strong>
+                    <div>re</div>
+                </a>
+            </li>
+            <li class="active">
+                <a href="#">
+                    <strong>Description du contenu</strong>
+                    <div>re</div>
+                </a>
+            </li>
+            <li class="active">
+                <a href="#">
+                    <strong>Cotation</strong>
+                    <div>re</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <form action="{{ path('users_adminuser_cotation_organisation', {'id': 1}) }}" method="">
+    <div class="mb-3" style="background: #fff; padding: 20px; min-height: 400px;">
+        <h3>
+            <a href="" style="float: right;"><span class="bi bi-node-plus"></span> Ajouter une ligne</a>
+            Cotation N° <strong>#78454521</strong>
+        </h3>
+        <hr/>
+        
+        <div class="card-dash-csu">
+            <div class="table-responsive-vertical shadow-z-1" style="box-shadow:0px 0px 2px rgba(0,0,0,0.0005);">
+            <table id="table" class="table table-hover table-mc-light-blue" style="margin: 0px 0px 15px 0px;">
+            <thead>
+            <tr>
+            <th>Eléments</th>
+            <th>Montant UHT</th>
+            <th>Quantité</th>
+            <th>Taxes</th>
+            <th>Montants TTC</th>
+            <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td data-title="Eléments" colspan="6">
+                        <strong>DEBOURS</strong>
+                    </td>
+                </tr>
+
+            <tr>
+                <td data-title="Eléments">Droits et Taxes de douane</td>
+                <td data-title="Montant UHT">
+                    <input type="text" name="" id="" class="form-control" placeholder="Montant" value="50 000"/>
+                </td>
+                <td data-title="Quantité">
+                    <select name="" id="" class="form-control input-lg">
+                        <option value="">1</option>
+                    </select>
+                </td>
+                <td data-title="Taxes">
+                    <input type="text" name="" id="" class="form-control" placeholder="Taxe"/>
+                </td>
+                <td data-title="Montants TTC">
+                    50 000
+                </td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments">Redevance DDE</td>
+                <td data-title="Montant UHT">
+                    <input type="text" name="" id="" class="form-control" placeholder="Montant" value="50 000"/>
+                </td>
+                <td data-title="Quantité">
+                    <select name="" id="" class="form-control input-lg">
+                        <option value="">1</option>
+                    </select>
+                </td>
+                <td data-title="Taxes">
+                    <input type="text" name="" id="" class="form-control" placeholder="Taxe"/>
+                </td>
+                <td data-title="Montants TTC">
+                    50 000
+                </td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments">BESC</td>
+                <td data-title="Montant UHT">
+                    <input type="text" name="" id="" class="form-control" placeholder="Montant" value="50 000"/>
+                </td>
+                <td data-title="Quantité">
+                    <select name="" id="" class="form-control input-lg">
+                        <option value="">1</option>
+                    </select>
+                </td>
+                <td data-title="Taxes">
+                    <input type="text" name="" id="" class="form-control" placeholder="Taxe"/>
+                </td>
+                <td data-title="Montants TTC">
+                    50 000
+                </td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments">Acconage</td>
+                <td data-title="Montant UHT">
+                    <input type="text" name="" id="" class="form-control" placeholder="Montant" value="50 000"/>
+                </td>
+                <td data-title="Quantité">
+                    <select name="" id="" class="form-control input-lg">
+                        <option value="">1</option>
+                    </select>
+                </td>
+                <td data-title="Taxes">
+                    <input type="text" name="" id="" class="form-control" placeholder="Taxe"/>
+                </td>
+                <td data-title="Montants TTC">
+                    50 000
+                </td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments">Timbre sur B/L</td>
+                <td data-title="Montant UHT">
+                    <input type="text" name="" id="" class="form-control" placeholder="Montant" value="50 000"/>
+                </td>
+                <td data-title="Quantité">
+                    <select name="" id="" class="form-control input-lg">
+                        <option value="">1</option>
+                    </select>
+                </td>
+                <td data-title="Taxes">
+                    <input type="text" name="" id="" class="form-control" placeholder="Taxe"/>
+                </td>
+                <td data-title="Montants TTC">
+                    50 000
+                </td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments">Cession documentaire</td>
+                <td data-title="Montant UHT">
+                    <input type="text" name="" id="" class="form-control" placeholder="Montant" value="50 000"/>
+                </td>
+                <td data-title="Quantité">
+                    <select name="" id="" class="form-control input-lg">
+                        <option value="">1</option>
+                    </select>
+                </td>
+                <td data-title="Taxes">
+                    <input type="text" name="" id="" class="form-control" placeholder="Taxe"/>
+                </td>
+                <td data-title="Montants TTC">
+                    50 000
+                </td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments">Taxe de debarquement / Embarquement (PAD)</td>
+                <td data-title="Montant UHT">
+                    <input type="text" name="" id="" class="form-control" placeholder="Montant" value="50 000"/>
+                </td>
+                <td data-title="Quantité">
+                    <select name="" id="" class="form-control input-lg">
+                        <option value="">1</option>
+                    </select>
+                </td>
+                <td data-title="Taxes">
+                    <input type="text" name="" id="" class="form-control" placeholder="Taxe"/>
+                </td>
+                <td data-title="Montants TTC">
+                    50 000
+                </td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments">Scanner</td>
+                <td data-title="Montant UHT">
+                    <input type="text" name="" id="" class="form-control" placeholder="Montant" value="50 000"/>
+                </td>
+                <td data-title="Quantité">
+                    <select name="" id="" class="form-control input-lg">
+                        <option value="">1</option>
+                    </select>
+                </td>
+                <td data-title="Taxes">
+                    <input type="text" name="" id="" class="form-control" placeholder="Taxe"/>
+                </td>
+                <td data-title="Montants TTC">
+                    50 000
+                </td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments">Relevage TC Livraison+TC Vide</td>
+                <td data-title="Montant UHT">
+                    <input type="text" name="" id="" class="form-control" placeholder="Montant" value="50 000"/>
+                </td>
+                <td data-title="Quantité">
+                    <select name="" id="" class="form-control input-lg">
+                        <option value="">1</option>
+                    </select>
+                </td>
+                <td data-title="Taxes">
+                    <input type="text" name="" id="" class="form-control" placeholder="Taxe"/>
+                </td>
+                <td data-title="Montants TTC">
+                    50 000
+                </td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments">Pont Bascule</td>
+                <td data-title="Montant UHT">
+                    <input type="text" name="" id="" class="form-control" placeholder="Montant" value="50 000"/>
+                </td>
+                <td data-title="Quantité">
+                    <select name="" id="" class="form-control input-lg">
+                        <option value="">1</option>
+                    </select>
+                </td>
+                <td data-title="Taxes">
+                    <input type="text" name="" id="" class="form-control" placeholder="Taxe"/>
+                </td>
+                <td data-title="Montants TTC">
+                    50 000
+                </td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments" colspan="4">
+                    <strong>TOTAL DEBOURS</strong>
+                </td>
+                <td data-title="Eléments" colspan="2">
+                    <strong>9 700 XAF</strong>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments" colspan="6">
+                    <strong>AUTRES DEBOURS</strong>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments">Frais Bancaire</td>
+                <td data-title="Montant UHT">
+                    <input type="text" name="" id="" class="form-control" placeholder="Montant" value="50 000"/>
+                </td>
+                <td data-title="Quantité">
+                    <select name="" id="" class="form-control input-lg">
+                        <option value="">1</option>
+                    </select>
+                </td>
+                <td data-title="Taxes">
+                    <input type="text" name="" id="" class="form-control" placeholder="Taxe"/>
+                </td>
+                <td data-title="Montants TTC">
+                    50 000
+                </td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td data-title="Eléments">Frais de gestion parc</td>
+                <td data-title="Montant UHT">
+                    <input type="text" name="" id="" class="form-control" placeholder="Montant" value="50 000"/>
+                </td>
+                <td data-title="Quantité">
+                    <select name="" id="" class="form-control input-lg">
+                        <option value="">1</option>
+                    </select>
+                </td>
+                <td data-title="Taxes">
+                    <input type="text" name="" id="" class="form-control" placeholder="Taxe"/>
+                </td>
+                <td data-title="Montants TTC">
+                    50 000
+                </td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td data-title="Eléments">Transport</td>
+                <td data-title="Montant UHT">
+                    <input type="text" name="" id="" class="form-control" placeholder="Montant" value="50 000"/>
+                </td>
+                <td data-title="Quantité">
+                    <select name="" id="" class="form-control input-lg">
+                        <option value="">1</option>
+                    </select>
+                </td>
+                <td data-title="Taxes">
+                    <input type="text" name="" id="" class="form-control" placeholder="Taxe"/>
+                </td>
+                <td data-title="Montants TTC">
+                    50 000
+                </td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments">Commission sur caution (0,5% de la valeur de caution)</td>
+                <td data-title="Montant UHT">
+                    <input type="text" name="" id="" class="form-control" placeholder="Montant" value="50 000"/>
+                </td>
+                <td data-title="Quantité">
+                    <select name="" id="" class="form-control input-lg">
+                        <option value="">1</option>
+                    </select>
+                </td>
+                <td data-title="Taxes">
+                    <input type="text" name="" id="" class="form-control" placeholder="Taxe"/>
+                </td>
+                <td data-title="Montants TTC">
+                    50 000
+                </td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments" colspan="4">
+                    <strong>TOTAL AUTRES DEBOURS</strong>
+                </td>
+                <td data-title="Eléments" colspan="2">
+                    <strong>9 700 XAF</strong>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments" colspan="6">
+                    <strong>INTERVENTIONS</strong>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments">Frais D'ouverture Dossier</td>
+                <td data-title="Montant UHT">
+                    <input type="text" name="" id="" class="form-control" placeholder="Montant" value="50 000"/>
+                </td>
+                <td data-title="Quantité">
+                    <select name="" id="" class="form-control input-lg">
+                        <option value="">1</option>
+                    </select>
+                </td>
+                <td data-title="Taxes">
+                    <input type="text" name="" id="" class="form-control" placeholder="Taxe"/>
+                </td>
+                <td data-title="Montants TTC">
+                    50 000
+                </td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments">Frais de passage Entrepôt</td>
+                <td data-title="Montant UHT">
+                    <input type="text" name="" id="" class="form-control" placeholder="Montant" value="50 000"/>
+                </td>
+                <td data-title="Quantité">
+                    <select name="" id="" class="form-control input-lg">
+                        <option value="">1</option>
+                    </select>
+                </td>
+                <td data-title="Taxes">
+                    <input type="text" name="" id="" class="form-control" placeholder="Taxe"/>
+                </td>
+                <td data-title="Montants TTC">
+                    50 000
+                </td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments">Frais passage Magasin</td>
+                <td data-title="Montant UHT">
+                    <input type="text" name="" id="" class="form-control" placeholder="Montant" value="50 000"/>
+                </td>
+                <td data-title="Quantité">
+                    <select name="" id="" class="form-control input-lg">
+                        <option value="">1</option>
+                    </select>
+                </td>
+                <td data-title="Taxes">
+                    <input type="text" name="" id="" class="form-control" placeholder="Taxe"/>
+                </td>
+                <td data-title="Montants TTC">
+                    50 000
+                </td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments" colspan="4">
+                    <strong>TOTAL INTERVENTIONS</strong>
+                </td>
+                <td data-title="Eléments" colspan="2">
+                    <strong>9 700 XAF</strong>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments" colspan="6">
+                    
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Eléments" colspan="4">
+                    <strong>MONTANT TOTAL</strong>
+                </td>
+                <td data-title="Eléments" colspan="2">
+                    <strong>9 700 XAF</strong>
+                </td>
+            </tr>
+
+            </tbody>
+            </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="mt-3 text-right " style="background: #fff; padding: 20px;">
+        <a href="{{ path('users_adminuser_cotation_description', {'id': 1}) }}" class="btn btn-primary" style="float: left;">
+            <span class="bi bi-arrow-return-left"></span> Etape précedente
+        </a>
+        <button type="submit" class="btn btn-primary">
+            Enregistrer et continuer <span class="bi bi-arrow-return-right"></span>
+        </button>
+    </div>
+
+</form>
+
+</div>
+<!-- content-wrapper ends -->
+
+  
+{% endblock %}
+
+{% block javascripttemplate %}
+
+{% endblock %}

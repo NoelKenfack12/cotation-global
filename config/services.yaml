@@ -1,0 +1,71 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+    saltcookies: dkjdlkdsfnksdfsd
+    brochures_directory: '%kernel.project_dir%\public'
+    siteweb: http://2si.com
+    sitename: Cotation
+    username: global
+    password: africexplorer
+    emailadmin: noel.kenfack@sprint-pay.com
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $targetDirectory: '%brochures_directory%'
+        public: true
+    general_service.servicetext:
+        class: App\Service\Servicetext\GeneralServicetext
+        arguments: [ '@doctrine.orm.entity_manager', '%brochures_directory%' ]
+    App\Service\Servicetext\GeneralServicetext: '@general_service.servicetext'
+    general_validatortext.emailuser:
+        class: App\Validator\Validatortext\EmailValidator
+        arguments: [ '@general_service.servicetext' ]
+        tags:
+            - { name: validator.constraint_validator, alias: email_user }
+    general_validatortext.sitewebuser:
+        class: App\Validator\Validatortext\SitewebValidator
+        arguments: [ '@general_service.servicetext' ]
+        tags:
+            - { name: validator.constraint_validator, alias: siteweb_user }
+    general_validatortext.passworduser:
+        class: App\Validator\Validatortext\PasswordValidator
+        arguments: [ '@general_service.servicetext' ]
+        tags:
+            - { name: validator.constraint_validator, alias: password_user }
+    general_validator.telephone:
+        class: App\Validator\Validatortext\TelephoneValidator
+        arguments: [ '@general_service.servicetext' ]
+        tags:
+            - { name: validator.constraint_validator, alias: adresse_telephone }
+    general_validatortext.telormailuser:
+        class: App\Validator\Validatortext\TelormailValidator
+        arguments: [ '@general_service.servicetext' ]
+        tags:
+            - { name: validator.constraint_validator, alias: teloremail_user }
+    general_validatorfile.image:
+        class:   App\Validator\Validatorfile\ImgValidator
+        arguments: [ '@general_service.servicetext' ]
+        tags: 
+            - { name: validator.constraint_validator, alias: my_image }
+    general_validatorfile.yourfile:
+        class:   App\Validator\Validatorfile\YfileValidator
+        arguments: [ '@general_service.servicetext' ]
+        tags: 
+            - { name: validator.constraint_validator, alias: your_file }
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones

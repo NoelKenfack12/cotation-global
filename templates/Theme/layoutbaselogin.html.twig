@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% block meta %} {% endblock %}
+  <!-- For Windows Phone -->
+  <title>{% block title %}{{ site }}{% endblock %}</title>
+  {% block stylesheets %}
+  <!-- CORE CSS-->
+  
+  <!-- style CSS -->
+  <link rel="stylesheet" href="{{ asset('logintemplate/css/style.css') }}" type="text/css" media="all">
+
+  <!-- fontawesome -->
+  <link rel="stylesheet" href="{{ asset('logintemplate/css/font-awesome.min.css') }}" type="text/css" media="all">
+
+  <!-- google fonts -->
+  <link href="//fonts.googleapis.com/css?family=Mukta:300,400,500" rel="stylesheet">
+
+	{% endblock %}
+  <link href="{{ asset('template/assets/img/favicon.png') }}" rel="icon">
+
+  <style>
+    input:checked+.slider {
+      background-color: #1b4889;
+    }
+  </style>
+</head> 
+<body class="my-login-page">
+  {% block body %}
+        
+  {% endblock %}
+	
+  <script src="{{ asset('logintemplate//js/jquery.min.js') }}"></script>
+  <script src="{{ asset('logintemplate//js/popper.min.js') }}"></script>
+  <script src="{{ asset('logintemplate//js/bootstrap.min.js') }}"></script>
+  <script type="text/javascript">
+    {% block javascript %}
+
+    {% endblock %}
+  </script>
+</body>
+</html>

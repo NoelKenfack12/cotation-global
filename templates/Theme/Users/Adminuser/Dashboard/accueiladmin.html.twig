@@ -1,0 +1,356 @@
+{% extends "Theme/Users/Adminuser/layoutadmin.html.twig" %}
+{% block meta %}
+	{{ parent() }}
+	<meta name="author" content="Sprint-pay"/>
+	<meta name="description" content="{{ site }} - Connexion"/>
+{% endblock %}
+
+{% block title %}
+	{{ parent() }} | Connexion
+{% endblock %}
+
+{% block userblog_body %}
+<section class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
+    <section style="min-height: 98px; padding: 15px 50px; background: #1e4a8b; color: #fff; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Tableau de bord</h1>
+                <div>
+                  <span class="bi bi-geo-alt"></span> Global - Administration
+              </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+<div class="container" style="min-height: calc(100vh - 150px);">
+
+    <ul class="breadcrumb_" itemprop="breadcrumb_">
+      <li><a href="#">Dashboard</a></li>
+      <li><a href="#">Statistiques</a></li>
+    </ul>
+
+        <form class="row">
+          <div class="col-md-8 col-xs-12">
+            <h3 class="typo3">
+              Activités 2022
+            </h3>
+          </div>
+    
+          <div class="col-md-2 col-xs-8" style="padding-right: 0px;">
+            <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text prepend-perso ">
+                  <span class="bi bi-calendar"></span>
+                </div>
+              </div>
+              <select class="form-control csu-input-append" name="">
+                <option value="">Année 2021</option>
+                <option value="">Année 2022</option>
+                <option value="">Année 2023</option>                
+              </select>
+            </div>
+          </div>
+    
+          <div class="col-md-2 col-xs-4">
+            <button type="button" name="button" class="btn btn-primary btn-block csu-filter-btn">Filtrer</button>
+          </div>
+        </form>
+    
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card-solde-total" style="">
+              <div class="text-center" style="margin-top: 60px; font-family: Muli-Bold; font-size: 13px; color: #FFFFFF;">
+                Montant Total Des cotations traitées
+              </div>
+              <div class="stat-item-card" style="color: #fff;">
+                269 050 000 XAF
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card-dash-csu md-card-dash">
+              <h3 class="table-description text-left">Status des cotations</h3>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="stat-item-card">
+                    06
+                  </div>
+                  <div class="libele-item-card pink-text-4">
+                      <strong>Annuler</strong>
+                  </div>
+    
+                  <div class="stat-item-card">
+                    02
+                  </div>
+                  <div class="libele-item-card pink-text-2">
+                      <strong>Active</strong>
+                  </div>
+    
+                </div>
+                <div class="col-md-6">
+                  <div class="stat-item-card">
+                    7
+                  </div>
+                  <div class="libele-item-card pink-text-1">
+                      <strong>Brouillon</strong>
+                  </div>
+    
+                  <div class="stat-item-card">
+                    01
+                  </div>
+                  <div class="libele-item-card pink-text-3">
+                      <strong>Corbeille</strong>
+                  </div>
+                </div>
+              </div>
+    
+            </div>
+          </div>
+    
+          <div class="col-md-4">
+            <div class="card-dash-csu md-card-dash" style="">
+              <h3 class="table-description text-left"> Services </h3>
+              <div class="stat-item-card">
+                403 054
+              </div>
+              <div class="libele-item-card">
+                  Total
+              </div>
+    
+              <div class="stat-item-card">
+                588
+              </div>
+              <div class="libele-item-card">
+                  Pré-Sélectionnés
+              </div>
+    
+              <a href="{{ path('users_adminuser_services_organisation', {'id': 1}) }}" class="more-infos">
+                  Consulter <span class="bi bi-eye" style="color: green;"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+    
+        <div class="row">
+          <div class="col-md-8">
+              <div class="card-dash-csu md-card-dash" style="">
+                <h3 class="table-description text-left"> Valeur des cotations</h3>
+    
+                <div class="row mg-t-5">
+                  <div class="col-md-6">
+                    <div class="stat-item-card">
+                      50 000 XAF
+                    </div>
+                    <div class="libele-item-card pink-text-4">
+                        <strong>Cotations Annulées</strong>
+                    </div>
+                  </div>
+    
+                  <div class="col-md-6">
+                    <div class="stat-item-card">
+                      65 212 000 XAF
+                    </div>
+                    <div class="libele-item-card pink-text-2">
+                        <strong>Cotations Actives</strong>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="stat-item-card">
+                      212 000 XAF
+                    </div>
+                    <div class="libele-item-card pink-text-3">
+                        <strong>Cotations Supprimées</strong>
+                    </div>
+                  </div>
+                </div>
+    
+                <a href="{{ path('users_adminuser_cotation_organisation', {'id': 1}) }}" class="more-infos">
+                    Consulter l'historique des transactions  <span class="bi bi-eye" style="color: green;"></span>
+                </a>
+              </div>
+          </div>
+    
+          <div class="col-md-4">
+            <div class="card-dash-csu md-card-dash">
+              <h3 class="table-description text-left">Autres données</h3>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="stat-item-card">
+                    2
+                  </div>
+                  <div class="libele-item-card">
+                      Administrateurs
+                  </div>
+    
+                  <div class="stat-item-card">
+                    27
+                  </div>
+                  <div class="libele-item-card">
+                      Clients
+                  </div>
+    
+                </div>
+                <div class="col-md-6">
+                  <div class="stat-item-card">
+                    3
+                  </div>
+                  <div class="libele-item-card">
+                      Organisations
+                  </div>
+    
+                  <div class="stat-item-card">
+                    01
+                  </div>
+                  <div class="libele-item-card ">
+                      Autres
+                  </div>
+                </div>
+              </div>
+    
+            </div>
+          </div>
+    
+        </div>
+    
+    
+        <div class="row">
+          <div class="col-md-12">
+            <h3 class="typo3">
+              Statistiques
+            </h3>
+          </div>
+            <div class="col-md-6">
+    
+              <div class="card-dash-csu graph-card-dash">
+                <div class="row"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+    
+                  <div class="col-md-12">
+                    <h3 class="table-description text-left">Comparitif annuel des cotations actives</h3>
+                  </div>
+    
+                  <div class="offset-md-6 col-md-3 text-right">
+                    <a href="" class="card-stat-sub-title"><span class="bp-legende-dash bp-legende3"></span> 2018</a>
+                  </div>
+                  <div class="col-md-3">
+                    <a href="" class="card-stat-sub-title"><span class="bp-legende-dash bp-legende1"></span> 2019</a>
+                  </div>
+    
+                  <canvas id="canvas" height="334" style="display: block; width: 358px; height: 167px;" width="716" class="chartjs-render-monitor"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+    
+              <div class="card-dash-csu graph-card-dash"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <h3 class="table-description">
+                      Comparitif annuel des cotations Annulées
+                    </h3>
+                  </div>
+              </div>
+    
+              <canvas id="canvashist" height="325" style="display: block; width: 328px; height: 167px;" width="656" class="chartjs-render-monitor"></canvas>
+    
+              <div class="row">
+                <div class="col-md-3 text-right">
+                  <a href="" class="card-stat-sub-title"><span class="bp-legende-dash bp-legende3"></span> 2018</a>
+                </div>
+                <div class="col-md-3">
+                  <a href="" class="card-stat-sub-title"><span class="bp-legende-dash bp-legende1"></span> 2019</a>
+                </div>
+              </div>
+              </div>
+            </div>
+        </div>
+
+
+</div>
+<!-- content-wrapper ends -->
+
+
+<script src="{{ asset('templatedash/js/Chart.min.js') }}"></script>
+
+<script type="text/javascript">
+  $(".item-dash-menu").eq(0).addClass('active-home-btn');
+
+  var datapoints1 = [0, 20, 20, 60, 60, 120, 2, 180, 120, 125, 105, 110, 170];
+  var datapoints2 = [7, 3, 8, 25, 85, 38, 78, 54, 25, 152, 107, 25, 20];
+  var config = {
+  type: 'line',
+  data: {
+    labels: ['0','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    datasets: [{
+      label: 'Linear interpolation',
+      data: datapoints1,
+      borderColor: '#52c969',
+      backgroundColor: 'rgba(0, 0, 0, 0)',
+      fill: true,
+      lineTension: 0
+    }, {
+      label: 'Linear interpolation',
+      data: datapoints2,
+      borderColor: '#0064d2',
+      backgroundColor: 'rgba(0, 0, 0, 0)',
+      fill: false,
+      lineTension: 0
+    }]
+  },
+  options: {
+    responsive: true,
+    title: {
+      display: false,
+      text: 'Chart.js Line Chart - Cubic interpolation mode'
+    },
+    tooltips: {
+      mode: 'index'
+    },
+    scales: {
+      xAxes: [{
+        display: true,
+        scaleLabel: {
+          display: true,
+          labelString: 'Mois'
+        }
+      }],
+      yAxes: [{
+        display: true,
+        scaleLabel: {
+          display: true,
+          labelString: 'Montant'
+        },
+        ticks: {
+          suggestedMin: 0,
+          suggestedMax: 200,
+        }
+      }]
+    },
+    legend: {
+      display: false,
+      labels: {
+        fontColor: 'rgb(255, 99, 132)'
+      }
+    }
+  }
+  };
+
+
+  window.onload = function() {
+  	var ctx = document.getElementById('canvas').getContext('2d');
+  	window.myLine = new Chart(ctx, config);
+
+    var ctx2 = document.getElementById('canvashist').getContext('2d');
+  	window.myBar = new Chart(ctx2, config);
+
+  };
+
+</script>
+
+  
+{% endblock %}
+
+{% block javascripttemplate %}
+
+{% endblock %}

@@ -1,0 +1,359 @@
+{% extends "Theme/Users/Adminuser/layoutbaseorg.html.twig" %}
+{% block meta %}
+	{{ parent() }}
+	<meta name="author" content="Sprint-pay"/>
+	<meta name="description" content="{{ site }} - Connexion"/>
+{% endblock %}
+
+{% block title %}
+	{{ parent() }} | Connexion
+{% endblock %}
+
+{% block userblog_body %}
+<section class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
+    <section style="min-height: 98px; padding: 15px 50px; background: #1e4a8b; color: #fff; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Une bonne affaire</h1>
+                <div>Une bonne affaire</div>
+            </div>
+            <div class="col-md-4">
+                <span style="float: right;">
+                    <a href="#!" data-toggle="modal" data-target="#articleModalCenter" class="btn btn-primary mt-2">Ajouter Un Article</a>
+                    <a href="#!" data-toggle="modal" data-target="#categoryModalCenter" class="btn btn-primary mt-2">Ajouter Une catégorie</a>
+                  </span>
+            </div>
+        </div>
+    </section>
+</section>
+
+<div class="container" style="min-height: calc(100vh - 150px);">
+    <ul class="breadcrumb_" itemprop="breadcrumb_">
+      <li><a href="#">Dashboard</a></li>
+      <li><a href="#">Paramètres</a></li>
+      <li><h1>Liste des paramètres {{ site }}</h1></li>
+    </ul>
+
+    <div class="mb-3" style="background: #fff; padding: 20px;">
+        <h3>Liste des types de services</h3>
+        <hr/>
+        <div class="row">
+            <div class="col-md-4">
+              <div class="card-cotation card-1">
+                <h3>Ionic Native</h3>
+                <p>A curated set of   ES5/ES6/TypeScript wrappers for plugins to easily add any native functionality to your Ionic apps.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card-cotation card-2">
+                <h3>UI Components</h3>
+                <p>Tabs, buttons, inputs, lists, cards, and more! A comprehensive library
+                  of mobile UI components, ready to go.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card-cotation card-3">
+                <h3>Theming</h3>
+                <p>Learn how to easily customize and modify your app’s design to fit your
+                  brand across all mobile platform styles.</p>
+              </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="background: #fff; padding: 20px;">
+        <h3>
+            <a href="{{ path('users_adminuser_services_targe_organisation', {'id': 1}) }}" class="btn btn-primary float-right">Ajouter les produits</a>
+            Liste des services
+        </h3>
+        
+        <hr/>
+        
+        <div class="card-dash-csu">
+            <div class="table-responsive-vertical shadow-z-1" style="box-shadow:0px 0px 2px rgba(0,0,0,0.0005);">
+            <table id="table" class="table table-hover table-mc-light-blue" style="margin: 0px 0px 15px 0px;">
+            <thead>
+            <tr>
+            <th>
+                <div class="mb-1">
+                    <div class="br-checkbox">
+                        <input id="checkbox-ind1" name="checkbox-ind1" type="checkbox" aria-label="Nom" checked="checked" indeterminate="indeterminate" data-parent="check-01">
+                        <label for="checkbox-ind1">Nom</label>
+                    </div>
+                </div>
+            </th>
+            <th>Type</th>
+            <th>Auteur</th>
+            <th>Nb. Sous-Organisation</th>
+            <th>Création</th>
+            <th>Nb. Utilisateurs</th>
+            <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr>
+                <td data-title="Nom">
+                    <div class="mb-1">
+                        <div class="br-checkbox">
+                            <input id="checkbox-01" name="checkbox-01" type="checkbox" aria-label="Ventes et Marketing" checked="checked" data-child="check-01">
+                            <label for="checkbox-01">Ventes et Marketing</label>
+                        </div>
+                    </div>
+                </td>
+                <td data-title="Type">Direction</td>
+                <td data-title="Auteur">Benoit N.</td>
+                <td data-title="Nb. Sous-Organisation">05</td>
+                <td data-title="Création">
+                    02/06/2022 
+                </td>
+                <td data-title="Nb. Utilisateurs">05</td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          <a class="dropdown-item" href="#"><span class="bi bi-trash"></span> Supprimer</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Nom">
+                    <div class="mb-1">
+                        <div class="br-checkbox">
+                        <input id="checkbox-02" name="checkbox-02" type="checkbox" aria-label="Recherche et Développement" data-child="check-01">
+                        <label for="checkbox-02">Recherche et Développement</label>
+                        </div>
+                    </div>
+                </td>
+                <td data-title="Type">Sous Direction</td>
+                <td data-title="Auteur">Benoit N.</td>
+                <td data-title="Nb. Sous-Organisation">05</td>
+                
+                <td data-title="Création">
+                02/06/2022 
+                </td>
+                <td data-title="Nb. Utilisateurs">06</td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          <a class="dropdown-item" href="#"><span class="bi bi-trash"></span> Supprimer</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Nom">
+                    <div class="mb-1">
+                        <div class="br-checkbox">
+                        <input id="checkbox-03" name="checkbox-03" type="checkbox" aria-label="Comptabilité et Finance" data-child="check-01">
+                        <label for="checkbox-03">Comptabilité et Finance</label>
+                        </div>
+                    </div>
+                </td>
+                <td data-title="Type">Département</td>
+                <td data-title="Auteur">Benoit N.</td>
+                <td data-title="Nb. Sous-Organisation">05</td>
+                <td data-title="Création">
+                02/06/2022 
+                </td>
+                <td data-title="Nb. Utilisateurs">02</td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          <a class="dropdown-item" href="#"><span class="bi bi-trash"></span> Supprimer</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Nom">
+                    <div class="mb-1">
+                        <div class="br-checkbox">
+                        <input id="checkbox-04" name="checkbox-04" type="checkbox" aria-label="Ressources humaines" data-child="check-01">
+                        <label for="checkbox-04">Ressources humaines</label>
+                        </div>
+                    </div>
+                </td>
+                <td data-title="Type">Direction</td>
+                <td data-title="Auteur">Benoit N.</td>
+                <td data-title="Nb. Sous-Organisation">05</td>
+                <td data-title="Création">
+                02/06/2022 
+                </td>
+                <td data-title="Nb. Utilisateurs">08</td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          <a class="dropdown-item" href="#"><span class="bi bi-trash"></span> Supprimer</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Nom">
+                    <div class="mb-1">
+                        <div class="br-checkbox">
+                        <input id="checkbox-05" name="checkbox-05" type="checkbox" aria-label="Maintenance Informatique" data-child="check-01">
+                        <label for="checkbox-05">Maintenance Informatique</label>
+                        </div>
+                    </div>
+                </td>
+                <td data-title="Type">Service</td>
+                <td data-title="Auteur">Benoit N.</td>
+                <td data-title="Nb. Sous-Organisation">05</td>
+                <td data-title="Création">
+                02/06/2022 
+                </td>
+                <td data-title="Nb. Utilisateurs">08</td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          <a class="dropdown-item" href="#"><span class="bi bi-trash"></span> Supprimer</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Nom">
+                    <div class="mb-1">
+                        <div class="br-checkbox">
+                        <input id="checkbox-03" name="checkbox-03" type="checkbox" aria-label="Comptabilité et Finance" data-child="check-01">
+                        <label for="checkbox-03">Comptabilité et Finance</label>
+                        </div>
+                    </div>
+                </td>
+                <td data-title="Type">Département</td>
+                <td data-title="Auteur">Benoit N.</td>
+                <td data-title="Nb. Sous-Organisation">05</td>
+                <td data-title="Création">
+                02/06/2022 
+                </td>
+                <td data-title="Nb. Utilisateurs">02</td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          <a class="dropdown-item" href="#"><span class="bi bi-trash"></span> Supprimer</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Nom">
+                    <div class="mb-1">
+                        <div class="br-checkbox">
+                        <input id="checkbox-04" name="checkbox-04" type="checkbox" aria-label="Ressources humaines" data-child="check-01">
+                        <label for="checkbox-04">Ressources humaines</label>
+                        </div>
+                    </div>
+                </td>
+                <td data-title="Type">Direction</td>
+                <td data-title="Auteur">Benoit N.</td>
+                <td data-title="Nb. Sous-Organisation">05</td>
+                <td data-title="Création">
+                02/06/2022 
+                </td>
+                <td data-title="Nb. Utilisateurs">08</td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          <a class="dropdown-item" href="#"><span class="bi bi-trash"></span> Supprimer</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td data-title="Nom">
+                    <div class="mb-1">
+                        <div class="br-checkbox">
+                        <input id="checkbox-05" name="checkbox-05" type="checkbox" aria-label="Maintenance Informatique" data-child="check-01">
+                        <label for="checkbox-05">Maintenance Informatique</label>
+                        </div>
+                    </div>
+                </td>
+                <td data-title="Type">Service</td>
+                <td data-title="Auteur">Benoit N.</td>
+                <td data-title="Nb. Sous-Organisation">05</td>
+                <td data-title="Création">
+                02/06/2022 
+                </td>
+                <td data-title="Nb. Utilisateurs">08</td>
+                <td data-title="Action" style="white-space: nowrap;">
+                    <div class="dropdown" style="float: right;">
+                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          <a class="dropdown-item" href="#"><span class="bi bi-trash"></span> Supprimer</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+            </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="mt-3 text-center " style="background: #fff; padding: 20px;">
+        <ul class="pagination-cotation">
+            <li><a class="" href="#">«</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#" class="active">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">6</a></li>
+            <li><a href="#">7</a></li>
+            <li><a href="#">»</a></li>
+        </ul>
+    </div>
+
+
+</div>
+<!-- content-wrapper ends -->
+
+  
+{% endblock %}
+
+{% block javascripttemplate %}
+
+{% endblock %}

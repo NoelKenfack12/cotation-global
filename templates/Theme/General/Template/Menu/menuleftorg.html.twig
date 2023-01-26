@@ -1,0 +1,55 @@
+
+<!-- partial:../../partials/_sidebar.html -->
+<nav class="sidebar sidebar-offcanvas" id="sidebar2">
+
+</nav>
+<nav class="sidebar sidebar-offcanvas" id="sidebar" style="box-shadow: 0 19px 38px rgb(0 0 0 / 30%), 0 15px 12px rgb(0 0 0 / 22%);
+background: #fff;">
+<ul class="nav">
+    <li class="nav-item">
+        <div class="d-flex sidebar-profile" style="background: #1e4a8b;">
+            <div class="sidebar-profile-image">
+                <img src="{{ asset('templatedash/images/co.png') }}" alt="image" />
+                <span class="sidebar-status-indicator"></span>
+            </div>
+            <div class="sidebar-profile-name">
+                <p class="sidebar-name">
+                    {% if app.user != null %}{{ app.user.name(50) }}{% else %}Admin{% endif %}
+                </p>
+                <p class="sidebar-designation">
+                    Entreposage Yaoundé
+                </p>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('users_adminuser_gestion_organisations', {'id': 1}) }}">
+            <i class="typcn typcn-device-desktop menu-icon"></i>
+            <span class="menu-title">Tableau de bord</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('users_adminuser_cotation_organisation', {'id': 1}) }}">
+            <i class="typcn typcn-device-desktop menu-icon"></i>
+            <span class="menu-title">Cotations</span>
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('users_adminuser_services_organisation', {'id': 1}) }}">
+            <i class="typcn typcn-device-desktop menu-icon"></i>
+            <span class="menu-title">Les services</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="#!">
+            <i class="typcn typcn-device-desktop menu-icon"></i>
+            <span class="menu-title">Clients</span>
+        </a>
+    </li>
+</ul>
+
+</nav>
+<!-- partial -->
