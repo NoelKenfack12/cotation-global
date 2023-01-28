@@ -91,3 +91,8 @@ users_adminuser_tarification_cotation:
     controller: App\Controller\Produit\Produit\PanierController:tarificationcotation
     requirements:
         id: \d+
+users_adminuser_contacts_succursale_global:
+    path: /admin/contacts/succursale/global/{id}
+    controller: App\Controller\Users\User\ContactController:contactssuccursale
+    requirements:
+        id: \d+

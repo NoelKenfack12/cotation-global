@@ -10,11 +10,12 @@
 {% endblock %}
 
 {% block userblog_body %}
+
 <section class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
     <section style="min-height: 98px; padding: 15px 50px; background: #1e4a8b; color: #fff; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
         <div class="row">
             <div class="col-md-8">
-                <h1>Liste des services</h1>
+                <h1>Tableau de bord</h1>
                 <div>
                   <span class="bi bi-geo-alt"></span> Global - Buéa - Entrepot
               </div>
@@ -31,44 +32,25 @@
 <div class="container" style="min-height: calc(100vh - 150px);">
     <ul class="breadcrumb_" itemprop="breadcrumb_">
       <li><a href="#">Dashboard</a></li>
-      <li><a href="#">Paramètres</a></li>
-      <li><h1>Liste des paramètres {{ site }}</h1></li>
+      <li><a href="#">Contacts</a></li>
+      <li><h1>Liste des clients</h1></li>
     </ul>
 
-    <div class="mb-3" style="background: #fff; padding: 20px;">
-        <h3>Liste des types de services</h3>
-        <hr/>
+    <div class="mt-3 mb-3 text-center" style="background: #fff; padding: 20px;">
         <div class="row">
-            <div class="col-md-4">
-              <div class="card-cotation card-1">
-                <h3>Ionic Native</h3>
-                <p>A curated set of   ES5/ES6/TypeScript wrappers for plugins to easily add any native functionality to your Ionic apps.</p>
-              </div>
+            <div class="col-md-8 text-left">
+                <h3>Liste des contacts</h3>
             </div>
             <div class="col-md-4">
-              <div class="card-cotation card-2">
-                <h3>UI Components</h3>
-                <p>Tabs, buttons, inputs, lists, cards, and more! A comprehensive library
-                  of mobile UI components, ready to go.</p>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card-cotation card-3">
-                <h3>Theming</h3>
-                <p>Learn how to easily customize and modify your app’s design to fit your
-                  brand across all mobile platform styles.</p>
-              </div>
+                <select name="" id="" class="form-control">
+                    <option value="">Select</option>
+                </select>
             </div>
         </div>
-
     </div>
 
-    <div style="background: #fff; padding: 20px;">
-        <h3>
-            <a href="{{ path('users_adminuser_services_targe_organisation', {'id': 1}) }}" class="btn btn-primary float-right">Ajouter les produits</a>
-            Liste des services
-        </h3>
-        
+    <div class="mb-3" style="background: #fff; padding: 20px; min-height: 400px;">
+        <h3>Nos contacts</h3>
         <hr/>
         
         <div class="card-dash-csu">
@@ -76,24 +58,24 @@
             <table id="table" class="table table-hover table-mc-light-blue" style="margin: 0px 0px 15px 0px;">
             <thead>
             <tr>
-            <th>Nom</th>
-            <th>Prix d'origine</th>
-            <th>Prix</th>
-            <th>Date d'ajouter</th>
-            <th>Rubrique</th>
-            <th>Action</th>
+                <th>Nom</th>
+                <th>Date Description</th>
+                <th>Nb. de dossier</th>
+                <th>Téléphone</th>
+                <th>Emails</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
 
             <tr>
-                <td data-title="Nom">Droits et Taxes de douane</td>
-                <td data-title="Prix d'origine">2 540</td>
-                <td data-title="Prix">2 540</td>
-                <td data-title="Date d'ajouter">
-                    02/06/2022 
+                <td data-title="Nom">Jeam Michel</td>
+                <td data-title="Date Description">12.05.2021</td>
+                <td data-title="Nb. de dossier">05</td>
+                <td data-title="Téléphone">
+                    657 87 96 58
                 </td>
-                <td data-title="Rubrique">DEBOURS</td>
+                <td data-title="Emails">noel.k@yahh.fr</td>
                 <td data-title="Action" style="white-space: nowrap;">
                     <div class="dropdown" style="float: right;">
                         <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -108,13 +90,13 @@
             </tr>
 
             <tr>
-                <td data-title="Nom">Redevance DDE</td>
-                <td data-title="Prix d'origine">20 457</td>
-                <td data-title="Prix">20 540</td>
-                <td data-title="Date d'ajouter">
-                    02/06/2022 
+                <td data-title="Nom">Blaise Sonko</td>
+                <td data-title="Date Description">12.08.2021</td>
+                <td data-title="Nb. de dossier">07</td>
+                <td data-title="Téléphone">
+                    657 98 54 58
                 </td>
-                <td data-title="Rubrique">INTERVENTIONS</td>
+                <td data-title="Emails">blaise.sonko@yahh.fr</td>
                 <td data-title="Action" style="white-space: nowrap;">
                     <div class="dropdown" style="float: right;">
                         <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -129,13 +111,13 @@
             </tr>
 
             <tr>
-                <td data-title="Nom">Frais Bancaire</td>
-                <td data-title="Prix d'origine">20 457</td>
-                <td data-title="Prix">20 540</td>
-                <td data-title="Date d'ajouter">
-                    02/06/2022 
+                <td data-title="Nom">Blaise Sonko</td>
+                <td data-title="Date Description">12.08.2021</td>
+                <td data-title="Nb. de dossier">07</td>
+                <td data-title="Téléphone">
+                    657 98 54 58
                 </td>
-                <td data-title="Rubrique">AUTRES DEBOURS</td>
+                <td data-title="Emails">blaise.sonko@yahh.fr</td>
                 <td data-title="Action" style="white-space: nowrap;">
                     <div class="dropdown" style="float: right;">
                         <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -150,13 +132,13 @@
             </tr>
 
             <tr>
-                <td data-title="Nom">Droits et Taxes de douane</td>
-                <td data-title="Prix d'origine">2 540</td>
-                <td data-title="Prix">2 540</td>
-                <td data-title="Date d'ajouter">
-                    02/06/2022 
+                <td data-title="Nom">Blaise Sonko</td>
+                <td data-title="Date Description">12.08.2021</td>
+                <td data-title="Nb. de dossier">07</td>
+                <td data-title="Téléphone">
+                    657 98 54 58
                 </td>
-                <td data-title="Rubrique">DEBOURS</td>
+                <td data-title="Emails">blaise.sonko@yahh.fr</td>
                 <td data-title="Action" style="white-space: nowrap;">
                     <div class="dropdown" style="float: right;">
                         <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -171,13 +153,13 @@
             </tr>
 
             <tr>
-                <td data-title="Nom">Redevance DDE</td>
-                <td data-title="Prix d'origine">20 457</td>
-                <td data-title="Prix">20 540</td>
-                <td data-title="Date d'ajouter">
-                    02/06/2022 
+                <td data-title="Nom">Blaise Sonko</td>
+                <td data-title="Date Description">12.08.2021</td>
+                <td data-title="Nb. de dossier">07</td>
+                <td data-title="Téléphone">
+                    657 98 54 58
                 </td>
-                <td data-title="Rubrique">INTERVENTIONS</td>
+                <td data-title="Emails">blaise.sonko@yahh.fr</td>
                 <td data-title="Action" style="white-space: nowrap;">
                     <div class="dropdown" style="float: right;">
                         <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -192,13 +174,13 @@
             </tr>
 
             <tr>
-                <td data-title="Nom">Frais Bancaire</td>
-                <td data-title="Prix d'origine">20 457</td>
-                <td data-title="Prix">20 540</td>
-                <td data-title="Date d'ajouter">
-                    02/06/2022 
+                <td data-title="Nom">Blaise Sonko</td>
+                <td data-title="Date Description">12.08.2021</td>
+                <td data-title="Nb. de dossier">07</td>
+                <td data-title="Téléphone">
+                    657 98 54 58
                 </td>
-                <td data-title="Rubrique">AUTRES DEBOURS</td>
+                <td data-title="Emails">blaise.sonko@yahh.fr</td>
                 <td data-title="Action" style="white-space: nowrap;">
                     <div class="dropdown" style="float: right;">
                         <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -213,13 +195,13 @@
             </tr>
 
             <tr>
-                <td data-title="Nom">Droits et Taxes de douane</td>
-                <td data-title="Prix d'origine">2 540</td>
-                <td data-title="Prix">2 540</td>
-                <td data-title="Date d'ajouter">
-                    02/06/2022 
+                <td data-title="Nom">Blaise Sonko</td>
+                <td data-title="Date Description">12.08.2021</td>
+                <td data-title="Nb. de dossier">07</td>
+                <td data-title="Téléphone">
+                    657 98 54 58
                 </td>
-                <td data-title="Rubrique">DEBOURS</td>
+                <td data-title="Emails">blaise.sonko@yahh.fr</td>
                 <td data-title="Action" style="white-space: nowrap;">
                     <div class="dropdown" style="float: right;">
                         <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -234,97 +216,13 @@
             </tr>
 
             <tr>
-                <td data-title="Nom">Redevance DDE</td>
-                <td data-title="Prix d'origine">20 457</td>
-                <td data-title="Prix">20 540</td>
-                <td data-title="Date d'ajouter">
-                    02/06/2022 
+                <td data-title="Nom">Blaise Sonko</td>
+                <td data-title="Date Description">12.08.2021</td>
+                <td data-title="Nb. de dossier">07</td>
+                <td data-title="Téléphone">
+                    657 98 54 58
                 </td>
-                <td data-title="Rubrique">INTERVENTIONS</td>
-                <td data-title="Action" style="white-space: nowrap;">
-                    <div class="dropdown" style="float: right;">
-                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="bi bi-three-dots"></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
-                          <a class="dropdown-item" href="#"><span class="bi bi-trash"></span> Supprimer</a>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-
-            <tr>
-                <td data-title="Nom">Frais Bancaire</td>
-                <td data-title="Prix d'origine">20 457</td>
-                <td data-title="Prix">20 540</td>
-                <td data-title="Date d'ajouter">
-                    02/06/2022 
-                </td>
-                <td data-title="Rubrique">AUTRES DEBOURS</td>
-                <td data-title="Action" style="white-space: nowrap;">
-                    <div class="dropdown" style="float: right;">
-                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="bi bi-three-dots"></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
-                          <a class="dropdown-item" href="#"><span class="bi bi-trash"></span> Supprimer</a>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-
-            <tr>
-                <td data-title="Nom">Droits et Taxes de douane</td>
-                <td data-title="Prix d'origine">2 540</td>
-                <td data-title="Prix">2 540</td>
-                <td data-title="Date d'ajouter">
-                    02/06/2022 
-                </td>
-                <td data-title="Rubrique">DEBOURS</td>
-                <td data-title="Action" style="white-space: nowrap;">
-                    <div class="dropdown" style="float: right;">
-                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="bi bi-three-dots"></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
-                          <a class="dropdown-item" href="#"><span class="bi bi-trash"></span> Supprimer</a>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-
-            <tr>
-                <td data-title="Nom">Redevance DDE</td>
-                <td data-title="Prix d'origine">20 457</td>
-                <td data-title="Prix">20 540</td>
-                <td data-title="Date d'ajouter">
-                    02/06/2022 
-                </td>
-                <td data-title="Rubrique">INTERVENTIONS</td>
-                <td data-title="Action" style="white-space: nowrap;">
-                    <div class="dropdown" style="float: right;">
-                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="bi bi-three-dots"></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
-                          <a class="dropdown-item" href="#"><span class="bi bi-trash"></span> Supprimer</a>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-
-            <tr>
-                <td data-title="Nom">Frais Bancaire</td>
-                <td data-title="Prix d'origine">20 457</td>
-                <td data-title="Prix">20 540</td>
-                <td data-title="Date d'ajouter">
-                    02/06/2022 
-                </td>
-                <td data-title="Rubrique">AUTRES DEBOURS</td>
+                <td data-title="Emails">blaise.sonko@yahh.fr</td>
                 <td data-title="Action" style="white-space: nowrap;">
                     <div class="dropdown" style="float: right;">
                         <a href="" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
