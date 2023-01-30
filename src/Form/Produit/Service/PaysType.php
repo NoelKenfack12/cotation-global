@@ -23,19 +23,18 @@ class PaysType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom',TextType::class,array('attr'=>array('placeholder'=>'Nom du pays','style'=>'width: 100%;')))
-            ->add('siteweb',TextType::class,array('attr'=>array('placeholder'=>'Site web','style'=>'width: 100%;')))
-            ->add('citoyen',TextType::class,array('attr'=>array('placeholder'=>'Citoyen','style'=>'width: 100%;')))
-            ->add('citoyenne',TextType::class,array('attr'=>array('placeholder'=>'Citoyenne','style'=>'width: 100%;')))
-            ->add('code',TextType::class,array('attr'=>array('placeholder'=>'Code du pays','style'=>'width: 100%;')))
-            ->add('domaine',TextType::class,array('attr'=>array('placeholder'=>'Extension','style'=>'width: 100%;')))
+            ->add('nom',TextType::class,array('attr'=>array('placeholder'=>'Nom du pays','class'=>'form-control')))
+            ->add('siteweb',TextType::class,array('attr'=>array('placeholder'=>'Site web','class'=>'form-control')))
+            ->add('citoyen',TextType::class,array('attr'=>array('placeholder'=>'Citoyen','class'=>'form-control')))
+            ->add('citoyenne',TextType::class,array('attr'=>array('placeholder'=>'Citoyenne','class'=>'form-control')))
+            ->add('code',TextType::class,array('attr'=>array('placeholder'=>'Code du pays','class'=>'form-control')))
+            ->add('domaine',TextType::class,array('attr'=>array('placeholder'=>'Extension','class'=>'form-control')))
             ->add('drapeau',DrapeauType::class)
-            ->add('file',FileType::class, array('required'=>false))
             ->add('continent',EntityType::class, array(
 			'class'=> Continent::class,
 			'choice_label'=>'nom',
 			'multiple'=>false, 
-			'attr'=>array('class'=>'form-control input-lg')))
+			'attr'=>array('class'=>'form-control')))
         ;
     }
     

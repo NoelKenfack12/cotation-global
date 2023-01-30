@@ -16,14 +16,16 @@
     <section style="min-height: 98px; padding: 15px 50px; background: #1e4a8b; color: #fff; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
         <div class="row">
             <div class="col-md-8">
-                <h1>Une bonne affaire</h1>
-                <div>Une bonne affaire</div>
+                <h1>Liste des organisations par type</h1>
+                <div>
+                  <span class="bi bi-geo-alt"></span> Global - Administration
+              </div>
             </div>
             <div class="col-md-4">
                 <span style="float: right;">
-                    <a href="#!" data-toggle="modal" data-target="#articleModalCenter" class="btn btn-primary mt-2">Ajouter Un Article</a>
-                    <a href="#!" data-toggle="modal" data-target="#categoryModalCenter" class="btn btn-primary mt-2">Ajouter Une catégorie</a>
-                  </span>
+                    <a href="#!" data-toggle="modal" data-target="#typeOrgModalCenter" class="btn btn-primary mt-2">Ajouter Un type d'organisation</a>
+                    <a href="#!" data-toggle="modal" data-target="#categoryModalCenter" class="btn btn-primary mt-2">Ajouter Une organisation</a>
+                </span>
             </div>
         </div>
     </section>
@@ -31,35 +33,41 @@
 
 <div class="container" style="min-height: calc(100vh - 150px);">
     <ul class="breadcrumb_" itemprop="breadcrumb_">
-      <li><a href="#">Dashboard</a></li>
-      <li><a href="#">Paramètres</a></li>
-      <li><h1>Liste des paramètres {{ site }}</h1></li>
+      <li><a href="#">Tableau de bord</a></li>
+      <li><a href="#">Localisation</a></li>
+      <li><h1>Listes des organisations</h1></li>
     </ul>
+
+    {% for infos in app.session.flashbag.get('information') %}
+        {% if loop.last %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              {{ infos }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+        {% endif %}
+    {% endfor %}
 
     <div class="mb-3" style="background: #fff; padding: 20px;">
         <h3>Type des organisations</h3>
         <hr/>
         <div class="row">
+          {% for type in liste_typeOrg %}
             <div class="col-md-4">
               <div class="card-cotation card-1">
-                <h3>Ionic Native</h3>
-                <p>A curated set of   ES5/ES6/TypeScript wrappers for plugins to easily add any native functionality to your Ionic apps.</p>
+                <h3>{{ type.name }}</h3>
+                <p>{{ type.description }}</p>
               </div>
             </div>
+          {% else %}
             <div class="col-md-4">
               <div class="card-cotation card-2">
-                <h3>UI Components</h3>
-                <p>Tabs, buttons, inputs, lists, cards, and more! A comprehensive library
-                  of mobile UI components, ready to go.</p>
+                <h3>Nom de type d'organisation</h3>
+                <p>Description du type d'organisation</p>
               </div>
             </div>
-            <div class="col-md-4">
-              <div class="card-cotation card-3">
-                <h3>Theming</h3>
-                <p>Learn how to easily customize and modify your app’s design to fit your
-                  brand across all mobile platform styles.</p>
-              </div>
-            </div>
+          {% endfor %}
         </div>
 
     </div>
@@ -126,12 +134,40 @@
             <li><a href="#">»</a></li>
         </ul>
     </div>
-
-
 </div>
 <!-- content-wrapper ends -->
 
-  
+<!-- Modal -->
+<div class="modal fade" id="typeOrgModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      {{ form_start(formTypeOrg, {'attr': {'action': path('users_adminuser_type_organisation') }}) }}
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">Ajouter un type d'organisation</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card pt-4 pl-4 pr-4" style="min-height: 150px;">
+            <div class="form-group">
+              {{ form_widget(formTypeOrg.name , {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+              {{ form_widget(formTypeOrg.description , {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-primary">Enregistrement</button>
+      </div>
+      {{ form_end(formTypeOrg) }}
+	    <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
 
 {% block javascripttemplate %}

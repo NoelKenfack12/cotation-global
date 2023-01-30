@@ -17,7 +17,7 @@ class DrapeauType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('file',FileType::class,array('required'=>false,'label_attr'=>array('style'=>'display: none;')))
+            ->add('file',FileType::class,array('required'=>false,'attr'=>array('class'=>'custom-file-label')))
         ;
     }
     

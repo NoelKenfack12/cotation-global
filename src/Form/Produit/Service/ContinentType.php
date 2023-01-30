@@ -21,10 +21,10 @@ class ContinentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom',TextType::class,array('attr'=>array('placeholder'=>'Nom du paus','style'=>'width: 100%;')))
-            ->add('citoyen',TextType::class,array('attr'=>array('placeholder'=>'Citoyen','style'=>'width: 100%;')))
-            ->add('citoyenne',TextType::class,array('attr'=>array('placeholder'=>'Citoyenne','style'=>'width: 100%;')))
-            ->add('file',FileType::class,array('required'=>false))
+            ->add('nom',TextType::class,array('attr'=>array('placeholder'=>'Nom du paus','class'=>'form-control')))
+            ->add('citoyen',TextType::class,array('attr'=>array('placeholder'=>'Citoyen','class'=>'form-control')))
+            ->add('citoyenne',TextType::class,array('attr'=>array('placeholder'=>'Citoyenne','class'=>'form-control')))
+            ->add('file',FileType::class,array('required'=>false, 'attr'=>array('class'=>'custom-file-label')))
         ;
     }
     

@@ -1,8 +1,7 @@
 <?php
 /* (c) Noel Kenfack <noel.kenfack@yahoo.fr> Février 2015
-* ce fichier est la proprieté de Zentsoft entreprise.
 */
-namespace App\Controller\Users\Localisation;
+namespace App\Controller\Localisation\Organisation;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,8 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Service\Servicetext\GeneralServicetext;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-
-class OrganisationController extends AbstractController
+class UserorganisationController extends AbstractController
 {
     private $params;
 
@@ -21,13 +19,8 @@ class OrganisationController extends AbstractController
         $this->params = $params;
     }
 
-    public function listeorganisation()
+    public function listeuserorganisation()
     {
-        return $this->render('Theme/Users/Adminuser/Organisation/listeorganisation.html.twig');
-    }
-
-    public function gestionorganisations($id)
-    {
-        return $this->render('Theme/Users/Adminuser/Organisation/gestionorganisations.html.twig');
+        return $this->render('Theme/Users/Adminuser/Organisation/listeuserorganisation.html.twig');
     }
 }

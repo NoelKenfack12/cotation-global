@@ -43,16 +43,16 @@ users_adminuser_drop_country_user_local:
         id: \d+
 users_adminuser_villes_organisations:
     path: /admin/villes/organisations
-    controller: App\Controller\Users\Localisation\OrganisationController:listeorganisation
+    controller: App\Controller\Localisation\Organisation\OrganisationController:listeorganisation
 users_adminuser_users_organisation:
     path: /admin/users/organisation
-    controller: App\Controller\Users\Localisation\UserorganisationController:listeuserorganisation
+    controller: App\Controller\Localisation\Organisation\UserorganisationController:listeuserorganisation
 users_adminuser_type_produit:
     path: /admin/type/produit
     controller: App\Controller\Produit\Produit\TypeproduitController:listetypeproduit
 users_adminuser_gestion_organisations:
     path: /admin/dashboard/organisations/{id}
-    controller: App\Controller\Users\Localisation\OrganisationController:gestionorganisations
+    controller: App\Controller\Localisation\Organisation\OrganisationController:gestionorganisations
     requirements:
         id: \d+
 users_adminuser_cotation_global:
@@ -75,7 +75,7 @@ users_adminuser_services_targe_organisation:
         id: \d+
 users_adminuser_type_organisation:
     path: /admin/type/organisation
-    controller: App\Controller\Users\Localisation\TypeorganisationController:typeorganisation
+    controller: App\Controller\Localisation\Organisation\TypeorganisationController:typeorganisation
 users_adminuser_nouvelle_cotation:
     path: /admin/nouvelle/cotation/{id}
     controller: App\Controller\Produit\Produit\PanierController:nouvellecotation
