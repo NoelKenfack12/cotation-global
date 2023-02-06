@@ -3,10 +3,13 @@
 namespace App\Entity\Localisation\Organisation;
 
 use App\Repository\Localisation\Organisation\TypeorganisationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=TypeorganisationRepository::class)
+ * @ORM\Table("typeorganisation")
  */
 class Typeorganisation
 {
@@ -32,9 +35,21 @@ class Typeorganisation
      */
     private $description;
 
+    /**
+     * @ORM\OneToMany(targetEntity=TypeorgServiceorg::class, mappedBy="typeorganisation", orphanRemoval=true)
+     */
+    private $typeorgServiceorgs;
+
+    /**
+     * @ORM\OneToMany(targetEntity=TypeorgOrganisation::class, mappedBy="typeorganisation", orphanRemoval=true)
+     */
+    private $typeorgOrganisations;
+
     public function __construct()
     {
         $this->date = new \Datetime();
+        $this->typeorgServiceorgs = new ArrayCollection();
+        $this->typeorgOrganisations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -74,6 +89,66 @@ class Typeorganisation
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TypeorgServiceorg>
+     */
+    public function getTypeorgServiceorgs(): Collection
+    {
+        return $this->typeorgServiceorgs;
+    }
+
+    public function addTypeorgServiceorg(TypeorgServiceorg $typeorgServiceorg): self
+    {
+        if (!$this->typeorgServiceorgs->contains($typeorgServiceorg)) {
+            $this->typeorgServiceorgs[] = $typeorgServiceorg;
+            $typeorgServiceorg->setTypeorganisation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTypeorgServiceorg(TypeorgServiceorg $typeorgServiceorg): self
+    {
+        if ($this->typeorgServiceorgs->removeElement($typeorgServiceorg)) {
+            // set the owning side to null (unless already changed)
+            if ($typeorgServiceorg->getTypeorganisation() === $this) {
+                $typeorgServiceorg->setTypeorganisation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TypeorgOrganisation>
+     */
+    public function getTypeorgOrganisations(): Collection
+    {
+        return $this->typeorgOrganisations;
+    }
+
+    public function addTypeorgOrganisation(TypeorgOrganisation $typeorgOrganisation): self
+    {
+        if (!$this->typeorgOrganisations->contains($typeorgOrganisation)) {
+            $this->typeorgOrganisations[] = $typeorgOrganisation;
+            $typeorgOrganisation->setTypeorganisation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTypeorgOrganisation(TypeorgOrganisation $typeorgOrganisation): self
+    {
+        if ($this->typeorgOrganisations->removeElement($typeorgOrganisation)) {
+            // set the owning side to null (unless already changed)
+            if ($typeorgOrganisation->getTypeorganisation() === $this) {
+                $typeorgOrganisation->setTypeorganisation(null);
+            }
+        }
 
         return $this;
     }

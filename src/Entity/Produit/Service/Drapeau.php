@@ -7,13 +7,15 @@ use App\Service\Servicetext\GeneralServicetext;
 use App\Validator\Validatorfile\Image;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Repository\Produit\Service\DrapeauRepository;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Drapeau
  *
  * @ORM\Table("drapeau")
  * @ORM\Entity(repositoryClass=DrapeauRepository::class)
- ** @ORM\HasLifecycleCallbacks
+ * @Vich\Uploadable
  */
 class Drapeau
 {
@@ -26,35 +28,42 @@ class Drapeau
      */
     private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="src", type="string", length=255,nullable=false)
+	/**
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $src;
+    public $contentUrl;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="alt", type="string", length=255,nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $alt;
-	
-	/**
-	*@Image(taillemax=1500000, message="la taille de l'image  %string% est grande.")
-	*/
-	private $file;
-	
-	// permet le stocage temporaire du nom du fichier
-	private $tempFilename;
+    private $filePath;
+
+     /**
+     * @Vich\UploadableField(mapping="filedrapeau", fileNameProperty="filePath", size="imageSize", mimeType="mimeType", originalName="originalName")
+     * @var File|null
+     */
+    public ?File $file = null;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imageSize;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $originalName;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $mimeType;
 	
 	// variable du service de normalisation des noms de fichier
 	private $servicefile;
 	
 	public function __construct()
 	{
-		$this->src ="source";
-		$this->alt ="alternatif";
 	}
 
     /**
@@ -67,150 +76,86 @@ class Drapeau
         return $this->id;
     }
 
-    /**
-     * Set src
-     *
-     * @param string $src
-     * @return Drapeau
-     */
-    public function setSrc($src)
-    {
-        $this->src = $src;
+    
+	//permet la récupération du nom du fichier temporaire
 
-        return $this;
-    }
-
-    /**
-     * Get src
-     *
-     * @return string 
-     */
-    public function getSrc()
-    {
-        return $this->src;
-    }
-
-    /**
-     * Set alt
-     *
-     * @param string $alt
-     * @return Drapeau
-     */
-    public function setAlt($alt)
-    {
-        $this->alt = $alt;
-
-        return $this;
-    }
-
-    /**
-     * Get alt
-     *
-     * @return string 
-     */
-    public function getAlt()
-    {
-        return $this->alt;
-    }
-	//permet la r�cup�ration du nom du fichier temporaire
     public function getTempFilename()
     {
-    return $this->tempFilename;
+    	return $this->tempFilename;
     }
 	//permet de modifier le contenu de la variable tempFilename
     public function setTempFilename($temp)
 	{
-	$this->tempFilename=$temp;
+		$this->tempFilename=$temp;
 	}
-	// permet la r�cup�ration du nom du fiechier
-	public function getFile()
-	{
-	return $this->file;
-	}
+	
 	public function setServicefile( GeneralServicetext $service)
 	{
-	$this->servicefile = $service;
+		$this->servicefile = $service;
 	}
 	public function getServicefile()
 	{
-	return $this->servicefile;
+		return $this->servicefile;
 	}
-	public function getUploadDir()
-	{
-	// On retourne le chemin relatif vers l'image pour un navigateur
-	return 'bundles/users/localisationuser/images/drapeau';
-	}
-	protected function getUploadRootDir()
-	{
-	// On retourne le chemin relatif vers l'image pour notre codePHP
-	return  __DIR__.'/../../../../public/'.$this->getUploadDir();
-	}
+	
 
-	public function setFile(UploadedFile $file)
-	{
-		$this->file = $file;
-		// On v�rifie si on avait d�j� un fichier pour cette entit�
-		if (null !== $this->src) {
-			// On sauvegarde l'extension du fichier pour le supprimer plus tard
-			$this->tempFilename = $this->src;
-			// On r�initialise les valeurs des attributs url et alt
-			$this->src = null;
-			$this->alt = null;
-		}
-	}
-	/**
-	* @ORM\PrePersist()
-	* @ORM\PreUpdate()
-	*/
-	public function preUpload()
-	{
-		if (null === $this->file) {
-		return;
-		}
-		$text = $this->file->getClientOriginalName();
-		$this->src = $this->servicefile->normaliseText($text);
-		$this->alt = $this->src;
-	}
-	/**
-	* @ORM\PostPersist()
-	* @ORM\PostUpdate()
-	*/
-	public function upload()
-	{
-	// Si jamais il n'y a pas de fichier (champ facultatif)
-	if (null === $this->file) {
-	return;
-	}
-	if (null !== $this->tempFilename) {
-	$oldFile = $this->getUploadRootDir().'/'.$this->id.'.'.$this->tempFilename;
-	if (file_exists($oldFile)) {
-	unlink($oldFile);
-	}
-	}
-	$this->file->move( $this->getUploadRootDir(), $this->id.'.'.$this->src);
-	}
-	/**
-	*@ORM\PreRemove()
-	*/
-	public function preRemoveUpload()
-	{
-	$this->tempFilename = $this->getUploadRootDir().'/'.$this->id.'.'.$this->src;
-	}
- 
-	/**
-	* @ORM\PostRemove()
-	*/
-	public function postRemoveUpload()
-	{
-	// En PostRemove, on n'a pas acc�s � l'id, on utilise notre nom sauvegard�
-	if (file_exists($this->tempFilename)) {
-	// On supprime le fichier
-	unlink($this->tempFilename);
-	}
-	}
+	public function getContentUrl(): ?string
+    {
+        return $this->contentUrl;
+    }
 
-	public function getWebPath()
-	{
-	return $this->getUploadDir().'/'.$this->getId().'.'.$this->getSrc();
-	}
+    public function setContentUrl(?string $contentUrl): self
+    {
+        $this->contentUrl = $contentUrl;
+
+        return $this;
+    }
+
+    public function getFilePath(): ?string
+    {
+        return $this->filePath;
+    }
+
+    public function setFilePath(?string $filePath): self
+    {
+        $this->filePath = $filePath;
+
+        return $this;
+    }
+
+    public function getImageSize(): ?string
+    {
+        return $this->imageSize;
+    }
+
+    public function setImageSize(?string $imageSize): self
+    {
+        $this->imageSize = $imageSize;
+
+        return $this;
+    }
+
+    public function getOriginalName(): ?string
+    {
+        return $this->originalName;
+    }
+
+    public function setOriginalName(?string $originalName): self
+    {
+        $this->originalName = $originalName;
+
+        return $this;
+    }
+
+    public function getMimeType(): ?string
+    {
+        return $this->mimeType;
+    }
+
+    public function setMimeType(?string $mimeType): self
+    {
+        $this->mimeType = $mimeType;
+
+        return $this;
+    }
 }

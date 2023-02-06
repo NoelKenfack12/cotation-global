@@ -24,7 +24,6 @@ class ContinentType extends AbstractType
             ->add('nom',TextType::class,array('attr'=>array('placeholder'=>'Nom du paus','class'=>'form-control')))
             ->add('citoyen',TextType::class,array('attr'=>array('placeholder'=>'Citoyen','class'=>'form-control')))
             ->add('citoyenne',TextType::class,array('attr'=>array('placeholder'=>'Citoyenne','class'=>'form-control')))
-            ->add('file',FileType::class,array('required'=>false, 'attr'=>array('class'=>'custom-file-label')))
         ;
     }
     

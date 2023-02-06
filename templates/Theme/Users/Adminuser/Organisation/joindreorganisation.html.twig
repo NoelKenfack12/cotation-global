@@ -1,0 +1,29 @@
+<form action="{{ path('users_adminuser_localisation_joindre_organisation_typeorganisation', {'id': organisation.id }) }}" method="post">
+    <h3 class="mb-4">Indiquez les types de services associés à cette organisation <strong>{{ organisation.nom }}</strong></h3>
+    {% for typeorg in liste_typeOrg %}
+    <div class="card mb-2" style="padding: 7px;">
+        <div class="row">
+            <div class="col-7 col-md-7">
+                <strong>{{ typeorg.name }}</strong>
+            </div>
+            <div class="col-5 col-md-5">
+                <label class="toggle-switch-1">
+                    <input name="typeorglist[]" value="{{ typeorg.id }}" type="checkbox" {% if typeorg.id in tabTypeOrganisation %} checked="" disabled="" {% endif %}>
+                    <span>
+                        <i></i>
+                    </span>
+                </label>
+            </div>
+            <div class="col-md-12">
+                {{ typeorg.description }}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="form-group">
+        <button class="btn btn-primary">
+            Enregistrer
+        </button>
+    </div>
+</form>

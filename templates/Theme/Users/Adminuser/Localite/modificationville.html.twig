@@ -1,0 +1,18 @@
+<div class="">
+{{ form_start(form, {'attr': { 'action': path('users_adminuser_modif_ville_localisation_organisation', {'id': ville.id}) }}) }}
+<div class="form-group">
+    {{ form_widget(form.name) }}
+    {{ form_label(form.name, 'Nom de la ville'|trans) }}
+    <div style="color: red;">{{ form_errors(form.name)|trans }}</div>
+</div>
+<div class="form-group">
+  {{ form_widget(form.pays) }}
+  {{ form_label(form.pays, 'Sélectionnez un pays'|trans) }}
+  <div style="color: red;">{{ form_errors(form.pays)|trans }}</div>
+</div>
+	  
+  <div class="form-group" style="margin-top: 30px;">
+	 <button class="btn btn-primary bg-struct" type="submit">Envoyer</button>
+  </div>
+{{ form_end(form) }}
+</div>

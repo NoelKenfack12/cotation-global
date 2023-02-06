@@ -1,0 +1,13 @@
+
+{{ form_start(form, {'attr': {'action': path('users_adminuser_modification_type_organisation', {'id': typeorganisation.id}) }}) }}
+   <div class="form-group">
+    {{ form_widget(form.name , {'attr': {'class': 'form-control'}}) }}
+  </div>
+  <div class="form-group">
+    {{ form_widget(form.description , {'attr': {'class': 'form-control'}}) }}
+  </div>
+  <div class="form-control">
+	 <button class="btn btn-primary bg-struct" type="submit">Envoyer </button>
+  </div>
+{{ form_end(form) }}
+

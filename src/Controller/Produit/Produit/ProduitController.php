@@ -8,7 +8,7 @@ use App\Service\Servicetext\GeneralServicetext;
 
 class ProduitController extends AbstractController
 {
-    public function servicesorganisation(GeneralServicetext $service, Request $request)
+    public function produitorganisation(GeneralServicetext $service, Request $request)
     {
         return $this->render('Theme/Users/Adminuser/Produitorganisation/servicesorganisation.html.twig');
     }

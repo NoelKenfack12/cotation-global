@@ -2,6 +2,9 @@
 
 namespace App\Entity\Users\User;
 
+use App\Entity\Localisation\Organisation\Userorganisation;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Validator\Validatortext\Email;
 use App\Validator\Validatortext\Taillemin;
@@ -84,23 +87,29 @@ class User implements UserInterface
     
 	private $servicetext;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Userorganisation::class, mappedBy="user")
+     */
+    private $userorganisations;
+
 	
 	public function __construct(GeneralServicetext $service)
-    {
-        $this->servicetext = $service;
-        $this->dateins = new \Datetime();
-        $this->roles = array('ROLE_USER');
-    }
+                            {
+                                $this->servicetext = $service;
+                                $this->dateins = new \Datetime();
+                                $this->roles = array('ROLE_USER');
+                                $this->userorganisations = new ArrayCollection();
+                            }
 	
 	public function getServicetext()
-    {
-        return $this->servicetext;
-    }
+                            {
+                                return $this->servicetext;
+                            }
 	
 	public function setServicetext(GeneralServicetext $service)
-    {
-        $this->servicetext = $service;
-    }
+                            {
+                                $this->servicetext = $service;
+                            }
 
 
     /**
@@ -217,22 +226,22 @@ class User implements UserInterface
     }
 	
 	public function addRole($role)
-    {
-        if (!in_array($role, $this->roles)) {
-            $this->roles[] = $role;
-        }
-
-        return $this;
-    }
+                            {
+                                if (!in_array($role, $this->roles)) {
+                                    $this->roles[] = $role;
+                                }
+                        
+                                return $this;
+                            }
 	public function removeRole($role)
-    {
-        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
-            unset($this->roles[$key]);
-            $this->roles = array_values($this->roles);
-        }
-
-        return $this;
-    }
+                            {
+                                if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+                                    unset($this->roles[$key]);
+                                    $this->roles = array_values($this->roles);
+                                }
+                        
+                                return $this;
+                            }
 	
 	/**
      * Set salt
@@ -281,23 +290,23 @@ class User implements UserInterface
     }
 	
 	public function eraseCredentials()
-    {
-    
-    }
+                            {
+                            
+                            }
 	
 	public function name($tail)
-    {
-        $allname = $this->nom.' '.$this->prenom;
-        if(strlen($allname) <= $tail)
-        {
-            return $allname;
-        }else{
-            $text = wordwrap($allname,$tail,'~',true);
-            $tab = explode('~',$text);
-            $text = $tab[0];
-            return $text.'...';
-        }
-    }
+                            {
+                                $allname = $this->nom.' '.$this->prenom;
+                                if(strlen($allname) <= $tail)
+                                {
+                                    return $allname;
+                                }else{
+                                    $text = wordwrap($allname,$tail,'~',true);
+                                    $tab = explode('~',$text);
+                                    $text = $tab[0];
+                                    return $text.'...';
+                                }
+                            }
 
     /**
      * Set prenom
@@ -320,6 +329,36 @@ class User implements UserInterface
     public function getPrenom()
     {
         return $this->prenom;
+    }
+
+    /**
+     * @return Collection<int, Userorganisation>
+     */
+    public function getUserorganisations(): Collection
+    {
+        return $this->userorganisations;
+    }
+
+    public function addUserorganisation(Userorganisation $userorganisation): self
+    {
+        if (!$this->userorganisations->contains($userorganisation)) {
+            $this->userorganisations[] = $userorganisation;
+            $userorganisation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserorganisation(Userorganisation $userorganisation): self
+    {
+        if ($this->userorganisations->removeElement($userorganisation)) {
+            // set the owning side to null (unless already changed)
+            if ($userorganisation->getUser() === $this) {
+                $userorganisation->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
 

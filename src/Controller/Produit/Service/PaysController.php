@@ -30,7 +30,6 @@ public function ajouterpays(GeneralServicetext $service, Request $request)
 		$em->flush();
 		$this->get('session')->getFlashBag()->add('information','le pays a été bien enregistrée.');
 	}else{
-		$pays->getContinent()->removePay($pays);
 		$this->get('session')->getFlashBag()->add('information','Echec, Une erreur a été rencontrée');
 	}
 	}
@@ -97,19 +96,12 @@ public function dropcountryuser(Pays $pays, Request $request)
 	if ($request->getMethod() == 'POST') {
 	$form->handleRequest($request);
     if ($form->isValid()){
-	$em = $this->getDoctrine()->getManager();
-	$liste_user = $em->getRepository(User::class)
-	                 ->findBy(array('pays'=>$pays));
-	if(count($liste_user) == 0)
-	{
-		$em->remove($pays);
-		$em->flush();
-		$this->get('session')->getFlashBag()->add('information','Suppression effectuée avec succès.');
-	}else{
-		$this->get('session')->getFlashBag()->add('information','Action réfusée; ce pays est reservé par les utilisateurs');
-	}
-	return $this->redirect($this->generateUrl('users_adminuser_form_pays_continent'));
-	}
+		$em = $this->getDoctrine()->getManager();
+			$em->remove($pays);
+			$em->flush();
+			$this->get('session')->getFlashBag()->add('information','Suppression effectuée avec succès.');
+		return $this->redirect($this->generateUrl('users_adminuser_form_pays_continent'));
+		}
 	}
 	$this->get('session')->getFlashBag()->add('pays_supp',''.$pays->getId().'');
 	$this->get('session')->getFlashBag()->add('pays_supp',''.$pays->getNom().'');

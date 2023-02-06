@@ -42,8 +42,26 @@ users_adminuser_drop_country_user_local:
     requirements:
         id: \d+
 users_adminuser_villes_organisations:
-    path: /admin/villes/organisations
-    controller: App\Controller\Localisation\Organisation\OrganisationController:listeorganisation
+    path: /admin/localisation/villes/{page}
+    controller: App\Controller\Localisation\Localite\VilleController:listeville
+    defaults:
+        page: 1
+    requirements:
+        page: \d+
+users_adminuser_modif_ville_localisation_organisation:
+    path: /admin/ville/localisation/organisation/{id}
+    controller: App\Controller\Localisation\Localite\VilleController:modificationville
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_localite_delete_ville:
+    path: /admin/localite/delete/ville/{id}
+    controller: App\Controller\Localisation\Localite\VilleController:deleteville
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
 users_adminuser_users_organisation:
     path: /admin/users/organisation
     controller: App\Controller\Localisation\Organisation\UserorganisationController:listeuserorganisation
@@ -63,9 +81,9 @@ users_adminuser_cotation_organisation:
     controller: App\Controller\Produit\Produit\PanierController:cotationorganisation
     requirements:
         id: \d+
-users_adminuser_services_organisation:
+users_adminuser_produit_organisation:
     path: /admin/cotation/services/organisation/{id}
-    controller: App\Controller\Produit\Produit\ProduitorganisationController:servicesorganisation
+    controller: App\Controller\Produit\Produit\ProduitorganisationController:produitorganisation
     requirements:
         id: \d+
 users_adminuser_services_targe_organisation:
@@ -74,8 +92,12 @@ users_adminuser_services_targe_organisation:
     requirements:
         id: \d+
 users_adminuser_type_organisation:
-    path: /admin/type/organisation
+    path: /admin/type/organisation/{page}
     controller: App\Controller\Localisation\Organisation\TypeorganisationController:typeorganisation
+    defaults:
+        page: 1
+    requirements:
+        page: \d+
 users_adminuser_nouvelle_cotation:
     path: /admin/nouvelle/cotation/{id}
     controller: App\Controller\Produit\Produit\PanierController:nouvellecotation
@@ -94,5 +116,103 @@ users_adminuser_tarification_cotation:
 users_adminuser_contacts_succursale_global:
     path: /admin/contacts/succursale/global/{id}
     controller: App\Controller\Users\User\ContactController:contactssuccursale
+    requirements:
+        id: \d+
+users_adminuser_services_organisation:
+    path: /admin/services/organisation
+    controller: App\Controller\Localisation\Organisation\ServiceorganisationController:servicesorganisation
+users_adminuser_ajouter_nouvelle_form_input:
+    path: /admin/ajouter/nouvelle/form/input
+    controller: App\Controller\Produit\Parametre\ForminputController:ajouterforminput
+users_adminuser_update_service_organisation:
+    path: /admin/update/service/organisation/{id}
+    controller: App\Controller\Localisation\Organisation\ServiceorganisationController:updateserviceorg
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_organisation_supprimer_serviceorg:
+    path: /admin/organisation/supprimer/serviceorg/{id}
+    controller: App\Controller\Localisation\Organisation\ServiceorganisationController:supprimerserviceorg
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_modifier_form_input:
+    path: /admin/modifier/form/input/{id}
+    controller: App\Controller\Produit\Parametre\ForminputController:updateforminput
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_produit_supprimer_parametre_forminput:
+    path: /admin/produit/supprimer/parametre/forminput/{id}
+    controller: App\Controller\Produit\Parametre\ForminputController:deleteforminput
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_ajouter_nouvelle_option_forminput:
+    path: /admin/ajouter/nouvelle/option/forminput/{id}
+    controller: App\Controller\Produit\Parametre\ForminputController:newuptionforminput
+    requirements:
+        id: \d+
+users_adminuser_modification_type_organisation:
+    path: /admin/modification/type/organisation/{id}
+    controller: App\Controller\Localisation\Organisation\TypeorganisationController:modificationtypeorg
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_produit_supprimer_type_organisation:
+    path: /admin/localisation/supprimer/type/organisation/{id}
+    controller: App\Controller\Localisation\Organisation\TypeorganisationController:deletetypeorg
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_localisation_organisation_joindre_serviceorg:
+    path: /admin/localisation/organisation/joindre/serviceorg/{id}
+    controller: App\Controller\Localisation\Organisation\TypeorganisationController:joindreserviceorg
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_produit_delete_serviceorg_typeorg:
+    path: /admin/localisation/delete/serviceorg/typeorg/{id}
+    controller: App\Controller\Localisation\Organisation\TypeorganisationController:deleteserviceorgtypeorg
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_localisation_nouvelle_organisation:
+    path: /admin/localisation/nouvelle/organisation
+    controller: App\Controller\Localisation\Organisation\OrganisationController:nouvelleorganisation
+users_adminuser_modif_organisation_localisation_organisation:
+    path: /admin/organisation/localisation/organisation/{id}
+    controller: App\Controller\Localisation\Organisation\OrganisationController:modificationorganisation
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_localisation_delete_organisation:
+    path: /admin/localisation/delete/organisation/{id}
+    controller: App\Controller\Localisation\Organisation\OrganisationController:deleteorganisation
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_localisation_joindre_organisation_typeorganisation:
+    path: /admin/localisation/joindre/organisation/typeorganisation/{id}
+    controller: App\Controller\Localisation\Organisation\TypeorganisationController:joindreorganisation
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_localisation_delete_organisation_typeorgOrganisation:
+    path: /admin/localisation/delete/organisation/typeorgOrganisation/{id}
+    controller: App\Controller\Localisation\Organisation\TypeorganisationController:deleteorganisationtypeorg
+    defaults:
+        id: 0
     requirements:
         id: \d+

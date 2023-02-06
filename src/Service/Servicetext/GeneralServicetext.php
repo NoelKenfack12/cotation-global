@@ -259,4 +259,12 @@ class GeneralServicetext
 	{
 		return $this->targetArchiveWebSite;
 	}
+
+	public function getRoles()
+	{
+		return array(
+			array('ROLE_ADMIN', 'Compte administrateur', false), //Non lié à une Organisation
+			array('ROLE_ADMIN_ORG', 'Compte administrateur d\'organisation', true) //lié à une organisation
+		);
+	}
 }

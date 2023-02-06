@@ -1,0 +1,323 @@
+
+{% extends "Theme/Users/Adminuser/layoutadmin.html.twig" %}
+{% block meta %}
+	{{ parent() }}
+	<meta name="author" content="Sprint-pay"/>
+	<meta name="description" content="{{ site }} - Connexion"/>
+{% endblock %}
+
+{% block title %}
+	{{ parent() }} | Connexion
+{% endblock %}
+
+{% block userblog_body %}
+
+<section class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
+    <section style="min-height: 98px; padding: 15px 50px; background: #1e4a8b; color: #fff; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Liste des services d'organisation</h1>
+                <div>
+                  <span class="bi bi-geo-alt"></span> Global - Administration
+                </div>
+            </div>
+            <div class="col-md-4">
+                <span style="float: right;">
+                    <a href="#!" data-toggle="modal" data-target="#typeOrgModalCenter" class="btn btn-primary mt-2">Ajouter Un service d'organisation</a>
+                    <a href="#!" data-toggle="modal" data-target="#formInputModalCenter" class="btn btn-primary mt-2">Ajouter Un champ</a>
+                </span>
+            </div>
+        </div>
+    </section>
+</section>
+
+<div class="container" style="min-height: calc(100vh - 150px);">
+    <ul class="breadcrumb_" itemprop="breadcrumb_">
+      <li><a href="#">Tableau de bord</a></li>
+      <li><a href="#">Organisation</a></li>
+      <li><h1>Listes des services d'organisations</h1></li>
+    </ul>
+
+    {% for infos in app.session.flashbag.get('information') %}
+        {% if loop.last %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              {{ infos }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+        {% endif %}
+    {% endfor %}
+    
+    {% set id = '' %}
+    {% for infos in app.session.flashbag.get('supprime_service') %}
+    {% if loop.last %}
+    <div style="background: #f2f2f2; padding: 5px; border-left: 4px solid #3565ae;">
+      <strong style="color: red;"><span class="fa fa-warning"></span> {{ 'Êtes vous certain de vouloir supprimer le service'|trans }} {{ infos|trans|lower|raw }} </strong>
+      <form action="{{ path('users_adminuser_organisation_supprimer_serviceorg',{'id': id }) }}" method="post" style="display: inline;">
+        <input type="submit" value="{{ 'Supprimer'|trans }}" style="background: red;"/>
+        {{ form_rest(formsupp) }}
+      </form>
+    </div>
+    {% else %}
+    {% set id = infos %}
+    {% endif %}
+    {% endfor %}
+
+    {% set id = '' %}
+    {% for infos in app.session.flashbag.get('supprime_forminput') %}
+    {% if loop.last %}
+    <div style="background: #f2f2f2; padding: 5px; border-left: 4px solid #3565ae;">
+      <strong style="color: red;"><span class="fa fa-warning"></span> {{ 'Êtes vous certain de vouloir supprimer le champ'|trans }} {{ infos|trans|lower|raw }} </strong>
+      <form action="{{ path('users_adminuser_produit_supprimer_parametre_forminput',{'id': id }) }}" method="post" style="display: inline;">
+        <input type="submit" value="{{ 'Supprimer'|trans }}" style="background: red;"/>
+        {{ form_rest(formsupp) }}
+      </form>
+    </div>
+    {% else %}
+    {% set id = infos %}
+    {% endif %}
+    {% endfor %}
+
+    <div class="mb-3" style="background: #fff; padding: 20px;">
+        <h3>Services d'organisations</h3>
+        <hr/>
+
+        <div class="accordion">
+          {% for type in liste_serviceOrg %}
+          <div class="accordion__item">
+            <h2 class="accordion__title {% if loop.index < 3 %}active{% endif %}">{{ type.nom }}</h2>
+            <div class="accordion__body2">
+              <p>{{ type.description }}</p>
+              
+              <div class="mt-3 text-right">
+                <a href="#!" class="update-type-article open-modal-update-continent" value="{{ type.id }}" style="color: green;"><span class="bi bi-pencil"></span> Modifier</a>
+                <a href="{{ path('users_adminuser_organisation_supprimer_serviceorg', {'id': type.id }) }}" class="suppression_current_categorie" style="color: red;"><span class="bi bi-x-lg"></span> Supprimer</a>
+              </div>
+  
+              <div class="card mt-3">
+                <div class="list-group list-group-flush">
+                  {% for input in type.forminputs %}
+                    <div class="list-group-item">
+                      <div class="dropdown" style="float: right;">
+                        <a href="#!" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="bi bi-three-dots"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item open-modal-update-input" value="{{ input.id }}" href="#!"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          <a class="dropdown-item" href="{{ path('users_adminuser_produit_supprimer_parametre_forminput', {'id': input.id }) }}"><span class="bi bi-trash"></span> Supprimer</a>
+                        </div>
+                      </div>
+
+                      {{ input.nom }} <span class="bi bi-activity"></span> <strong>Type</strong>: {{ input.typeInput }} | <strong>Required</strong>: {% if input.required == true %}Oui{% else %}Non{% endif %}
+
+                        {% if input.typeInput == 'select' %}
+
+                          <div class="row mt-3">
+                          <div class="col-md-10 offset-md-1">
+                              <div class="bloc-mise-en-page exemple exemplea">
+                                <h4>Liste des options</h4>
+                                <ul>
+                                  {% for option in input.optionFormInputs %}
+                                  <li><span>{{ option.libelle }}</span></li>
+                                  {% else %}
+                                  <li><span>Aucune option trouvée actuellement</span></li>
+                                  {% endfor %}
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-10 offset-md-1">
+                              <div class="card p-3 mt-2">
+                                <h4>Ajouter une nouvelle option pour ce champ</h4>
+                                <form action="{{ path('users_adminuser_ajouter_nouvelle_option_forminput', {'id': input.id }) }}" method="post">
+                                  <div class="input-group mb-1">
+                                    <input type="text" name="option" class="form-control" placeholder="Rentrez une option">
+                                    <div class="input-group-append">
+                                      <button type="submit" class="input-group-text">Ajouter</button>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        {% endif %}
+                    </div>
+                  {% else %}
+                    <div class="list-group-item">
+                      <a href="#!" data-toggle="modal" data-target="#formInputModalCenter"><span class="bi bi-node-plus"></span> Ajoutez un champ</a>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+  
+            <!-- div class="mt-4">
+              <a href="">Afficher tous les articles <span class="bi bi-arrow-90deg-right"></span></a>
+            </div -->
+          </div>
+          <!-- 	END Item -->
+          {% else %}
+          <div class="accordion__item">
+            <h2 class="accordion__title {% if loop.index < 3 %}active{% endif %}">Aucun service ajouté</h2>
+            <div class="accordion__body2">
+              <p>La liste des services d'organisations s'affichera ici</p>
+              <div class="card mt-3">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Aucun champ sélectionné</li>
+                </ul>
+              </div>
+            </div>
+  
+            <!-- div class="mt-4">
+              <a href="">Afficher tous les articles <span class="bi bi-arrow-90deg-right"></span></a>
+            </div -->
+          </div>
+          {% endfor %}
+        </div>
+
+    </div>
+</div>
+<!-- content-wrapper ends -->
+
+<!-- Modal -->
+<div class="modal fade" id="typeOrgModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      {{ form_start(formService, {'attr': {'action': path('users_adminuser_services_organisation') }}) }}
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">Ajouter un service d'organisation</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card pt-4 pl-4 pr-4" style="min-height: 150px;">
+            <div class="form-group">
+              {{ form_widget(formService.nom , {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+              {{ form_widget(formService.description , {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-primary">Enregistrement</button>
+      </div>
+      {{ form_end(formService) }}
+	    <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="formInputModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        {{ form_start(form, {'attr': {'action': path('users_adminuser_ajouter_nouvelle_form_input') }}) }}
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLongTitle">Ajouter un nouveau champ</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card pt-4 pl-4 pr-4" style="min-height: 150px;">
+              <div class="form-group">
+                {{ form_widget(form.nom , {'attr': {'class': 'form-control'}}) }}
+                {{ form_label(form.nom, 'Nom du champ'|trans) }}
+                <div style="color: red;">{{ form_errors(form.nom)|trans }}</div>
+              </div>
+              <div class="form-group">
+                {{ form_widget(form.libelle , {'attr': {'class': 'form-control'}}) }}
+                {{ form_label(form.libelle, 'Libellé à utiliser sur le champ'|trans) }}
+                <div style="color: red;">{{ form_errors(form.libelle)|trans }}</div>
+              </div>
+              <div class="form-group">
+                {{ form_widget(form.typeInput , {'attr': {'class': 'form-control'}}) }}
+                {{ form_label(form.typeInput, 'Sélectionnez le type du champ'|trans) }}
+              </div>
+              <div class="form-group">
+                {{ form_widget(form.placeholder , {'attr': {'class': 'form-control'}}) }}
+                {{ form_label(form.placeholder, 'Spécifiez le placeholder du champ'|trans) }}
+              </div>
+              <div class="form-group">
+                {{ form_widget(form.serviceorganisation , {'attr': {'class': 'form-control'}}) }}
+                {{ form_label(form.serviceorganisation, 'Sélection le service associé'|trans) }}
+              </div>
+              <div class="form-group">
+                {{ form_widget(form.required , {'attr': {'class': 'form-control'}}) }}
+                {{ form_label(form.required, 'Spécifiez le champ est requis'|trans) }}
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          <button type="submit" class="btn btn-primary">Enregistrement</button>
+        </div>
+        {{ form_end(form) }}
+          <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" data-backdrop="false" id="modal-update-content" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLongTitle">Mise à jour du contenu</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+              <div class="input-field col-md-12">
+                <div class="wait-chargement-content-module-article" style="text-align: center;">
+                  Patientez un moment pendant le chargement de l'article</br>
+                  <img src="{{ asset('template/images/loader1.gif') }}" alt="image" style="height: 40px; width: 40px;">
+                </div>
+            
+                <div class="content-module-loading-article" style="display: none;">
+                
+                </div>
+              </div>
+          </div>
+        </div>
+      <div class="modal-footer" style="padding-top: 15px; z-index: 1;">
+      {% include 'Theme/General/Template/Menu/social.html.twig' %}
+      </div>
+    </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block javascripttemplate %}
+
+$('.open-modal-update-continent').click(function(){
+	var id = $(this).attr('value');
+	$('.wait-chargement-content-module-article').show();
+	$('.content-module-loading-article').hide();
+	$('#modal-update-content').modal('show');
+	$.get('{{ path('users_adminuser_update_service_organisation') }}',{ id: id }, function(data){
+		$('.wait-chargement-content-module-article').hide();
+		$('.content-module-loading-article').show();
+		$('.content-module-loading-article').html(data);
+	});
+});
+$('.open-modal-update-input').click(function(){
+	var id = $(this).attr('value');
+	$('.wait-chargement-content-module-article').show();
+	$('.content-module-loading-article').hide();
+	$('#modal-update-content').modal('show');
+	$.get('{{ path('users_adminuser_modifier_form_input') }}',{ id: id }, function(data){
+		$('.wait-chargement-content-module-article').hide();
+		$('.content-module-loading-article').show();
+		$('.content-module-loading-article').html(data);
+	});
+});
+{% endblock %}

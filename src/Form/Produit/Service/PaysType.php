@@ -24,7 +24,6 @@ class PaysType extends AbstractType
     {
         $builder
             ->add('nom',TextType::class,array('attr'=>array('placeholder'=>'Nom du pays','class'=>'form-control')))
-            ->add('siteweb',TextType::class,array('attr'=>array('placeholder'=>'Site web','class'=>'form-control')))
             ->add('citoyen',TextType::class,array('attr'=>array('placeholder'=>'Citoyen','class'=>'form-control')))
             ->add('citoyenne',TextType::class,array('attr'=>array('placeholder'=>'Citoyenne','class'=>'form-control')))
             ->add('code',TextType::class,array('attr'=>array('placeholder'=>'Code du pays','class'=>'form-control')))

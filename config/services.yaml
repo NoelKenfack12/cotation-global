@@ -19,6 +19,10 @@ services:
         bind:
             $targetDirectory: '%brochures_directory%'
         public: true
+    general_service.customnamer:
+        class: App\Service\Naming\CustomNamer
+        arguments: [ '@Vich\UploaderBundle\Util\Transliterator', '@general_service.servicetext' ]
+    App\Service\Naming\CustomNamer: '@general_service.customnamer' 
     general_service.servicetext:
         class: App\Service\Servicetext\GeneralServicetext
         arguments: [ '@doctrine.orm.entity_manager', '%brochures_directory%' ]

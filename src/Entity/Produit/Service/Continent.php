@@ -7,8 +7,6 @@ use App\Validator\Validatortext\Taillemin;
 use App\Validator\Validatortext\Taillemax;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use App\Service\Servicetext\GeneralServicetext;
-use App\Validator\Validatorfile\Image;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Repository\Produit\Service\ContinentRepository;
 use App\Entity\Produit\Service\Pays;
 use Doctrine\Common\Collections\Collection;
@@ -32,20 +30,6 @@ class Continent
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-	
-	/**
-     * @var string
-     *
-     * @ORM\Column(name="src", type="string", length=255, nullable=true)
-     */
-    private $src;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="alt", type="string", length=255, nullable=true)
-     */
-    private $alt;
 
     /**
      * @var string
@@ -79,22 +63,12 @@ class Continent
      */
     private $pays;
 	
-	/**
-	*@Image(taillemax=1500000, message="la taille de l'image  %string% est grande.")
-	*/
-	private $file;
-	
-	// permet le stocage temporaire du nom du fichier
-	private $tempFilename;
-	
 	private $serviceaccent;
 	
 	public function __construct(GeneralServicetext $service)
 	{
         $this->serviceaccent = $service ;
         $this->pays = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->src ="source";
-        $this->alt ="alternatif";
 	}
 	
 	public function getServiceaccent()
@@ -184,18 +158,6 @@ class Continent
     {
         return $this->nom;
     }
-	
-	/**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function premajuscule()
-	{
-        $text = $this->serviceaccent->retireAccent($this->nom);
-        $text2 = $this->serviceaccent->retireAccent($this->citoyen);
-        $this->nom = strtoupper($text);
-        $this->citoyen = strtoupper($text2);
-	}
 
     /**
      * Get pays 
@@ -251,109 +213,12 @@ class Continent
     {
         return $this->citoyenne;
     }
-	
-	//permet la récupération du nom du fichier temporaire
-    public function getTempFilename()
-    {
-    return $this->tempFilename;
-    }
-	//permet de modifier le contenu de la variable tempFilename
-    public function setTempFilename($temp)
-	{
-	$this->tempFilename=$temp;
-	}
-	// permet la récupération du nom du fiechier
-	public function getFile()
-	{
-	return $this->file;
-	}
-	
-	public function getUploadDir()
-	{
-	// On retourne le chemin relatif vers l'image pour un navigateur
-	return 'bundles/users/localisation/images/continent';
-	}
-	protected function getUploadRootDir()
-	{
-	// On retourne le chemin relatif vers l'image pour notre codePHP
-	return  __DIR__.'/../../../../public/'.$this->getUploadDir();
-	}
-	public function setFile(UploadedFile $file)
-	{
-	$this->file = $file;
-	// On vérifie si on avait déjà un fichier pour cette entité
-	if (null !== $this->src) {
-	// On sauvegarde l'extension du fichier pour le supprimer plus tard
-	$this->tempFilename = $this->src;
-	// On réinitialise les valeurs des attributs url et alt
-	$this->src = null;
-	$this->alt = null;
-	}
-	}
-	
-	/**
-	* @ORM\PrePersist()
-	* @ORM\PreUpdate()
-	*/
-	public function preUpload()
-	{
-	if (null === $this->file) {
-	return;
-	}
-	$text = $this->file->getClientOriginalName();
-	$this->src = $this->serviceaccent->normaliseText($text);
-	$this->alt = $this->src;
-	}
-	
-	/**
-	* @ORM\PostPersist()
-	* @ORM\PostUpdate()
-	*/
-	public function upload()
-	{
-	// Si jamais il n'y a pas de fichier (champ facultatif)
-	if (null === $this->file) {
-	return;
-	}
-	if (null !== $this->tempFilename) {
-	$oldFile = $this->getUploadRootDir().'/'.$this->id.'.'.$this->tempFilename;
-	if (file_exists($oldFile)) {
-	unlink($oldFile);
-	}
-	}
-	$this->file->move( $this->getUploadRootDir(), $this->id.'.'.$this->src);
-	}
-	
-	/**
-	*@ORM\PreRemove()
-	*/
-	public function preRemoveUpload()
-	{
-	$this->tempFilename = $this->getUploadRootDir().'/'.$this->id.'.'.$this->src;
-	}
-	
-	/**
-	* @ORM\PostRemove()
-	*/
-	public function postRemoveUpload()
-	{
-	// En PostRemove, on n'a pas accès à l'id, on utilise notre nom sauvegardé
-	if (file_exists($this->tempFilename)) {
-	// On supprime le fichier
-	unlink($this->tempFilename);
-	}
-	}
-	
-	public function getWebPath()
-	{
-	return $this->getUploadDir().'/'.$this->getId().'.'.$this->getSrc();
-	}
 
     /**
      * Add pays
      * @return Continent
-     */
-    public function addPay(Pays $pays): ?Pays
+    */
+    public function addPay(Pays $pays): self
     {
         $this->pays[] = $pays;
 

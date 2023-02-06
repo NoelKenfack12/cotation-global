@@ -265,12 +265,6 @@
             {{ form_label(form2.continent, 'Nom du continent'|trans) }}
             <div style="color: red;">{{ form_errors(form2.continent)|trans }}</div>
            </div>
-           
-           <div class="form-group">
-            {{ form_widget(form2.siteweb) }}
-            {{ form_label(form2.siteweb, 'Site web'|trans) }}
-            <div style="color: red;">{{ form_errors(form2.siteweb)|trans }}</div>
-           </div>
 
            <div class="custom-file">
               {{ form_widget(form2.drapeau) }}
@@ -319,11 +313,6 @@
             <div style="color: red;">{{ form_errors(form.citoyenne)|trans }}</div>
           </div>
 
-           <div class="custom-file">
-              {{ form_widget(form.file) }}
-              {{ form_label(form.file, 'Image illustrative') }}
-            </div>
-
         </div>
       </div>
       <div class="modal-footer">
@@ -336,8 +325,63 @@
   </div>
 </div>
 
+
+<div class="modal fade" data-backdrop="false" id="modal-update-content" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">Mise à jour du contenu</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="input-field col-md-12">
+              <div class="wait-chargement-content-module-article" style="text-align: center;">
+                Patientez un moment pendant le chargement de l'article</br>
+                <img src="{{ asset('template/images/loader1.gif') }}" alt="image" style="height: 40px; width: 40px;">
+              </div>
+          
+              <div class="content-module-loading-article" style="display: none;">
+              
+              </div>
+            </div>
+        </div>
+      </div>
+    <div class="modal-footer" style="padding-top: 15px; z-index: 1;">
+    {% include 'Theme/General/Template/Menu/social.html.twig' %}
+    </div>
+  </div>
+  </div>
+</div>
+
 {% endblock %}
 
 {% block javascripttemplate %}
+
+$('.open-modal-update-continent').click(function(){
+	var id = $(this).attr('value');
+	$('.wait-chargement-content-module-article').show();
+	$('.content-module-loading-article').hide();
+	$('#modal-update-content').modal('show');
+	$.get('{{ path('users_adminuser_update_content_continent12') }}',{ id: id }, function(data){
+		$('.wait-chargement-content-module-article').hide();
+		$('.content-module-loading-article').show();
+		$('.content-module-loading-article').html(data);
+	});
+});	
+
+$('.open-modal-update-pays').click(function(){
+	var id = $(this).attr('value');
+	$('.wait-chargement-content-module-article').show();
+	$('.content-module-loading-article').hide();
+	$('#modal-update-content').modal('show');
+	$.get('{{ path('users_adminuser_modif_pays_localisation_user') }}',{ id: id }, function(data){
+		$('.wait-chargement-content-module-article').hide();
+		$('.content-module-loading-article').show();
+		$('.content-module-loading-article').html(data);
+	});
+});
 
 {% endblock %}

@@ -1,0 +1,31 @@
+{{ form_start(form, {'attr': {'action': path('users_adminuser_modifier_form_input', {'id': forminput.id}) }}) }}
+  <div class="form-group">
+    {{ form_widget(form.nom , {'attr': {'class': 'form-control'}}) }}
+    {{ form_label(form.nom, 'Nom du champ'|trans) }}
+    <div style="color: red;">{{ form_errors(form.nom)|trans }}</div>
+  </div>
+  <div class="form-group">
+    {{ form_widget(form.libelle , {'attr': {'class': 'form-control'}}) }}
+    {{ form_label(form.libelle, 'Libellé à utiliser sur le champ'|trans) }}
+    <div style="color: red;">{{ form_errors(form.libelle)|trans }}</div>
+  </div>
+  <div class="form-group">
+    {{ form_widget(form.typeInput , {'attr': {'class': 'form-control'}}) }}
+    {{ form_label(form.typeInput, 'Sélectionnez le type du champ'|trans) }}
+  </div>
+  <div class="form-group">
+    {{ form_widget(form.placeholder , {'attr': {'class': 'form-control'}}) }}
+    {{ form_label(form.placeholder, 'Spécifiez le placeholder du champ'|trans) }}
+  </div>
+  <div class="form-group">
+    {{ form_widget(form.serviceorganisation , {'attr': {'class': 'form-control'}}) }}
+    {{ form_label(form.serviceorganisation, 'Sélection le service associé'|trans) }}
+  </div>
+  <div class="form-group">
+    {{ form_widget(form.required , {'attr': {'class': 'form-control'}}) }}
+    {{ form_label(form.required, 'Spécifiez le champ est requis'|trans) }}
+  </div>
+  <div class="form-control">
+	 <button class="btn btn-primary bg-struct" type="submit">Envoyer </button>
+  </div>
+{{ form_end(form) }}

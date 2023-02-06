@@ -1,0 +1,11 @@
+{{ form_start(form, {'attr': {'action': path('users_adminuser_modif_organisation_localisation_organisation', {'id': organisation.id}) }}) }}
+   <div class="form-group">
+    {{ form_widget(form.nom , {'attr': {'class': 'form-control'}}) }}
+  </div>
+  <div class="form-group">
+    {{ form_widget(form.ville , {'attr': {'class': 'form-control'}}) }}
+  </div>
+  <div class="form-control">
+	 <button class="btn btn-primary bg-struct" type="submit">Envoyer </button>
+  </div>
+{{ form_end(form) }}
