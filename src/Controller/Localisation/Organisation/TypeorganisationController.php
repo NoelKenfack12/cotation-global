@@ -66,12 +66,12 @@ class TypeorganisationController extends AbstractController
         }
         
         $typeorganisation = $em->getRepository(Typeorganisation::class)
-                        ->find($id);
+                               ->find($id);
 
         if($typeorganisation != null)
         {
         $form = $this->createForm(TypeorganisationType::class, $typeorganisation);
-        if ($request->getMethod() == 'POST'){
+        if($request->getMethod() == 'POST'){
             $form->handleRequest($request);
             if ($form->isValid()){
                 $em->flush();
@@ -81,6 +81,7 @@ class TypeorganisationController extends AbstractController
             }
             return $this->redirect($this->generateUrl('users_adminuser_type_organisation'));
         }
+
         return $this->render('Theme/Users/Adminuser/Organisation/modificationtypeorg.html.twig',
         array('form'=>$form->createView(),'typeorganisation'=>$typeorganisation));
         }else{

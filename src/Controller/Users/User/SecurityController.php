@@ -45,13 +45,13 @@ class SecurityController extends AbstractController
         $error_login = '';
         $last_username = null;
         if($request->getMethod() == 'POST' and $this->getUser() == null){
-            if (isset($_POST['_username']) and isset($_POST['_password'])){
+            if (isset($_POST['__username']) and isset($_POST['__password'])){
                 $repository = $em->getRepository(User::class);
-                $user = $repository->findOneBy(array('username'=>$_POST['_username']));
+                $user = $repository->findOneBy(array('username'=>$_POST['__username']));
                 
                 if($user != null)
                 {
-                    if($_POST['_password'] == $service->decrypt($user->getPassword(),$user->getSalt()))
+                    if($_POST['__password'] == $service->decrypt($user->getPassword(),$user->getSalt()))
                     {
                         $response = $this->guardHandler->authenticateUserAndHandleSuccess(
                             $user,          // the User object you just created
@@ -85,14 +85,14 @@ class SecurityController extends AbstractController
                         {
                             return $this->redirect($target_link);
                         }else{
-                            return $this->redirect($this->generateUrl('users_user_accueil'));
+                            return $this->redirect($this->generateUrl('users_adminuser_accueil_admin_dashboard'));
                         }
                     }else{
                         $error_login = '<span style="color: red;">Echec: Mot de passe ou Email invalide.</span>';
-                        $last_username = $_POST['_username'];
+                        $last_username = $_POST['__username'];
                     }
                 }else{
-                    $last_username = $_POST['_username'];
+                    $last_username = $_POST['__username'];
                 }
             }
         }

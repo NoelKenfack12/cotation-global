@@ -1,0 +1,46 @@
+<form action="{{ path('users_adminuser_joindre_userorganisation_roles', {'id': user.id }) }}" method="post">
+    <h3 class="mb-4">Ajouter les autorisations à <strong>{{ user.name(30) }}</strong></h3>
+    {% for role in liste_role %}
+        {% if role[2] == true %}
+            <div class="card mb-2" style="padding: 7px;">
+                <div class="row">
+                    <div class="col-7 col-md-7">
+                        <strong>{{ role[0] }} </strong>
+                    </div>
+                    <div class="col-5 col-md-5">
+                        <label class="toggle-switch-1">
+                            <input name="rolelist[]" value="{{ role[0] }}" type="checkbox" {% if role[0] in user.roles %} checked="" disabled="" {% endif %}>
+                            <span>
+                                <i></i>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="col-md-12">
+                        {{ role[1] }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    <div class="card mb-2" style="padding: 7px;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <select name="organisationId" id="" class="form-control">
+                        <option value="">Sélectionnez une Organisation</option>
+                        {% for organisation in liste_organisation %}
+                        <option value="{{ organisation.id }}">{{ organisation.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button class="btn btn-primary">
+            Enregistrer
+        </button>
+    </div>
+</form>

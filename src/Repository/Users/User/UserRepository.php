@@ -9,7 +9,6 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Users\User\User;
 
 
-
 /**
  * UserRepository
  *
@@ -18,9 +17,22 @@ use App\Entity\Users\User\User;
  */
 class UserRepository extends ServiceEntityRepository
 {
-public function __construct(ManagerRegistry $registry)
-{
-	parent::__construct($registry, User::class);
-}
+	public function __construct(ManagerRegistry $registry)
+	{
+		parent::__construct($registry, User::class);
+	}
+
+	public function findUserPagine($page, $nombreParPage)
+	{ 
+		if($page < 1){
+			throw new \InvalidArgumentException('Page inexistant');
+		}
+		$query = $this->createQueryBuilder('u')
+					->orderBy('u.dateins','ASC')
+					->getQuery();
+		$query->setFirstResult(($page-1) * $nombreParPage)
+			->setMaxResults($nombreParPage);
+		return new Paginator($query);
+	}
 
 }

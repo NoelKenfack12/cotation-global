@@ -23,7 +23,7 @@ use App\Repository\Users\User\UserRepository;
  * @UniqueEntity(fields="username", message="Ce  mail existe déjà.")
  ** @ORM\HasLifecycleCallbacks
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @var integer
@@ -92,24 +92,74 @@ class User implements UserInterface
      */
     private $userorganisations;
 
+    private $fakePassword;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $telephone;
+
 	
-	public function __construct(GeneralServicetext $service)
-                            {
-                                $this->servicetext = $service;
-                                $this->dateins = new \Datetime();
-                                $this->roles = array('ROLE_USER');
-                                $this->userorganisations = new ArrayCollection();
-                            }
-	
-	public function getServicetext()
-                            {
-                                return $this->servicetext;
-                            }
-	
-	public function setServicetext(GeneralServicetext $service)
-                            {
-                                $this->servicetext = $service;
-                            }
+    public function __construct(GeneralServicetext $service)
+    {
+        $this->servicetext = $service;
+        $this->dateins = new \Datetime();
+        $this->roles = array('ROLE_USER');
+        $this->userorganisations = new ArrayCollection();
+    }
+
+    public function getServicetext()
+    {
+        return $this->servicetext;
+    }
+
+    public function setServicetext(GeneralServicetext $service)
+    {
+        $this->servicetext = $service;
+    }
+
+    public function getFakePassword()
+    {
+        return $this->fakePassword;
+    }
+
+    public function setFakePassword($fakePassword)
+    {
+        $this->fakePassword = $fakePassword;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function serialize()
+    {
+        $test = null;
+        return serialize([
+            $this->password,
+            $this->username,
+            $this->id,
+            $this->roles,
+            $this->nom,
+            $this->prenom
+        ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function unserialize($serialized)
+    {
+        $data = unserialize($serialized);
+
+        list(
+            $this->password,
+            $this->username,
+            $this->id,
+            $this->roles,
+            $this->nom,
+            $this->prenom
+        ) = $data;
+    }
 
 
     /**
@@ -150,7 +200,7 @@ class User implements UserInterface
      *
      * @param string $password
      * @return User
-     */
+    */
     public function setPassword($password)
     {
         $this->password = $password;
@@ -226,22 +276,22 @@ class User implements UserInterface
     }
 	
 	public function addRole($role)
-                            {
-                                if (!in_array($role, $this->roles)) {
-                                    $this->roles[] = $role;
-                                }
-                        
-                                return $this;
-                            }
+                                     {
+                                         if (!in_array($role, $this->roles)) {
+                                             $this->roles[] = $role;
+                                         }
+                                 
+                                         return $this;
+                                     }
 	public function removeRole($role)
-                            {
-                                if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
-                                    unset($this->roles[$key]);
-                                    $this->roles = array_values($this->roles);
-                                }
-                        
-                                return $this;
-                            }
+                                     {
+                                         if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+                                             unset($this->roles[$key]);
+                                             $this->roles = array_values($this->roles);
+                                         }
+                                 
+                                         return $this;
+                                     }
 	
 	/**
      * Set salt
@@ -290,23 +340,23 @@ class User implements UserInterface
     }
 	
 	public function eraseCredentials()
-                            {
-                            
-                            }
+                                     {
+                                     
+                                     }
 	
 	public function name($tail)
-                            {
-                                $allname = $this->nom.' '.$this->prenom;
-                                if(strlen($allname) <= $tail)
-                                {
-                                    return $allname;
-                                }else{
-                                    $text = wordwrap($allname,$tail,'~',true);
-                                    $tab = explode('~',$text);
-                                    $text = $tab[0];
-                                    return $text.'...';
-                                }
-                            }
+                                     {
+                                         $allname = $this->nom.' '.$this->prenom;
+                                         if(strlen($allname) <= $tail)
+                                         {
+                                             return $allname;
+                                         }else{
+                                             $text = wordwrap($allname,$tail,'~',true);
+                                             $tab = explode('~',$text);
+                                             $text = $tab[0];
+                                             return $text.'...';
+                                         }
+                                     }
 
     /**
      * Set prenom
@@ -361,5 +411,16 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): self
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
 
 }

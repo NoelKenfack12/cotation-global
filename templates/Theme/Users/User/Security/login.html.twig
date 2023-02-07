@@ -14,7 +14,7 @@
 
     <div class="bottom-grid">
         <div class="logo">
-            <h1> <a href="">Connexion Cotation Global</a></h1>
+            <h1> <a href="">Cotation Global Investissement</a></h1>
         </div>
     </div>
     <div class="content-w3ls">
@@ -23,17 +23,17 @@
         </div>
 
         <div class="content-bottom">
-            <form action="#" method="post" class="my-login-validation">
+            <form action="{{ path('login') }}" method="post" class="my-login-validation">
                 <div class="field-group">
                     <span class="fa fa-user" aria-hidden="true"></span>
                     <div class="wthree-field">
-                        <input name="text1" id="validationDefaultUsername" type="text" value="" placeholder="Username" required>
+                        <input name="__username" id="validationDefaultUsername" type="text" value="" placeholder="Username" required>
                     </div>
                 </div>
                 <div class="field-group">
                     <span class="fa fa-lock" aria-hidden="true"></span>
                     <div class="wthree-field">
-                        <input name="password" id="myInput" type="Password" placeholder="Password">
+                        <input name="__password" id="myInput" type="Password" placeholder="Password">
                     </div>
                 </div>
                 <div class="wthree-field">

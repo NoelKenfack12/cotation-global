@@ -63,8 +63,12 @@ users_adminuser_localite_delete_ville:
     requirements:
         id: \d+
 users_adminuser_users_organisation:
-    path: /admin/users/organisation
+    path: /admin/users/organisation/{page}
     controller: App\Controller\Localisation\Organisation\UserorganisationController:listeuserorganisation
+    defaults:
+        page: 1
+    requirements:
+        page: \d+
 users_adminuser_type_produit:
     path: /admin/type/produit
     controller: App\Controller\Produit\Produit\TypeproduitController:listetypeproduit
@@ -212,6 +216,27 @@ users_adminuser_localisation_joindre_organisation_typeorganisation:
 users_adminuser_localisation_delete_organisation_typeorgOrganisation:
     path: /admin/localisation/delete/organisation/typeorgOrganisation/{id}
     controller: App\Controller\Localisation\Organisation\TypeorganisationController:deleteorganisationtypeorg
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_users_update_user:
+    path: /admin/update/user/{id}
+    controller: App\Controller\Users\User\UserController:updateuser
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_joindre_userorganisation_roles:
+    path: /admin/joindre/userorganisation/roles/{id}
+    controller: App\Controller\Users\User\UserController:joindreuserorganisation
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_users_delete_userorganisation:
+    path: /admin/users/delete/userorganisation/{id}
+    controller: App\Controller\Users\User\UserController:deleteuser
     defaults:
         id: 0
     requirements:

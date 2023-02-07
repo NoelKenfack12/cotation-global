@@ -46,6 +46,7 @@ class Userorganisation
     public function __construct()
     {
         $this->date = new \Datetime();
+        $this->roles = array();
     }
 
     public function getId(): ?int

@@ -1,0 +1,22 @@
+{{ form_start(form, {'attr': {'action': path('users_adminuser_users_update_user', {'id': user.id}) }}) }}
+   
+    <div class="form-group">
+    {{ form_widget(form.nom , {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+    {{ form_widget(form.prenom , {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_widget(form.username , {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_widget(form.telephone , {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_widget(form.fakePassword , {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <div class="form-control">
+        <button class="btn btn-primary bg-struct" type="submit">Envoyer </button>
+    </div>
+{{ form_end(form) }}
