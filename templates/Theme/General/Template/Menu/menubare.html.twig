@@ -19,25 +19,22 @@
   <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
     <ul class="navbar-nav mr-lg-2">
       <li class="nav-item  d-none d-lg-flex">
-        <a class="nav-link" href="{{ path('users_adminuser_users_organisation') }}">
+        <a class="nav-link {% if organisationId == -1 %}active{% endif %}" href="{{ path('users_adminuser_users_organisation') }}">
           Utilisateurs
         </a>
       </li>
       <li class="nav-item  d-none d-lg-flex">
-        <a class="nav-link active" href="{{ path('users_adminuser_accueil_admin_dashboard') }}">
+        <a class="nav-link {% if organisationId == 0 %}active{% endif %}" href="{{ path('users_adminuser_accueil_admin_dashboard') }}">
           Administration
         </a>
       </li>
+      {% for userorganisation in liste_userorganisation %}
       <li class="nav-item  d-none d-lg-flex">
-        <a class="nav-link" href="{{ path('users_adminuser_gestion_organisations', {'id': 1}) }}">
-          Global Douala
+        <a class="nav-link {% if organisationId == userorganisation.organisation.id %}active{% endif %}" href="{{ path('users_adminuser_gestion_organisations', {'id': userorganisation.organisation.id }) }}">
+          {{ userorganisation.organisation.nom }}
         </a>
       </li>
-      <li class="nav-item  d-none d-lg-flex">
-        <a class="nav-link" href="{{ path('users_adminuser_gestion_organisations', {'id': 1}) }}">
-          Global Yaoundé
-        </a>
-      </li>
+      {% endfor %}
     </ul>
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item d-none d-lg-flex  mr-2">

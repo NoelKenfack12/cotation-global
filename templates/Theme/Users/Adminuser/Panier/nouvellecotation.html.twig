@@ -1,3 +1,4 @@
+{% set organisationId = organisation.id %}
 {% extends "Theme/Users/Adminuser/layoutbaseorg.html.twig" %}
 {% block meta %}
 	{{ parent() }}
@@ -16,7 +17,7 @@
             <div class="col-md-8">
                 <h1>Enregistrement d'une nouvelle cotation</h1>
                 <div>
-                    <span class="bi bi-geo-alt"></span> Global - Buéa - Entrepot
+                    <span class="bi bi-geo-alt"></span> {{ organisation.nom }} - {{ organisation.ville.name }}
                 </div>
             </div>
         </div>
@@ -53,71 +54,94 @@
         </ul>
     </div>
 
-    <form action="{{ path('users_adminuser_cotation_description', {'id': 1}) }}" method="post">
+    <form action="{{ path('users_adminuser_cotation_description', {'id': organisation.id }) }}" method="post">
     <div class="mb-3" style="background: #fff; padding: 20px; min-height: 400px;">
         <h3>Liste cotation</h3>
         <hr/>
         
         <div class="row">
             <div class="col-md-6">
-                <label for="client-name">Sélectionnez le type d'opération</label>
-                <select name="typeop" class="form-control input-lg" id="client-name">
-                    <option value="">Groupage</option>
-                    <option value="">Entreposage</option>
+                <label for="selection_type_service">Sélectionnez le type d'opération</label>
+                <select name="typeserviceorg" class="form-control input-lg" id="selection_type_service">
+                    {% for typeorg in organisation.getTypeorgOrganisations() %}
+                    <option value="{{ typeorg.typeorganisation.id }}">{{ typeorg.typeorganisation.name }}</option>
+                    {% endfor %}
                 </select>
             </div>
 
             <div class="col-md-6">
-                <label for="client-name">Sélectionnez le titre de transport</label>
-                <select name="typeop" class="form-control input-lg" id="client-name">
-                    <option value="">Transport Maritime</option>
-                    <option value="">Aérien</option>
-                    <option value="">Lettre de voiture</option>
-                </select>
+                {% for typeorg in organisation.getTypeorgOrganisations() %}
+                <div class="select-typeorg services-typeorg-{{ typeorg.typeorganisation.id }}" style="{% if not(loop.first) %}display: none;{% endif %}">
+                    <label for="client-name">Sélectionnez le titre de transport</label>
+                    <select name="serviceorg" class="form-control input-lg selection_service_organisation" id="selection_service_organisation_{{ typeorg.typeorganisation.id }}">
+                        {% set typeorganisation = typeorg.typeorganisation %}
+                        {% for typeorgServiceorg in typeorganisation.getTypeorgServiceorgs() %}
+                        <option value="typeorg-{{ typeorg.id }}-typeorgServiceorg_{{ typeorgServiceorg.serviceorganisation.id }}">{{ typeorgServiceorg.serviceorganisation.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endfor %}
             </div>
 
             <div class="col-md-12 mt-4 mb-4">
-                <div style="border: 1px dashed #999; background: #e8eff9; padding: 15px; border-radius: 10px;">
-                    <h3>Attributs spécifiques</h3>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="input-key">B/L : Transport Maritime</label>
+                {% set indexInput = 0 %}
+                {% for typeorg in organisation.getTypeorgOrganisations() %}
+
+                    {% set typeorganisation = typeorg.typeorganisation %}
+                    {% if loop.first %}
+                        {% set indexInput = 1 %}
+                    {% else %}
+                        {% set indexInput = 0 %}
+                    {% endif %}
+
+
+                    {% for typeorgServiceorg in typeorganisation.getTypeorgServiceorgs() %}
+                        {% set serviceorganisation = typeorgServiceorg.serviceorganisation %}
+                        <div class="block-required-coustom-input required-form-service-org-typeorg-{{ typeorg.id }}-typeorgServiceorg_{{ serviceorganisation.id }}" style="{% if loop.first and indexInput == 1 %}{% else %}display: none;{% endif %} border: 1px dashed #999; background: #e8eff9; padding: 15px; border-radius: 10px;">
+                            <h3>Attributs spécifiques</h3>
+                            
+                            <div class="" style="">
+                                {% for forminput in serviceorganisation.getForminputs() %}
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="input-key">{{ forminput.libelle }}</label>
+                                    </div>
+
+                                    <div class="col-md-8">
+                                        {% if forminput.typeInput == 'number' %}
+                                        <div class="form-group">
+                                            <input type="number" name="required-input-{{ forminput.id }}" class="form-control" placeholder="valeur"/>
+                                        </div>
+                                        {% elseif(forminput.typeInput == 'text') %}
+                                        <div class="form-group">
+                                            <input type="text" name="required-input-{{ forminput.id }}" class="form-control" placeholder="valeur"/>
+                                        </div>
+                                        {% elseif(forminput.typeInput == 'textarea') %}
+                                        <div class="form-group">
+                                            <textarea name="required-input-{{ forminput.id }}" class="form-control input-lg" rows="10"></textarea>
+                                        </div>
+                                        {% elseif(forminput.typeInput == 'select') %}
+                                        <div class="form-group">
+                                            <select name="required-input-{{ forminput.id }}" id="" class="form-control">
+                                                {% for option in forminput.optionFormInputs %}
+                                                <option value="{{ option.id }}">{{ option.libelle }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            <input type="text" name="" id="input-key" class="form-control" placeholder="valeur"/>
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-4">
-                            <label for="input-key">LTA : Aérien</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" name="" id="input-key" class="form-control" placeholder="valeur"/>
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-4">
-                            <label for="input-key">LV : Lettre de voiture</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" name="" id="input-key" class="form-control" placeholder="valeur"/>
-                        </div>
-                    </div>
-                </div>
+                    {% endfor %}
+                {% endfor %}
             </div>
 
-            <div class="col-md-6">
-                <label for="client-name">Sélectionnez le Régime</label>
-                <select name="typeop" class="form-control input-lg" id="client-name">
-                    <option value="">EDD</option>
-                </select>
-            </div>
-
-            <div class="col-md-6">
-
+            <div class="col-md-12">
                 <div class="row mt-3">
                     <div class="col-md-6">
-                        <label for="group_name" class="col-form-label">Activer les attibuts optionnels</label>
+                        <h3>Activer les attibuts optionnels</h3>
                     </div>
                     <div class="col-md-6 text-right">
                         <label class="toggle-switch-1">
@@ -171,4 +195,18 @@
 
 {% block javascripttemplate %}
 
+    $('#selection_type_service').on('change',function(){
+        var idType = $(this).val();
+        $('.select-typeorg').hide();
+        $('.services-typeorg-'+idType).show();
+
+        $('#selection_service_organisation_'+idType+' option:eq(1)').prop('selected', true).change();
+    });
+
+    $('.selection_service_organisation').on('change', function(){
+        var idType = $(this).val();
+        $('.block-required-coustom-input').hide();
+        $('.required-form-service-org-'+idType).show();
+    })
+    
 {% endblock %}

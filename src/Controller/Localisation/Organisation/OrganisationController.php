@@ -36,9 +36,10 @@ class OrganisationController extends AbstractController
         array('formTypeOrg'=>$formTypeOrg->createView()));
     }
 
-    public function gestionorganisations($id)
+    public function gestionorganisations(Organisation $organisation)
     {
-        return $this->render('Theme/Users/Adminuser/Organisation/gestionorganisations.html.twig');
+        return $this->render('Theme/Users/Adminuser/Organisation/gestionorganisations.html.twig', 
+        array('organisation'=>$organisation));
     }
 
     public function nouvelleorganisation(Request $request, EntityManagerInterface $em)

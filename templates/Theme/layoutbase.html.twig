@@ -295,7 +295,7 @@
 
 <body>
  
-  {{ render(controller("App\\Controller\\General\\Template\\MenuController:menubare", {'position': 'offerts'})) }}
+  {{ render(controller("App\\Controller\\General\\Template\\MenuController:menubare", {'position': 'offerts', 'organisationId': organisationId|default(0) })) }}
   {% block body %}
         
   {% endblock %}

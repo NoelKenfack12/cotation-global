@@ -366,7 +366,7 @@
 
 <body>
   <div class="container-scroller">
-      {{ render(controller("App\\Controller\\General\\Template\\MenuController:menubare", {'position': 'dash'})) }}
+      {{ render(controller("App\\Controller\\General\\Template\\MenuController:menubare", {'position': 'dash', 'organisationId': organisationId|default(0) })) }}
       <div class="container-fluid page-body-wrapper">
           {{ render(controller("App\\Controller\\General\\Template\\MenuController:menuleftorg", {'position': 'dash'})) }}
           <div class="main-panel" style="background: #e8eff9;">

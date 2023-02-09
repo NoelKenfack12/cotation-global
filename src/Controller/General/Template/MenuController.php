@@ -12,6 +12,8 @@ use App\Service\Servicetext\GeneralServicetext;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Users\User\User;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Localisation\Organisation\Userorganisation;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class MenuController extends AbstractController
 {
@@ -25,7 +27,7 @@ class MenuController extends AbstractController
         $this->guardHandler = $guardHandler;
     }
 
-    public function menubare(GeneralServicetext $service, Request $request, $position)
+    public function menubare(GeneralServicetext $service, Request $request, $position, $organisationId)
     {
         $user = null;
 		$em = $this->getDoctrine()->getManager();
@@ -50,7 +52,16 @@ class MenuController extends AbstractController
 				}
 			}
 		}
-        return $this->render('Theme/General/Template/Menu/menubare.html.twig', array('position'=>$position));
+		$liste_userorganisation = new ArrayCollection();
+		if($this->getUser() != null)
+		{
+			$liste_userorganisation = $em->getRepository(Userorganisation::class)
+                                 ->findBy(array('user'=>$this->getUser()));
+		}
+		
+
+        return $this->render('Theme/General/Template/Menu/menubare.html.twig', 
+		array('position'=>$position, 'organisationId'=>$organisationId, 'liste_userorganisation'=>$liste_userorganisation));
     }
 	
     public function footer(EntityManagerInterface $em, $position)
