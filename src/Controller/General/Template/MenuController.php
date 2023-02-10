@@ -74,8 +74,9 @@ class MenuController extends AbstractController
         return $this->render('Theme/General/Template/Menu/menuleft.html.twig', array('position'=>$position));
     }
 
-	public function menuleftorg($position)
+	public function menuleftorg($position, $organisationId)
 	{
-		return $this->render('Theme/General/Template/Menu/menuleftorg.html.twig', array('position'=>$position));
+		return $this->render('Theme/General/Template/Menu/menuleftorg.html.twig', 
+		array('position'=>$position, 'organisationId'=>$organisationId));
 	}
 }

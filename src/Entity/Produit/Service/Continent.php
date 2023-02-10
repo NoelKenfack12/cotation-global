@@ -16,9 +16,9 @@ use Doctrine\Common\Collections\Collection;
  *
  * @ORM\Table("continent")
  * @ORM\Entity(repositoryClass=ContinentRepository::class)
-  * @UniqueEntity(fields="nom", message="Ce continent existe déjà.")
-  * @UniqueEntity(fields="citoyen", message="Ce continent existe déjà.")
-  ** @ORM\HasLifecycleCallbacks
+ * @UniqueEntity(fields="nom", message="Ce continent existe déjà.")
+ * @UniqueEntity(fields="citoyen", message="Ce continent existe déjà.")
+ ** @ORM\HasLifecycleCallbacks
  */
 class Continent
 {
@@ -73,11 +73,12 @@ class Continent
 	
 	public function getServiceaccent()
 	{
-	return $this->serviceaccent;
+	    return $this->serviceaccent;
 	}
+
 	public function setServiceaccent(GeneralServicetext $service)
 	{
-	$this->serviceaccent = $service;
+	    $this->serviceaccent = $service;
 	}
 
     /**

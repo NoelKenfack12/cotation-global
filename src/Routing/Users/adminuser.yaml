@@ -70,8 +70,12 @@ users_adminuser_users_organisation:
     requirements:
         page: \d+
 users_adminuser_type_produit:
-    path: /admin/type/produit
+    path: /admin/type/produit/{page}
     controller: App\Controller\Produit\Produit\TypeproduitController:listetypeproduit
+    defaults:
+        page: 1
+    requirements:
+        page: \d+
 users_adminuser_gestion_organisations:
     path: /admin/dashboard/organisations/{id}
     controller: App\Controller\Localisation\Organisation\OrganisationController:gestionorganisations
@@ -86,15 +90,21 @@ users_adminuser_cotation_organisation:
     requirements:
         id: \d+
 users_adminuser_produit_organisation:
-    path: /admin/cotation/services/organisation/{id}
-    controller: App\Controller\Produit\Produit\ProduitorganisationController:produitorganisation
+    path: /admin/cotation/services/organisation/{id}/{page}
+    controller: App\Controller\Produit\Produit\ProduitorganisationController:servicesorganisation
+    defaults:
+        page: 1
     requirements:
+        page: \d+
         id: \d+
 users_adminuser_services_targe_organisation:
-    path: /admin/cotation/services/targe/organisation/{id}
+    path: /admin/cotation/services/targe/organisation/{id}/{page}
     controller: App\Controller\Produit\Produit\ProduitorganisationController:servicestargeorganisation
+    defaults:
+        page: 1
     requirements:
         id: \d+
+        page: \d+
 users_adminuser_type_organisation:
     path: /admin/type/organisation/{page}
     controller: App\Controller\Localisation\Organisation\TypeorganisationController:typeorganisation
@@ -241,3 +251,42 @@ users_adminuser_users_delete_userorganisation:
         id: 0
     requirements:
         id: \d+
+users_adminuser_produit_nouveau_produit:
+    path: /admin/produit/nouveau/produit
+    controller: App\Controller\Produit\Produit\ProduitController:nouveauproduit
+users_adminuser_update_produit_produit_produit:
+    path: /admin/update/produit/{id}
+    controller: App\Controller\Produit\Produit\ProduitController:modificationproduit
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_produit_delete_produit:
+    path: /admin/produit/delete/produit/{id}
+    controller: App\Controller\Produit\Produit\ProduitController:deleteproduit
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_update_produit_produit_typeproduit:
+    path: /admin/update/type/produit/{id}
+    controller: App\Controller\Produit\Produit\TypeproduitController:modificationtypeproduit
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_produit_suppression_typeproduit:
+    path: /admin/produit/suppression/typeproduit/{id}
+    controller: App\Controller\Produit\Produit\TypeproduitController:suppressiontypeproduit
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+users_adminuser_targuer_nouveau_produit:
+    path: /admin/targuer/nouveau/produit/{organisation}/{id}
+    controller: App\Controller\Produit\Produit\ProduitorganisationController:targuernouveauproduit
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+        organisation: \d+

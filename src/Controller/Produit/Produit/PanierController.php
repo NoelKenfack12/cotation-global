@@ -57,8 +57,8 @@ class PanierController extends AbstractController
                     }
                 }
 
-                print_r($dataTab);
-                exit;
+                //print_r($dataTab);
+                //exit;
             }
         }
         return $this->render('Theme/Users/Adminuser/Panier/cotationdescription.html.twig', 
