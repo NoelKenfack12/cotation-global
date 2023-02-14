@@ -19,6 +19,7 @@ class TypeorganisationType extends AbstractType
     {
         $builder
             ->add('name',TextType::class, array('attr'=>array('class'=>'form-control input-lg','placeholder'=>'Nom de l\'organisation')))
+            ->add('code',TextType::class, array('attr'=>array('class'=>'form-control input-lg','placeholder'=>'Code du service, ex: GPG')))
             ->add('description',TextareaType::class, array('attr'=>array('class'=>'form-control input-lg','placeholder'=>'Description de l\'organisation')))
         ;
     }

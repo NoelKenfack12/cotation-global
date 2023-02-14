@@ -35,6 +35,11 @@ class Ville
 	*/
     private $pays;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $abbreviation;
+
     public function __construct()
 	{
         $this->date = new \Datetime();
@@ -86,5 +91,17 @@ class Ville
     public function getPays(): ?Pays
     {
         return $this->pays;
+    }
+
+    public function getAbbreviation(): ?string
+    {
+        return $this->abbreviation;
+    }
+
+    public function setAbbreviation(?string $abbreviation): self
+    {
+        $this->abbreviation = $abbreviation;
+
+        return $this;
     }
 }

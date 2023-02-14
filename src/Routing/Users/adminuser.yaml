@@ -117,8 +117,13 @@ users_adminuser_nouvelle_cotation:
     controller: App\Controller\Produit\Produit\PanierController:nouvellecotation
     requirements:
         id: \d+
+users_adminuser_create_cotation_identification:
+    path: /admin/create/cotation/{id}
+    controller: App\Controller\Produit\Produit\PanierController:createcotationIdentification
+    requirements:
+        id: \d+
 users_adminuser_cotation_description:
-    path: /admin/cotation/description/{id}
+    path: /admin/create/cotation/description/{id}
     controller: App\Controller\Produit\Produit\PanierController:cotationdescription
     requirements:
         id: \d+

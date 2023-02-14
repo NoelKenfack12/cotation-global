@@ -33,18 +33,30 @@ class ForminputType extends AbstractType
                 ],
                 'group_by' => function($choice, $key, $value) {
                     if ($choice <= new \DateTime('+3 days')) {
-                        return 'Soon';
+                        return 'Type de champ a crée';
                     }
             
                     return 'Later';
                 }])
             ->add('placeholder', TextType::class, array('attr'=>array('class'=>'form-control input-lg','placeholder'=>'Placeholder du champ')))
-            ->add('required', CheckboxType::class, array('attr'=>array('class'=>'form-control input-lg')))
+            ->add('required', CheckboxType::class, array('attr'=>array('class'=>'form-control input-lg'), 'required'=>false))
             ->add('serviceorganisation',EntityType::class, array(
                 'class'=>Serviceorganisation::class,
                 'choice_label'=>'nom',
                 'multiple'=>false, 
                 'attr'=>array('class'=>'form-control')))
+            ->add('position', ChoiceType::class, [
+                'choices' => [ 
+                    'Etape 1: Identification' => 'indentification',
+                    'Etape 2: Détail de la cotation' => 'detailcontenu'
+                ],
+                'group_by' => function($choice, $key, $value) {
+                    if ($choice <= new \DateTime('+3 days')) {
+                        return 'Disposition du champ';
+                    }
+            
+                    return 'Disposition du champ';
+                }])
         ;
     }
 

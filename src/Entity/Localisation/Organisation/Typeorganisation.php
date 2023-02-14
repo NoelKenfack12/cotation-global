@@ -45,6 +45,11 @@ class Typeorganisation
      */
     private $typeorgOrganisations;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $code;
+
     public function __construct()
     {
         $this->date = new \Datetime();
@@ -149,6 +154,18 @@ class Typeorganisation
                 $typeorgOrganisation->setTypeorganisation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(?string $code): self
+    {
+        $this->code = $code;
 
         return $this;
     }

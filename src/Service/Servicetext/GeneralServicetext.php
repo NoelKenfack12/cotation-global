@@ -267,4 +267,25 @@ class GeneralServicetext
 			array('ROLE_ADMIN_ORG', 'Compte administrateur d\'organisation', true) //lié à une organisation
 		);
 	}
+
+	public function editNumberCommande($nbItemPanier)
+	{
+		$codeCommande = '';
+		if($nbItemPanier < 10)
+		{
+			$codeCommande = '0000'.$nbItemPanier;
+		}else if($nbItemPanier < 100)
+		{
+			$codeCommande = '000'.$nbItemPanier;
+		}else if($nbItemPanier < 1000)
+		{
+			$codeCommande = '00'.$nbItemPanier;
+		}else if($nbItemPanier < 10000)
+		{
+			$codeCommande = '0'.$nbItemPanier;
+		}else{
+			$codeCommande = $nbItemPanier;
+		}
+		return $codeCommande;
+	}
 }

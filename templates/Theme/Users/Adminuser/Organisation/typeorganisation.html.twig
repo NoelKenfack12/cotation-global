@@ -116,7 +116,7 @@
         <div class="accordion">
           {% for type in liste_typeOrg %}
           <div class="accordion__item">
-            <h2 class="accordion__title {% if loop.index < 3 %}active{% endif %}">{{ type.name }}</h2>
+            <h2 class="accordion__title {% if loop.index < 3 %}active{% endif %}">{{ type.name }}  - {{ type.code }}</h2>
             <div class="accordion__body2">
               <p>{{ type.description }}</p>
               
@@ -305,6 +305,9 @@
         <div class="card pt-4 pl-4 pr-4" style="min-height: 150px;">
             <div class="form-group">
               {{ form_widget(formTypeOrg.name , {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+              {{ form_widget(formTypeOrg.code , {'attr': {'class': 'form-control'}}) }}
             </div>
             <div class="form-group">
               {{ form_widget(formTypeOrg.description , {'attr': {'class': 'form-control'}}) }}

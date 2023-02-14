@@ -31,6 +31,17 @@
       <li><h1>Nouvelle cotation</h1></li>
     </ul>
 
+    {% for infos in app.session.flashbag.get('information') %}
+        {% if loop.last %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              {{ infos }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+        {% endif %}
+    {% endfor %}
+
     <div class="mt-2 mb-2">
         <ul class="tabs-step">
             <li class="active">
@@ -54,7 +65,7 @@
         </ul>
     </div>
 
-    <form action="{{ path('users_adminuser_cotation_description', {'id': organisation.id }) }}" method="post">
+    <form action="{{ path('users_adminuser_create_cotation_identification', {'id': organisation.id }) }}" method="post">
     <div class="mb-3" style="background: #fff; padding: 20px; min-height: 400px;">
         <h3>Liste cotation</h3>
         <hr/>
@@ -73,7 +84,7 @@
                 {% for typeorg in organisation.getTypeorgOrganisations() %}
                 <div class="select-typeorg services-typeorg-{{ typeorg.typeorganisation.id }}" style="{% if not(loop.first) %}display: none;{% endif %}">
                     <label for="client-name">Sélectionnez le titre de transport</label>
-                    <select name="serviceorg" class="form-control input-lg selection_service_organisation" id="selection_service_organisation_{{ typeorg.typeorganisation.id }}">
+                    <select name="serviceorg_{{ typeorg.typeorganisation.id }}" class="form-control input-lg selection_service_organisation" id="selection_service_organisation_{{ typeorg.typeorganisation.id }}">
                         {% set typeorganisation = typeorg.typeorganisation %}
                         {% for typeorgServiceorg in typeorganisation.getTypeorgServiceorgs() %}
                         <option value="typeorg-{{ typeorg.id }}-typeorgServiceorg_{{ typeorgServiceorg.serviceorganisation.id }}">{{ typeorgServiceorg.serviceorganisation.nom }}</option>
@@ -101,7 +112,7 @@
                             <h3>Attributs spécifiques</h3>
                             
                             <div class="" style="">
-                                {% for forminput in serviceorganisation.getForminputs() %}
+                                {% for forminput in serviceorganisation.getForminputs()|filter(forminput => forminput.required == true and forminput.position == 'indentification') %}
                                 <div class="row">
                                     <div class="col-md-4">
                                         <label for="input-key">{{ forminput.libelle }}</label>
@@ -110,19 +121,19 @@
                                     <div class="col-md-8">
                                         {% if forminput.typeInput == 'number' %}
                                         <div class="form-group">
-                                            <input type="number" name="required-input-{{ forminput.id }}" class="form-control" placeholder="valeur"/>
+                                            <input type="number" name="required-input-{{ typeorgServiceorg.id }}service{{ serviceorganisation.id }}-input{{ forminput.id }}" class="form-control" placeholder="valeur"/>
                                         </div>
                                         {% elseif(forminput.typeInput == 'text') %}
                                         <div class="form-group">
-                                            <input type="text" name="required-input-{{ forminput.id }}" class="form-control" placeholder="valeur"/>
+                                            <input type="text" name="required-input-{{ typeorgServiceorg.id }}service{{ serviceorganisation.id }}-input{{ forminput.id }}" class="form-control" placeholder="valeur"/>
                                         </div>
                                         {% elseif(forminput.typeInput == 'textarea') %}
                                         <div class="form-group">
-                                            <textarea name="required-input-{{ forminput.id }}" class="form-control input-lg" rows="10"></textarea>
+                                            <textarea name="required-input-{{ typeorgServiceorg.id }}service{{ serviceorganisation.id }}-input{{ forminput.id }}" class="form-control input-lg" rows="10"></textarea>
                                         </div>
                                         {% elseif(forminput.typeInput == 'select') %}
                                         <div class="form-group">
-                                            <select name="required-input-{{ forminput.id }}" id="" class="form-control">
+                                            <select name="required-input-{{ typeorgServiceorg.id }}service{{ serviceorganisation.id }}-input{{ forminput.id }}" id="" class="form-control">
                                                 {% for option in forminput.optionFormInputs %}
                                                 <option value="{{ option.id }}">{{ option.libelle }}</option>
                                                 {% endfor %}
@@ -145,7 +156,7 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <label class="toggle-switch-1">
-                            <input type="checkbox" checked="">
+                            <input type="checkbox" checked="" id="switch-optional-attr">
                             <span>
                                 <i></i>
                             </span>
@@ -154,27 +165,61 @@
                 </div>
             </div>
 
-            <div class="col-md-12 mt-4 mb-4">
-                <div style="border: 1px dashed #999; background: #e8eff9; padding: 15px; border-radius: 10px;">
-                    <h3>Attributs spécifiques</h3>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="input-key"> TD : Tarif douanier</label>
+            <div class="col-md-12 mt-4 mb-4 optional_inputs_section">
+                {% set indexInput = 0 %}
+                {% for typeorg in organisation.getTypeorgOrganisations() %}
+
+                    {% set typeorganisation = typeorg.typeorganisation %}
+                    {% if loop.first %}
+                        {% set indexInput = 1 %}
+                    {% else %}
+                        {% set indexInput = 0 %}
+                    {% endif %}
+
+
+                    {% for typeorgServiceorg in typeorganisation.getTypeorgServiceorgs() %}
+                        {% set serviceorganisation = typeorgServiceorg.serviceorganisation %}
+                        <div class="block-required-coustom-input required-form-service-org-typeorg-{{ typeorg.id }}-typeorgServiceorg_{{ serviceorganisation.id }}" style="{% if loop.first and indexInput == 1 %}{% else %}display: none;{% endif %} border: 1px dashed #999; background: #e8eff9; padding: 15px; border-radius: 10px;">
+                            <h3>Attributs Optionnels</h3>
+                            
+                            <div class="" style="">
+                                {% for forminput in serviceorganisation.getForminputs()|filter(forminput => forminput.required == false and forminput.position == 'indentification') %}
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="input-key">{{ forminput.libelle }}</label>
+                                    </div>
+
+                                    <div class="col-md-8">
+                                        {% if forminput.typeInput == 'number' %}
+                                        <div class="form-group">
+                                            <input type="number" name="optional-input-{{ typeorgServiceorg.id }}service{{ serviceorganisation.id }}-input{{ forminput.id }}" class="form-control" placeholder="valeur"/>
+                                        </div>
+                                        {% elseif(forminput.typeInput == 'text') %}
+                                        <div class="form-group">
+                                            <input type="text" name="optional-input-{{ typeorgServiceorg.id }}service{{ serviceorganisation.id }}-input{{ forminput.id }}" class="form-control" placeholder="valeur"/>
+                                        </div>
+                                        {% elseif(forminput.typeInput == 'textarea') %}
+                                        <div class="form-group">
+                                            <textarea name="optional-input-{{ typeorgServiceorg.id }}service{{ serviceorganisation.id }}-input{{ forminput.id }}" class="form-control input-lg" rows="10"></textarea>
+                                        </div>
+                                        {% elseif(forminput.typeInput == 'select') %}
+                                        <div class="form-group">
+                                            <select name="optional-input-{{ typeorgServiceorg.id }}service{{ serviceorganisation.id }}-input{{ forminput.id }}" id="" class="form-control">
+                                                {% for option in forminput.optionFormInputs %}
+                                                <option value="{{ option.id }}">{{ option.libelle }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            <input type="text" name="" id="input-key" class="form-control" placeholder="valeur"/>
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-4">
-                            <label for="input-key">Clé</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" name="" id="input-key" class="form-control" placeholder="valeur"/>
-                        </div>
-                    </div>
-                </div>
+                    {% endfor %}
+                {% endfor %}
             </div>
+            
 
         </div>
 
@@ -208,5 +253,14 @@
         $('.block-required-coustom-input').hide();
         $('.required-form-service-org-'+idType).show();
     })
+
+    $('#switch-optional-attr').change(function (i, value) {
+        if(!$('#switch-optional-attr').prop('checked'))
+        {
+            $('.optional_inputs_section').hide();
+        }else{
+            $('.optional_inputs_section').show();
+        }
+    });
     
 {% endblock %}

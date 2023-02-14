@@ -52,4 +52,5 @@ class OrganisationRepository extends ServiceEntityRepository
 			->setMaxResults($nombreParPage);
 		return new Paginator($query);
 	}
+
 }

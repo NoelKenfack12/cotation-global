@@ -1,13 +1,14 @@
 
 {{ form_start(form, {'attr': {'action': path('users_adminuser_update_service_organisation', {'id': serviceorganisation.id}) }}) }}
-  <div class="form-group">
-    {{ form_widget(form.nom , {'attr': {'class': 'form-control'}}) }}
-  </div>
-  <div class="form-group">
-    {{ form_widget(form.description , {'attr': {'class': 'form-control'}}) }}
-  </div>
-  <div class="form-control">
-	 <button class="btn btn-primary bg-struct" type="submit">Envoyer </button>
-  </div>
+    <div class="form-group">
+      {{ form_widget(form.nom , {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+      {{ form_widget(form.description , {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <div class="form-control">
+      <button class="btn btn-primary bg-struct" type="submit">Envoyer </button>
+    </div>
 {{ form_end(form) }}
 

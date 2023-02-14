@@ -20,6 +20,7 @@ class VilleType extends AbstractType
     {
         $builder
             ->add('name', TextType::class,array('attr'=>array('placeholder'=>'Nom de la ville','class'=>'form-control')))
+            ->add('abbreviation', TextType::class,array('attr'=>array('placeholder'=>'Code d\'identification','class'=>'form-control')))
             ->add('pays',EntityType::class, array(
                 'class'=> Pays::class,
                 'choice_label'=>'nom',

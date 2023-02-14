@@ -63,6 +63,11 @@ class Forminput
      */
     private $required;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $position;
+
     public function __construct()
     {
         $this->date = new \Datetime();
@@ -185,6 +190,18 @@ class Forminput
     public function setRequired(bool $required): self
     {
         $this->required = $required;
+
+        return $this;
+    }
+
+    public function getPosition(): ?string
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?string $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }

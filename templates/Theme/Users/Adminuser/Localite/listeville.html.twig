@@ -78,7 +78,7 @@
                     </div>
                   </div>
 
-                <h3>{{ ville.name }}</h3>
+                <h3>{{ ville.name }} - {{ ville.abbreviation }}</h3>
                 <p>{{ ville.pays.nom }}</p>
               </div>
             </div>
@@ -185,6 +185,11 @@
                 {{ form_widget(form.name) }}
                 {{ form_label(form.name, 'Nom de la ville'|trans) }}
                 <div style="color: red;">{{ form_errors(form.name)|trans }}</div>
+            </div>
+            <div class="form-group">
+              {{ form_widget(form.abbreviation) }}
+              {{ form_label(form.abbreviation, 'Code d\'identification (ex: Yaoundé: YDE)'|trans) }}
+              <div style="color: red;">{{ form_errors(form.abbreviation)|trans }}</div>
             </div>
             <div class="form-group">
               {{ form_widget(form.pays) }}
