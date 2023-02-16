@@ -5,11 +5,15 @@ namespace App\Entity\Produit\Produit;
 use App\Entity\Localisation\Organisation\Organisation;
 use App\Entity\Localisation\Organisation\Serviceorganisation;
 use App\Entity\Localisation\Organisation\Typeorganisation;
+use App\Entity\Produit\Service\Pays;
 use App\Entity\Users\User\Contact;
 use App\Repository\Produit\Produit\PanierRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
+use App\Entity\Produit\Produit\Produitpanier;
+use App\Entity\Produit\Produit\Typeproduit;
 
 /**
  * @ORM\Entity(repositoryClass=PanierRepository::class)
@@ -75,10 +79,38 @@ class Panier
      */
     private $contact;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Pays::class)
+     */
+    private $paysorigin;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Pays::class)
+     */
+    private $paysprovenance;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Produitpanier::class, mappedBy="panier")
+     */
+    private $produitpaniers;
+
+    private $em;
+
     public function __construct()
     {
         $this->panierInputs = new ArrayCollection();
         $this->date = new \Datetime();
+        $this->produitpaniers = new ArrayCollection();
+    }
+
+    public function getEm()
+    {
+        return $this->em;
+    }
+
+    public function setEm($em)
+    {
+        $this->em = $em;
     }
 
     public function getId(): ?int
@@ -222,5 +254,66 @@ class Panier
         $this->contact = $contact;
 
         return $this;
+    }
+
+    public function getPaysorigin(): ?Pays
+    {
+        return $this->paysorigin;
+    }
+
+    public function setPaysorigin(?Pays $paysorigin): self
+    {
+        $this->paysorigin = $paysorigin;
+
+        return $this;
+    }
+
+    public function getPaysprovenance(): ?Pays
+    {
+        return $this->paysprovenance;
+    }
+
+    public function setPaysprovenance(?Pays $paysprovenance): self
+    {
+        $this->paysprovenance = $paysprovenance;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Produitpanier>
+     */
+    public function getProduitpaniers(): Collection
+    {
+        return $this->produitpaniers;
+    }
+
+    public function addProduitpanier(Produitpanier $produitpanier): self
+    {
+        if (!$this->produitpaniers->contains($produitpanier)) {
+            $this->produitpaniers[] = $produitpanier;
+            $produitpanier->setPanier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduitpanier(Produitpanier $produitpanier): self
+    {
+        if ($this->produitpaniers->removeElement($produitpanier)) {
+            // set the owning side to null (unless already changed)
+            if ($produitpanier->getPanier() === $this) {
+                $produitpanier->setPanier(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getProduitOrganisationType(Typeproduit $typeproduit)
+    {
+        $produit_panier = $this->em->getRepository(Produitpanier::class)
+                             ->findProduitPanierType($this->getId(), $typeproduit->getId());
+        return $produit_panier;
     }
 }

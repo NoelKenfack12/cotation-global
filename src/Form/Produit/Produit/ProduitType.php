@@ -22,7 +22,7 @@ class ProduitType extends AbstractType
         $builder
             ->add('nom',TextType::class,array('attr'=>array('placeholder'=>'Nom du produit','class'=>'form-control')))
             ->add('description',TextareaType::class,array('attr'=>array('placeholder'=>'Indications sur le produit','class'=>'form-control')))
-            ->add('montant',TextType::class,array('attr'=>array('placeholder'=>'Nom du produit','class'=>'form-control')))
+            ->add('montant',TextType::class,array('attr'=>array('placeholder'=>'Montant du produit','class'=>'form-control')))
             ->add('typeproduit',EntityType::class, array(
                 'class'=> Typeproduit::class,
                 'choice_label'=>'nom',

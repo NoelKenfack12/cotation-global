@@ -49,6 +49,7 @@ class ProduitOrganisation
     public function __construct()
 	{
         $this->date = new \Datetime();
+        $this->selectDefault = false;
 	}
 
     public function getId(): ?int

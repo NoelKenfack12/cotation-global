@@ -1,3 +1,4 @@
+{% set organisationId = organisation.id %}
 {% extends "Theme/Users/Adminuser/layoutbaseorg.html.twig" %}
 {% block meta %}
 	{{ parent() }}
@@ -29,74 +30,105 @@
       <li><a href="#">Cotations</a></li>
       <li><h1>Nouvelle cotation</h1></li>
     </ul>
+    {% for infos in app.session.flashbag.get('information') %}
+        {% if loop.last %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              {{ infos }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+        {% endif %}
+    {% endfor %}
 
     <div class="mt-2 mb-2">
         <ul class="tabs-step">
             <li class="active">
                 <a href="#">
                     <strong>Identification de l'opération</strong>
-                    <div>re</div>
+                    <div>Services</div>
                 </a>
             </li>
             <li class="active">
                 <a href="#">
                     <strong>Description du contenu</strong>
-                    <div>re</div>
+                    <div>Contacts</div>
                 </a>
             </li>
             <li>
                 <a href="#">
                     <strong>Cotation</strong>
-                    <div>re</div>
+                    <div>Tarification</div>
                 </a>
             </li>
         </ul>
     </div>
 
-    <form action="{{ path('users_adminuser_tarification_cotation', {'id': 1}) }}" method="post">
+    <form action="{{ path('users_adminuser_cotation_description', {'id': panier.id}) }}" method="post">
     <div class="mb-3" style="background: #fff; padding: 20px; min-height: 400px;">
-        <h3>Liste cotation</h3>
+        <h3>{{ panier.typeorganisation.name }} <span class="bi bi-arrow-right-short"></span> {{ panier.serviceorganisation.nom }}</h3>
         <hr/>
         
         <div class="row">
             <div class="col-md-6">
                 <label for="client-name">Pays d'origine</label>
-                <select name="typeop" id="pays_origine" class="form-control input-lg" id="client-name">
-                    <option value="">Cameroun</option>
-                    <option value="">Usa</option>
+                <select name="paysorigine" id="pays_origine" class="form-control input-lg" id="client-name">
+                    {% for pays in liste_pays %}
+                    <option value="{{ pays.id }}">{{ pays.nom }}</option>
+                    {% endfor %}
                 </select>
             </div>
 
             <div class="col-md-6">
                 <label for="client-name">Pays de provenance</label>
-                <select name="typeop" id="pays_provenance" class="form-control input-lg" id="client-name">
-                    <option value="">Cameroun</option>
-                    <option value="">Usa</option>
+                <select name="paysprovenance" id="pays_provenance" class="form-control input-lg" id="client-name">
+                    {% for pays in liste_pays %}
+                    <option value="{{ pays.id }}">{{ pays.nom }}</option>
+                    {% endfor %}
                 </select>
             </div>
 
+            {% if form_required|length > 0 %}
             <div class="col-md-12 mt-4 mb-4">
                 <div style="border: 1px dashed #999; background: #e8eff9; padding: 15px; border-radius: 10px;">
                     <h3>Champs Obligatoire*</h3>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="input-key">Poids</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" name="" id="input-key" class="form-control" placeholder="valeur"/>
-                        </div>
-                    </div>
+                    
+                    {% for forminput in form_required %}
                     <div class="row mt-2">
                         <div class="col-md-4">
-                            <label for="input-key">Nombre de colis</label>
+                            <label for="input-key">{{ forminput.libelle }}</label>
                         </div>
+
                         <div class="col-md-8">
-                            <input type="text" name="" id="input-key" class="form-control" placeholder="valeur"/>
+                            {% if forminput.typeInput == 'number' %}
+                            <div class="form-group">
+                                <input type="number" name="required-input-{{ forminput.id }}" class="form-control" placeholder="valeur"/>
+                            </div>
+                            {% elseif(forminput.typeInput == 'text') %}
+                            <div class="form-group">
+                                <input type="text" name="required-input-{{ forminput.id }}" class="form-control" placeholder="valeur"/>
+                            </div>
+                            {% elseif(forminput.typeInput == 'textarea') %}
+                            <div class="form-group">
+                                <textarea name="required-input-{{ forminput.id }}" class="form-control input-lg" rows="10"></textarea>
+                            </div>
+                            {% elseif(forminput.typeInput == 'select') %}
+                            <div class="form-group">
+                                <select name="required-input-{{ forminput.id }}" id="" class="form-control">
+                                    {% for option in forminput.optionFormInputs %}
+                                    <option value="{{ option.id }}">{{ option.libelle }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
+            {% endif %}
 
+            {% if form_optional|length > 0 %}
             <div class="col-md-12">
                 <div class="row mt-3">
                     <div class="col-md-6">
@@ -116,33 +148,49 @@
             <div class="col-md-12 mt-4 mb-4 optional_inputs_section">
                 <div style="border: 1px dashed #999; background: #e8eff9; padding: 15px; border-radius: 10px;">
                     <h3>Champs optionnels</h3>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="input-key">Nom & prénom</label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" name="" id="input-key" class="form-control" placeholder="valeur"/>
-                        </div>
-                    </div>
+                    {% for forminput in form_optional %}
                     <div class="row mt-2">
                         <div class="col-md-4">
-                            <label for="input-key">Téléphone</label>
+                            <label for="input-key">{{ forminput.libelle }}</label>
                         </div>
+
                         <div class="col-md-8">
-                            <input type="text" name="" id="input-key" class="form-control" placeholder="valeur"/>
+                            {% if forminput.typeInput == 'number' %}
+                            <div class="form-group">
+                                <input type="number" name="optional-input-{{ forminput.id }}" class="form-control" placeholder="valeur"/>
+                            </div>
+                            {% elseif(forminput.typeInput == 'text') %}
+                            <div class="form-group">
+                                <input type="text" name="optional-input{{ forminput.id }}" class="form-control" placeholder="valeur"/>
+                            </div>
+                            {% elseif(forminput.typeInput == 'textarea') %}
+                            <div class="form-group">
+                                <textarea name="optional-input{{ forminput.id }}" class="form-control input-lg" rows="10"></textarea>
+                            </div>
+                            {% elseif(forminput.typeInput == 'select') %}
+                            <div class="form-group">
+                                <select name="optional-input{{ forminput.id }}" id="" class="form-control">
+                                    {% for option in forminput.optionFormInputs %}
+                                    <option value="{{ option.id }}">{{ option.libelle }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
+            {% endif %}
 
             <div class="col-md-12">
-                <div class="row mt-3">
+                <div class="row mt-5">
                     <div class="col-md-6">
                         <h3>Ajouter les informations du client</h3>
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="form-group">
-                            <select name="" id="type_operation_contact" class="form-control">
+                            <select name="infosclient" id="type_operation_contact" class="form-control">
                                 <option value="0">Choisir une opération</option>
                                 <option value="1">Sélectionner un client existant</option>
                                 <option value="2">Créer un nouveau client</option>
@@ -157,12 +205,13 @@
                     <h3>Client</h3>
                     <div class="row">
                         <div class="col-md-4">
-                            <label for="input-key">Retrouvez un client</label>
+                            <label for="client-id">Retrouvez un client</label>
                         </div>
                         <div class="col-md-8">
-                            <select name="typeop" id="contacts_client" class="form-control input-lg" id="client-name">
-                                <option value="">Cameroun</option>
-                                <option value="">Usa</option>
+                            <select name="clientId" id="contacts_client" class="form-control input-lg" id="client-id">
+                                {% for contact in liste_contact %}
+                                <option value="{{ contact.id }}">{{ contact.nom }}</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -177,7 +226,7 @@
                             <label for="input-key">Nom & prénom</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" name="" id="input-key" class="form-control" placeholder="valeur"/>
+                            <input type="text" name="username" id="input-key" class="form-control" placeholder="Nom et Prenom" required=""/>
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -185,7 +234,7 @@
                             <label for="input-key">Téléphone</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" name="" id="input-key" class="form-control" placeholder="valeur"/>
+                            <input type="text" name="telephone" id="input-key" class="form-control" placeholder="Téléphone"/>
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -193,7 +242,7 @@
                             <label for="input-key">Adresse Email</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" name="" id="input-key" class="form-control" placeholder="valeur"/>
+                            <input type="text" name="email" id="input-key" class="form-control" placeholder="Email"/>
                         </div>
                     </div>
                 </div>

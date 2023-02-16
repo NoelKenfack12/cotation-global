@@ -85,8 +85,10 @@ users_adminuser_cotation_global:
     path: /admin/cotation/global
     controller: App\Controller\Produit\Produit\PanierController:cotationglobal
 users_adminuser_cotation_organisation:
-    path: /admin/cotation/organisation/{id}
+    path: /admin/cotation/organisation/{id}/{page}
     controller: App\Controller\Produit\Produit\PanierController:cotationorganisation
+    defaults:
+        page: 1
     requirements:
         id: \d+
 users_adminuser_produit_organisation:

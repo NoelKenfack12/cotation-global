@@ -133,9 +133,10 @@
                     </div>
                   </div>
 
-                  {{ produit.nom }}
+                  {{ produit.nom }} - {{ produit.montant }} {{ devise }}
                 </h3>
                 <p>{{ produit.description }}</p>
+                <div>{{ produit.typeproduit.nom|upper }}</div>
               </div>
             </div>
             {% else %}

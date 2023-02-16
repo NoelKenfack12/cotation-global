@@ -43,6 +43,11 @@ class Contact
      */
     private $date;
 
+    public function __construct()
+    {
+        $this->date = new \Datetime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

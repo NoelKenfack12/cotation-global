@@ -65,6 +65,7 @@ class Forminput
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * indentification | detailcontenu
      */
     private $position;
 

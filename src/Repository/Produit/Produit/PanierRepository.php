@@ -5,6 +5,7 @@ namespace App\Repository\Produit\Produit;
 use App\Entity\Produit\Produit\Panier;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * @extends ServiceEntityRepository<Panier>
@@ -46,4 +47,21 @@ class PanierRepository extends ServiceEntityRepository
         
         return (int) $query->getSingleScalarResult();
     }
+
+    public function findPanierOrganisationPagine($id, $page, $nombreParPage)
+	{
+		if($page < 1){
+			throw new \InvalidArgumentException('Page inexistant');
+		}
+		$query = $this->createQueryBuilder('p')
+                    ->leftJoin('p.organisation', 'o')
+                    ->addSelect('o')
+                    ->where('o.id = :id')
+					->orderBy('p.date','DESC')
+                    ->setParameter('id', $id)
+					->getQuery();
+		$query->setFirstResult(($page-1) * $nombreParPage)
+			->setMaxResults($nombreParPage);
+		return new Paginator($query);
+	}
 }
