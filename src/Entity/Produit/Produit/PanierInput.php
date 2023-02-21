@@ -38,7 +38,7 @@ class PanierInput
 
     /**
      * @ORM\Column(type="text")
-     */
+    */
     private $valeur;
 
     public function __construct()
@@ -97,5 +97,19 @@ class PanierInput
         $this->valeur = $valeur;
 
         return $this;
+    }
+
+    public function name($tail)
+    {
+        $allname = $this->valeur;
+        if(strlen($allname) <= $tail)
+        {
+            return $allname;
+        }else{
+            $text = wordwrap($allname,$tail,'~',true);
+            $tab = explode('~',$text);
+            $text = $tab[0];
+            return $text.'...';
+        }
     }
 }

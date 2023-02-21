@@ -130,4 +130,18 @@ class Produit
 
         return $this;
     }
+
+    public function name($tail)
+    {
+        $allname = $this->nom;
+        if(strlen($allname) <= $tail)
+        {
+            return $allname;
+        }else{
+            $text = wordwrap($allname,$tail,'~',true);
+            $tab = explode('~',$text);
+            $text = $tab[0];
+            return $text.'...';
+        }
+    }
 }

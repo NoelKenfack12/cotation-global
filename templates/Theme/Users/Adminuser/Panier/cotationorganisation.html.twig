@@ -1,3 +1,4 @@
+{% set organisationId = organisation.id %}
 {% extends "Theme/Users/Adminuser/layoutbaseorg.html.twig" %}
 {% block meta %}
 	{{ parent() }}
@@ -21,7 +22,7 @@
             </div>
             <div class="col-md-4">
                 <span style="float: right;">
-                    <a href="{{ path('users_adminuser_nouvelle_cotation', {'id': 1}) }}" class="btn btn-primary mt-2">Ajouter Une Cotation</a>
+                    <a href="{{ path('users_adminuser_nouvelle_cotation', {'id': organisation.id}) }}" class="btn btn-primary mt-2">Ajouter Une Cotation</a>
                   </span>
             </div>
         </div>
@@ -40,7 +41,7 @@
           <div class="alert alert-success alert-dismissible fade show" role="alert">
               <h3 class="text-center">{{ infos }}</h3>
               <div class="mt-3 text-center">
-                <a href="{{ panierId }}"><span class="bi bi-cloud-download"></span> Télécharger</a>
+                <a href="{{ path('users_adminuser_impression_fiche_cotation', {'id': panierId}) }}" target="_blank"><span class="bi bi-cloud-download"></span> Télécharger</a>
               </div>
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
@@ -103,6 +104,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                           <a class="dropdown-item" href="{{ path('users_adminuser_tarification_cotation', {'id': panier.id }) }}"><span class="bi bi-pencil-square"></span> Modifier</a>
+                          <a class="dropdown-item" href="{{ path('users_adminuser_impression_fiche_cotation', {'id': panier.id}) }}" target="_blank"><span class="bi bi-cloud-download"></span> Télécharger</a>
                           <a class="dropdown-item" href="#"><span class="bi bi-trash"></span> Supprimer</a>
                         </div>
                     </div>

@@ -206,4 +206,18 @@ class Forminput
 
         return $this;
     }
+
+    public function name($tail)
+    {
+        $allname = $this->libelle;
+        if(strlen($allname) <= $tail)
+        {
+            return $allname;
+        }else{
+            $text = wordwrap($allname,$tail,'~',true);
+            $tab = explode('~',$text);
+            $text = $tab[0];
+            return $text.'...';
+        }
+    }
 }

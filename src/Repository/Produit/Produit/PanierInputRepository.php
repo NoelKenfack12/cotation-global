@@ -39,28 +39,19 @@ class PanierInputRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return PanierInput[] Returns an array of PanierInput objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findInputPanier($panierId, $position)
+    {
+        $query = $this->createQueryBuilder('pi')
+                    ->leftJoin('pi.forminput', 'f')
+                    ->leftJoin('pi.panier', 'p')
+                    ->addSelect('p')
+                    ->addSelect('f')
+                    ->where('p.id = :id AND f.position LIKE :position')
+					->orderBy('pi.date','DESC')
+                    ->setParameter('id', $panierId)
+                    ->setParameter('position', '%'.$position.'%')
+					->getQuery();
 
-//    public function findOneBySomeField($value): ?PanierInput
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        return $query->getResult();
+    }
 }

@@ -18,6 +18,7 @@ use App\Entity\Users\User\Contact;
 use App\Entity\Produit\Produit\Typeproduit;
 use App\Entity\Produit\Produit\ProduitOrganisation;
 use App\Entity\Produit\Produit\Produitpanier;
+use App\Service\AfPdf\PDF;
 
 class PanierController extends AbstractController
 {
@@ -41,6 +42,13 @@ class PanierController extends AbstractController
         {
             if(isset($_POST['panierId'])){
                 $panierId = $_POST['panierId'];
+                $panier = $em->getRepository(Panier::class)
+                             ->find($panierId);
+                if($panier != null)
+                {
+                    $panier->setStatus('active');
+                    $em->flush();
+                }
                 $this->get('session')->getFlashBag()->add('generationFichier','La contation a été enregistrée avec succès !');
             }
         }
@@ -324,5 +332,144 @@ class PanierController extends AbstractController
 
         return $this->render('Theme/Users/Adminuser/Panier/tarificationcotation.html.twig',
         array('organisation'=>$panier->getOrganisation(), 'panier'=>$panier, 'liste_typeProd'=>$liste_typeProd));
+    }
+
+    public function impressionfichecotation(EntityManagerInterface $em, GeneralServicetext $service, Panier $panier)
+    {
+        $liste_typeProd = $em->getRepository(Typeproduit::class)
+                             ->myfindAll();
+        $panier->setEm($em);
+
+        $pdf = new PDF('P','mm','A4');
+        $addpagedeux = false;
+
+        $pdf->AliasNbPages();
+        $pdf->AddPage();
+        $page = 1;
+
+        if($panier->getContact() != null)
+        {
+            $clientName = $panier->getContact()->getNom();
+        }else{
+            $clientName = 'Noel K.';
+        }
+        $pdf->myheader('Facture N: '.$panier->getReference().' du: '.$panier->getDate()->format('Y-m-d H:i:s'),$clientName,'N. Client: '.$panier->getClientNumber());
+
+        $liste_input_one = $em->getRepository(PanierInput::class)
+                              ->findInputPanier($panier->getId(), 'indentification');
+        $liste_input_two = $em->getRepository(PanierInput::class)
+                              ->findInputPanier($panier->getId(), 'detailcontenu');
+
+        $currentPosition = $pdf->GetY() +5;
+        $pdf->SetY($currentPosition);
+        foreach($liste_input_one as $input)
+        {
+            $pdf->addLeftHeding($service->retireAccent($input->getForminput()->name(18)), $service->retireAccent($input->name(35)));
+        }
+
+        $currentYIndex = $pdf->GetY();
+
+        $pdf->setY($currentPosition);
+        foreach($liste_input_two as $input)
+        {
+            $pdf->addRightHeding($service->retireAccent($input->getForminput()->name(18)), $service->retireAccent($input->name(35)));
+        }
+
+        if($panier->getPaysorigin() != null)
+        {
+            $pdf->addRightHeding('Pays d\'origin', $panier->getPaysorigin()->getNom());
+        }
+        if($panier->getPaysprovenance() != null)
+        {
+            $pdf->addRightHeding('Pays de provenance', $panier->getPaysprovenance()->getNom());
+        }
+
+        if($pdf->GetY() < $currentYIndex)
+        {
+            $pdf->setY($currentYIndex);
+        }
+
+        $pdf->headerdescription();
+
+        
+        $nbligne = 0;
+        $total = 0;
+        $nbarticle = 0;
+        
+        foreach($liste_typeProd as $typeproduit)
+        {
+            $pdf->addProduct($typeproduit->getNom(),'', '', '', '', true);
+
+            $currentProduits = $panier->getProduitOrganisationType($typeproduit);
+            $totalSection = 0;
+            foreach($currentProduits as $produitpanier)
+            {
+                $totalRow = $produitpanier->getMontant()*$produitpanier->getQuantite() + $produitpanier->getTaxe();
+                $total = $total + $totalRow;
+
+                $totalSection = $totalSection + $totalRow;
+                
+                $nbarticle = $nbarticle + 1; 
+                $nomProduit = $produitpanier->getProduitOrganisation()->getProduit()->name(45);
+                $pdf->addProduct($service->retireAccent($nomProduit),$produitpanier->getMontant(), $produitpanier->getQuantite(), $produitpanier->getTaxe(), $totalRow);
+
+                if($nbligne >= 30 and $nbligne <= 36)
+                {
+                    $addpagedeux = true;
+                    $y = $pdf->GetY();
+                    if ($y  >= 250){
+                        $pdf->AddPage();
+                        $pdf->setY(15);
+                        $addpagedeux = false;
+                    }
+                }else{
+                    $addpagedeux = false;
+                }
+
+                $nbligne++;
+            }
+
+            if($nbligne >= 30 and $nbligne <= 36)
+            {
+                $addpagedeux = true;
+                $y = $pdf->GetY();
+                if ($y  >= 250){
+                    $pdf->AddPage();
+                    $pdf->setY(15);
+                    $addpagedeux = false;
+                }
+            }else{
+                $addpagedeux = false;
+            }
+
+            $nbligne++;
+
+            $pdf->addProduct('Total '.$typeproduit->getNom(),'', '', '', $totalSection, true);
+
+            if($nbligne >= 30 and $nbligne <= 36)
+            {
+                $addpagedeux = true;
+                $y = $pdf->GetY();
+                if ($y  >= 250){
+                    $pdf->AddPage();
+                    $pdf->setY(15);
+                    $addpagedeux = false;
+                }
+            }else{
+                $addpagedeux = false;
+            }
+
+            $nbligne++;
+        }
+        $pdf->addProduct('Total ','', '', '', $total, true);
+
+        if($addpagedeux == true)
+        {
+            $pdf->AddPage();
+            $addpagedeux = false;
+        }
+
+        $pdf->statistique('0'.$nbarticle, '0,00',$total, 'Livraison : Yaoundé','Quartier: Biyem-Assi', 'Tel: 693839823',$total,$page, $clientName,$panier->getOrganisation()->getNom(),'La Direction De Transit ');
+        $pdf->Output();
     }
 }

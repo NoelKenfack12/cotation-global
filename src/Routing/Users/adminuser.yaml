@@ -297,3 +297,10 @@ users_adminuser_targuer_nouveau_produit:
     requirements:
         id: \d+
         organisation: \d+
+users_adminuser_impression_fiche_cotation:
+    path: /admin/impression/fiche/cotation/{id}
+    controller: App\Controller\Produit\Produit\PanierController:impressionfichecotation
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
