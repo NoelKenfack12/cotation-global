@@ -135,8 +135,17 @@ users_adminuser_tarification_cotation:
     requirements:
         id: \d+
 users_adminuser_contacts_succursale_global:
-    path: /admin/contacts/succursale/global/{id}
+    path: /admin/contacts/succursale/global/{id}/{page}
     controller: App\Controller\Users\User\ContactController:contactssuccursale
+    defaults:
+        page: 1
+    requirements:
+        id: \d+
+users_adminuser_contacts_client:
+    path: /admin/contacts/client/{page}
+    controller: App\Controller\Users\User\ContactController:contactsclient
+    defaults:
+        page: 1
     requirements:
         id: \d+
 users_adminuser_services_organisation:

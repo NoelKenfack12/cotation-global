@@ -1,4 +1,4 @@
-{% extends "Theme/Users/Adminuser/layoutbaseorg.html.twig" %}
+{% extends "Theme/Users/Adminuser/layoutadmin.html.twig" %}
 {% block meta %}
 	{{ parent() }}
 	<meta name="author" content="Sprint-pay"/>
@@ -15,15 +15,13 @@
     <section style="min-height: 98px; padding: 15px 50px; background: #1e4a8b; color: #fff; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
         <div class="row">
             <div class="col-md-8">
-                <h1>Tableau de bord</h1>
+                <h1>Liste des produits</h1>
                 <div>
-                  <span class="bi bi-geo-alt"></span> Global - Buéa - Entrepot
-              </div>
+                    <span class="bi bi-geo-alt"></span> Global - Administration
+                </div>
             </div>
             <div class="col-md-4">
-                <span style="float: right;">
-                   <a href="{{ path('users_adminuser_nouvelle_cotation', {'id': 1}) }}" class="btn btn-primary mt-2">Ajouter une cotation</a>
-                </span>
+
             </div>
         </div>
     </section>
@@ -60,7 +58,7 @@
             <tr>
                 <th>Nom</th>
                 <th>Date Description</th>
-                <th>Nb. de dossier</th>
+                <th>Organisation</th>
                 <th>Téléphone</th>
                 <th>Emails</th>
                 <th>Action</th>
@@ -72,7 +70,7 @@
             <tr>
                 <td data-title="Nom">{{ contact.nom }}</td>
                 <td data-title="Date Description">{{ contact.date|date('d') }}/{{ contact.date|date('m') }}/{{ contact.date|date('Y') }}</td>
-                <td data-title="Nb. de dossier">05</td>
+                <td data-title="Organisation">{% if contact.organisation != null %}{{ contact.organisation.nom }}{% else %}-{% endif %}</td>
                 <td data-title="Téléphone">
                     {{ contact.telephone }}
                 </td>
@@ -94,7 +92,7 @@
             <tr>
                 <td data-title="Nom">-</td>
                 <td data-title="Date Description">-</td>
-                <td data-title="Nb. de dossier">-</td>
+                <td data-title="Organisation">-</td>
                 <td data-title="Téléphone">
                     -
                 </td>
@@ -168,23 +166,23 @@
             {% endif %}
     
     
-              <li><a href="{{ path('users_adminuser_contacts_succursale_global', {'id': organisation.id, 'page': 1 }) }}" title="Première page" ><span class="bi bi-chevron-bar-left"></span></a></li>
-              <li><a href="{{ path('users_adminuser_contacts_succursale_global', {'id': organisation.id, 'page': pagepre }) }}" title="Page précedente" ><span class="bi bi-chevron-compact-left"></span></a></li>
+              <li><a href="{{ path('users_adminuser_contacts_client', {'page': 1 }) }}" title="Première page" ><span class="bi bi-chevron-bar-left"></span></a></li>
+              <li><a href="{{ path('users_adminuser_contacts_client', {'page': pagepre }) }}" title="Page précedente" ><span class="bi bi-chevron-compact-left"></span></a></li>
               {% for p in debut..fin %}
-              <li value="{{ p }}" class="{% if p == page %}active{% endif %}"><a href="{{ path('users_adminuser_contacts_succursale_global', {'id': organisation.id, 'page': p }) }}" style="margin: 4px 0px;">{{ p }}</a></li>
+              <li value="{{ p }}" class="{% if p == page %}active{% endif %}"><a href="{{ path('users_adminuser_contacts_client', {'page': p }) }}" style="margin: 4px 0px;">{{ p }}</a></li>
               {% endfor %}
-              <li><a href="{{ path('users_adminuser_contacts_succursale_global', {'id': organisation.id, 'page': pagesuiv }) }}"  title="Page suivante" ><span class="bi bi-chevron-compact-right"></span></a></li>
-              <li><a href="{{ path('users_adminuser_contacts_succursale_global', {'id': organisation.id, 'page': nombrepage }) }}" title="Dernière page" ><span class="bi bi-chevron-bar-right"></span></a></li>
+              <li><a href="{{ path('users_adminuser_contacts_client', {'page': pagesuiv }) }}"  title="Page suivante" ><span class="bi bi-chevron-compact-right"></span></a></li>
+              <li><a href="{{ path('users_adminuser_contacts_client', {'page': nombrepage }) }}" title="Dernière page" ><span class="bi bi-chevron-bar-right"></span></a></li>
             
             {% else %}
     
-              <li><a href="{{ path('users_adminuser_contacts_succursale_global', {'id': organisation.id, 'page': page }) }}" title="Première page" ><span class="bi bi-chevron-bar-left"></span></a></li>
-              <li><a href="{{ path('users_adminuser_contacts_succursale_global', {'id': organisation.id, 'page': page }) }}" title="Page précedente" ><span class="bi bi-chevron-compact-left"></span></a></li>
+              <li><a href="{{ path('users_adminuser_contacts_client', {'page': page }) }}" title="Première page" ><span class="bi bi-chevron-bar-left"></span></a></li>
+              <li><a href="{{ path('users_adminuser_contacts_client', {'page': page }) }}" title="Page précedente" ><span class="bi bi-chevron-compact-left"></span></a></li>
     
-              <li  class="active"><a href="{{ path('users_adminuser_contacts_succursale_global', {'id': organisation.id, 'page': page }) }}" style="margin: 4px 0px;">0</a></li>
+              <li  class="active"><a href="{{ path('users_adminuser_contacts_client', {'page': page }) }}" style="margin: 4px 0px;">0</a></li>
     
-              <li><a href="{{ path('users_adminuser_contacts_succursale_global', {'id': organisation.id, 'page': page }) }}"  title="Page suivante" ><span class="bi bi-chevron-compact-right"></span></a></li>
-              <li><a href="{{ path('users_adminuser_contacts_succursale_global', {'id': organisation.id, 'page': page }) }}" title="Dernière page" ><span class="bi bi-chevron-bar-right"></span></a></li>
+              <li><a href="{{ path('users_adminuser_contacts_client', {'page': page }) }}"  title="Page suivante" ><span class="bi bi-chevron-compact-right"></span></a></li>
+              <li><a href="{{ path('users_adminuser_contacts_client', {'page': page }) }}" title="Dernière page" ><span class="bi bi-chevron-bar-right"></span></a></li>
     
             {% endif %}	
           </ul>
@@ -194,7 +192,6 @@
 </div>
 <!-- content-wrapper ends -->
 
-  
 {% endblock %}
 
 {% block javascripttemplate %}

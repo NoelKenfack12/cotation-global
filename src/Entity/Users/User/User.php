@@ -345,18 +345,18 @@ class User implements UserInterface, \Serializable
                                      }
 	
 	public function name($tail)
-                                     {
-                                         $allname = $this->nom.' '.$this->prenom;
-                                         if(strlen($allname) <= $tail)
-                                         {
-                                             return $allname;
-                                         }else{
-                                             $text = wordwrap($allname,$tail,'~',true);
-                                             $tab = explode('~',$text);
-                                             $text = $tab[0];
-                                             return $text.'...';
-                                         }
-                                     }
+    {
+        $allname = $this->nom.' '.$this->prenom;
+        if(strlen($allname) <= $tail)
+        {
+            return $allname;
+        }else{
+            $text = wordwrap($allname,$tail,'~',true);
+            $tab = explode('~',$text);
+            $text = $tab[0];
+            return $text.'...';
+        }
+    }
 
     /**
      * Set prenom

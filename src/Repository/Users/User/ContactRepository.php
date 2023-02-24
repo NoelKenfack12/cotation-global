@@ -3,6 +3,7 @@
 namespace App\Repository\Users\User;
 
 use App\Entity\Users\User\Contact;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,28 +40,35 @@ class ContactRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Contact[] Returns an array of Contact objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findContactOrganisation($organisationId, $page, $nombreParPage)
+    {
+        if($page < 1){
+			throw new \InvalidArgumentException('Page inexistant');
+		}
+		$query = $this->createQueryBuilder('c')
+                    ->leftJoin('c.organisation', 'o')
+                    ->addSelect('o')
+                    ->where('o.id = :id')
+					->orderBy('c.date','DESC')
+                    ->setParameter('id', $organisationId)
+					->getQuery();
+		$query->setFirstResult(($page-1) * $nombreParPage)
+			  ->setMaxResults($nombreParPage);
+		return new Paginator($query);
+    }
 
-//    public function findOneBySomeField($value): ?Contact
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findContactClient($page, $nombreParPage)
+    {
+        if($page < 1){
+			throw new \InvalidArgumentException('Page inexistant');
+		}
+		$query = $this->createQueryBuilder('c')
+                    ->leftJoin('c.organisation', 'o')
+                    ->addSelect('o')
+					->orderBy('c.date','DESC')
+					->getQuery();
+		$query->setFirstResult(($page-1) * $nombreParPage)
+			  ->setMaxResults($nombreParPage);
+		return new Paginator($query);
+    }
 }

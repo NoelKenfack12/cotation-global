@@ -217,6 +217,7 @@ class PanierController extends AbstractController
                     $contact = new Contact();
                     $contact->setNom($_POST['username'])
                             ->setTelephone($_POST['telephone'])
+                            ->setOrganisation($panier->getOrganisation())
                             ->setEmail($_POST['email']);
                     $em->persist($contact);
                     $panier->setContact($contact);
