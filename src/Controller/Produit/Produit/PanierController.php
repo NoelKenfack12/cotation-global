@@ -330,9 +330,12 @@ class PanierController extends AbstractController
         }
 
         $panier->setEm($em);
+        
+        $formsupp = $this->createFormBuilder()->getForm();
 
         return $this->render('Theme/Users/Adminuser/Panier/tarificationcotation.html.twig',
-        array('organisation'=>$panier->getOrganisation(), 'panier'=>$panier, 'liste_typeProd'=>$liste_typeProd));
+        array('organisation'=>$panier->getOrganisation(), 'panier'=>$panier, 'liste_typeProd'=>$liste_typeProd,
+        'formsupp'=>$formsupp->createView()));
     }
 
     public function impressionfichecotation(EntityManagerInterface $em, GeneralServicetext $service, Panier $panier)
@@ -472,5 +475,115 @@ class PanierController extends AbstractController
 
         $pdf->statistique('0'.$nbarticle, '0,00',$total, 'Livraison : Yaoundé','Quartier: Biyem-Assi', 'Tel: 693839823',$total,$page, $clientName,$panier->getOrganisation()->getNom(),'La Direction De Transit ');
         $pdf->Output();
+    }
+
+    public function editcommande()
+    {
+        if(isset($_GET['id']))
+        {
+            $id = $_GET['id'];
+        }else{
+            $id = 0;
+        }
+        
+        $em = $this->getDoctrine()->getManager();
+        $prodpan = $em->getRepository(Produitpanier::class)
+                        ->find($id);
+        if($prodpan != null)
+        {
+            if(isset($_GET['quantite']))
+            {
+                $quantite = $_GET['quantite'];
+                $prodpan->setQuantite($quantite);
+            }
+            if(isset($_GET['montant']))
+            {
+                $montant = $_GET['montant'];
+                $prodpan->setMontant($montant);
+            }
+            if(isset($_GET['taxe']))
+            {
+                $taxe = $_GET['taxe'];
+                $prodpan->setTaxe($taxe);
+            }
+
+            $em->flush();
+            echo 1;
+            exit;
+        }else{
+            echo 0;
+            exit;
+        }
+    }
+
+    public function deleteproduitpanier(Produitpanier $produitpanier, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $formsupp = $this->createFormBuilder()->getForm(); 
+        $panier = $produitpanier->getPanier();
+        if ($request->getMethod() == 'POST'){
+            $formsupp->handleRequest($request);
+            if ($formsupp->isValid()){
+                $em->remove($produitpanier);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add('information','Produit bien supprimé.');
+                return $this->redirect($this->generateUrl('users_adminuser_tarification_cotation', array('id'=>$panier->getId())));
+            }
+        }
+        $this->get('session')->getFlashBag()->add('supprime_contenu',$produitpanier->getId());
+        $this->get('session')->getFlashBag()->add('supprime_contenu',$produitpanier->getProduitOrganisation()->getProduit()->getNom());
+        return $this->redirect($this->generateUrl('users_adminuser_tarification_cotation', array('id'=>$panier->getId())));
+    }
+
+    public function addnewProduitPanier(GeneralServicetext $service, Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if(isset($_GET['id']))
+        {
+            $id = $_GET['id'];
+        }else{
+            $id = $id;
+        }
+        
+        $panier = $em->getRepository(Panier::class)
+                        ->find($id);
+        if($panier != null)
+        {
+        if($request->getMethod() == 'POST'){
+            
+            if(isset($_POST['produitOrganisationId']))
+            {
+                $produitOrganisation = $em->getRepository(ProduitOrganisation::class)->find($_POST['produitOrganisationId']);
+
+                if($produitOrganisation != null)
+                {
+                    $oldProdPan = $em->getRepository(Produitpanier::class)
+                                     ->findOneBy(array('produitOrganisation'=>$produitOrganisation, 'panier'=>$panier), array('date'=>'desc'), 1);
+                    if($oldProdPan == null)
+                    {
+                        $produitpanier = new Produitpanier();
+                        $produitpanier->setProduitOrganisation($produitorganisation)
+                                    ->setPanier($panier)
+                                    ->setMontant($produitorganisation->getMontant());
+                        
+                        $em->persist($produitpanier);
+                        $em->flush();
+
+                        $this->get('session')->getFlashBag()->add('information','Produit ajouté avec succès !');
+                    }
+                }
+            }
+            return $this->redirect($this->generateUrl('users_adminuser_tarification_cotation', array('id'=>$panier->getId())));
+        }
+
+        $liste_produitOrganisation = $em->getRepository(ProduitOrganisation::class)
+                                      ->findBy(array('organisation'=>$panier->getOrganisation()), array('date'=>'desc'));
+
+        return $this->render('Theme/Produit/Produit/Panier/addnewProduitPanier.html.twig',
+        array('panier'=>$panier, 'liste_produitOrganisation'=>$liste_produitOrganisation));
+        }else{
+            echo 'Echec ! Une erreur a été rencontrée.';
+            exit;
+        }
     }
 }

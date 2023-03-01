@@ -52,4 +52,19 @@ class ProduitRepository extends ServiceEntityRepository
 			->setMaxResults($nombreParPage);
 		return new Paginator($query);
 	}
+
+    public function findProduitExitListe($listProd, $page, $nombreParPage)
+    {
+        if($page < 1){
+			throw new \InvalidArgumentException('Page inexistant');
+		}
+		$query = $this->createQueryBuilder('p')
+                    ->where('p.id NOT IN (:list)')
+                    ->setParameter('list', $listProd)
+					->orderBy('p.nom','ASC')
+					->getQuery();
+		$query->setFirstResult(($page-1) * $nombreParPage)
+			->setMaxResults($nombreParPage);
+		return new Paginator($query);
+    }
 }

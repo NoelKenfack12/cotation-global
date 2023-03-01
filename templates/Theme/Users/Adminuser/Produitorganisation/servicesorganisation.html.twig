@@ -47,6 +47,8 @@
       <li><h1>Liste des paramètres {{ site }}</h1></li>
     </ul>
 
+    
+
     <div class="mt-3 mb-3 text-center" style="background: #fff; padding: 20px;">
       <div class="row">
           <div class="col-md-8 text-left">
@@ -59,6 +61,32 @@
           </div>
       </div>
     </div>
+
+    {% for infos in app.session.flashbag.get('information') %}
+        {% if loop.last %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              {{ infos }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+        {% endif %}
+    {% endfor %}
+
+    {% set id = '' %}
+    {% for infos in app.session.flashbag.get('supprime_contenu') %}
+    {% if loop.last %}
+    <div style="background: #f2f2f2; padding: 5px; border-left: 4px solid #3565ae;">
+      <strong style="color: red;"><span class="fa fa-warning"></span> {{ 'Êtes vous certain de vouloir supprimer le produit'|trans }} {{ infos|trans|lower|raw }}</strong>
+      <form action="{{ path('users_adminuser_produit_delete_produitorganisation',{'id': id }) }}" method="post" style="display: inline;">
+        <input type="submit" value="{{ 'Supprimer'|trans }}" style="background: red;"/>
+        {{ form_rest(formsupp) }}
+      </form>
+    </div>
+    {% else %}
+    {% set id = infos %}
+    {% endif %}
+    {% endfor %}
 
     <div style="background: #fff; padding: 20px;">
         <h3>
@@ -101,7 +129,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                           <a class="dropdown-item modification_produit_amount" href="#!" value="{{ produitOrg.produit.id }}"><span class="bi bi-pencil-square"></span> Modifier</a>
-                          <a class="dropdown-item" href="#!"><span class="bi bi-trash"></span> Supprimer</a>
+                          <a class="dropdown-item" href="{{ path('users_adminuser_produit_delete_produitorganisation', {'id': produitOrg.id }) }}"><span class="bi bi-trash"></span> Supprimer</a>
                         </div>
                     </div>
                 </td>

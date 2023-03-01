@@ -57,4 +57,11 @@ class ProduitOrganisationRepository extends ServiceEntityRepository
 			->setMaxResults($nombreParPage);
 		return new Paginator($query);
 	}
+
+    public function findProduitOrganisationArray($organisationId)
+    {
+        $query =  $this->_em->createQuery('SELECT p.id as id FROM App\Entity\Produit\Produit\ProduitOrganisation po, App\Entity\Localisation\Organisation\Organisation o, App\Entity\Produit\Produit\Produit p WHERE po.organisation = o AND po.produit = p AND o.id = :organisationId');
+        $query->setParameter('organisationId',$organisationId);
+        return array_column($query->getArrayResult(), 'id');
+    }
 }

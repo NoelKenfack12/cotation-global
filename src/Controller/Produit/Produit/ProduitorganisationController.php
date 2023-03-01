@@ -9,6 +9,7 @@ use App\Entity\Localisation\Organisation\Organisation;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Produit\Produit\Produit;
 use App\Entity\Produit\Produit\ProduitOrganisation;
+use App\Entity\Produit\Produit\Produitpanier;
 
 class ProduitorganisationController extends AbstractController
 {
@@ -17,14 +18,26 @@ class ProduitorganisationController extends AbstractController
         $produit_organisation = $em->getRepository(ProduitOrganisation::class)
                                    ->findProduitOrganisationPagine($organisation->getId(), $page, 12);
 
+        $formsupp = $this->createFormBuilder()->getForm();
         return $this->render('Theme/Users/Adminuser/Produitorganisation/servicesorganisation.html.twig',
-        array('organisation'=>$organisation, 'produit_organisation'=>$produit_organisation, 'page'=>$page, 'nombrepage' => ceil(count($produit_organisation)/12)));
+        array('organisation'=>$organisation, 'produit_organisation'=>$produit_organisation, 'page'=>$page, 
+        'nombrepage' => ceil(count($produit_organisation)/12), 'formsupp'=>$formsupp->createView()));
     }
 
     public function servicestargeorganisation(Organisation $organisation, EntityManagerInterface $em, $page)
     {
-        $liste_Prod = $em->getRepository(Produit::class)
+        $produitOrg_List = $em->getRepository(ProduitOrganisation::class)
+                              ->findProduitOrganisationArray($organisation->getId());
+
+        if(count($produitOrg_List) == 0)
+        {
+            $liste_Prod = $em->getRepository(Produit::class)
                         ->findProduitPagine($page, 12);
+        }else{
+            $liste_Prod = $em->getRepository(Produit::class)
+                             ->findProduitExitListe($produitOrg_List, $page, 12); 
+        }
+        
 
         return $this->render('Theme/Users/Adminuser/Produitorganisation/servicestargeorganisation.html.twig',
         array('organisation'=>$organisation, 'liste_Prod'=>$liste_Prod, 'page'=>$page, 'nombrepage' => ceil(count($liste_Prod)/12)));
@@ -76,5 +89,32 @@ class ProduitorganisationController extends AbstractController
             echo 'Echec ! Une erreur a été rencontrée.';
             exit;
         }
+    }
+
+    public function deleteproduitorg(ProduitOrganisation $produitOrganisation, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $formsupp = $this->createFormBuilder()->getForm(); 
+        if ($request->getMethod() == 'POST'){
+            $formsupp->handleRequest($request);
+            if($formsupp->isValid()){
+
+                $oldProduitpanier = $em->getRepository(Produitpanier::class)
+                                       ->FindBy(array('produitOrganisation'=>$produitOrganisation), array('date'=>'desc'));
+                if(count($oldProduitpanier) == 0)
+                {
+                    $em->remove($produitOrganisation);
+                    $em->flush();
+                    $this->get('session')->getFlashBag()->add('information','produit bien supprimé.');
+                }else{
+                    $this->get('session')->getFlashBag()->add('information','Echec, ce produit est déjà dans une commande');
+                }
+                
+                return $this->redirect($this->generateUrl('users_adminuser_produit_organisation', array('id'=>$produitOrganisation->getOrganisation()->getId())));
+            }
+        }
+        $this->get('session')->getFlashBag()->add('supprime_contenu',$produitOrganisation->getId());
+        $this->get('session')->getFlashBag()->add('supprime_contenu',$produitOrganisation->getProduit()->getNom());
+        return $this->redirect($this->generateUrl('users_adminuser_produit_organisation', array('id'=>$produitOrganisation->getOrganisation()->getId())));
     }
 }

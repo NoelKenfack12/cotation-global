@@ -4,3 +4,7 @@
 app_directory_users:
     resource: '../src/Routing/Users/'
     type: directory
+
+app_directory_produit:
+    resource: '../src/Routing/Produit/'
+    type: directory

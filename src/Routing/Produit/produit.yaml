@@ -1,0 +1,19 @@
+produit_produit_editer_courant_commande:
+    path: /edit/card/current/user
+    controller: App\Controller\Produit\Produit\PanierController:editcommande
+    requirements:
+        id: \d+
+produit_produit_produit_delete_produitpanier:
+    path: /admin/produit/delete/produitpanier/{id}
+    controller: App\Controller\Produit\Produit\PanierController:deleteproduitpanier
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
+produit_produit_panier_addnew_line:
+    path: /admin/produit/panier/addnew/line/{id}
+    controller: App\Controller\Produit\Produit\PanierController:addnewProduitPanier
+    defaults:
+        id: 0
+    requirements:
+        id: \d+

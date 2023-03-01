@@ -54,10 +54,36 @@
         </ul>
     </div>
 
+    {% for infos in app.session.flashbag.get('information') %}
+        {% if loop.last %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              {{ infos }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+        {% endif %}
+    {% endfor %}
+
+    {% set id = '' %}
+    {% for infos in app.session.flashbag.get('supprime_contenu') %}
+    {% if loop.last %}
+    <div style="background: #f2f2f2; padding: 5px; border-left: 4px solid #3565ae;">
+      <strong style="color: red;"><span class="fa fa-warning"></span> {{ 'Êtes vous certain de vouloir supprimer le produit'|trans }} {{ infos|trans|lower|raw }}</strong>
+      <form action="{{ path('produit_produit_produit_delete_produitpanier',{'id': id }) }}" method="post" style="display: inline;">
+        <input type="submit" value="{{ 'Supprimer'|trans }}" style="background: red;"/>
+        {{ form_rest(formsupp) }}
+      </form>
+    </div>
+    {% else %}
+    {% set id = infos %}
+    {% endif %}
+    {% endfor %}
+
     <form action="{{ path('users_adminuser_cotation_organisation', {'id': panier.organisation.id}) }}" method="post">
     <div class="mb-3" style="background: #fff; padding: 20px; min-height: 400px;">
         <h3>
-            <a href="" style="float: right;"><span class="bi bi-node-plus"></span> Ajouter une ligne</a>
+            <a href="#!" class="open-modal-update-panier" style="float: right;" value="{{ panier.id }}"><span class="bi bi-node-plus"></span> Ajouter une ligne</a>
             Client N°: <strong>{{ panier.clientNumber }}</strong> <span class="bi bi-circle"></span> Référence: <strong>{{ panier.reference }}</strong>
         </h3>
         <hr/>
@@ -91,17 +117,17 @@
                         <tr>
                             <td data-title="Produit">{{ produitpanier.produitOrganisation.produit.nom }}</td>
                             <td data-title="Montant UHT">
-                                <input type="number" name="" id="" class="form-control" placeholder="Montant" value="{{ produitpanier.montant }}"/>
+                                <input type="number" class="form-control update_product_amount" placeholder="Montant" value="{{ produitpanier.montant }}" name="{{ produitpanier.id }}"/>
                             </td>
                             <td data-title="Quantité">
-                                <select name="" id="" class="form-control input-lg">
+                                <select  class="form-control input-lg quantity_produit_item" name="{{ produitpanier.id }}">
                                     {% for i in range(1, 20) %}
                                     <option value="{{ i }}" {% if i == produitpanier.quantite %}selected{% endif %}>{{ i }}</option>
                                     {% endfor %}
                                 </select>
                             </td>
                             <td data-title="Taxes">
-                                <input type="number" name="" id="" class="form-control" placeholder="Taxe" value="{{ produitpanier.taxe }}"/>
+                                <input type="number" class="form-control update_product_taxe" placeholder="Taxe" value="{{ produitpanier.taxe }}" name="{{ produitpanier.id }}"/>
                             </td>
                             <td data-title="Montants TTC">
                                 {% set totalItem = (produitpanier.montant * produitpanier.quantite) + (produitpanier.taxe * produitpanier.quantite) %}
@@ -113,7 +139,7 @@
                                     <span class="bi bi-three-dots"></span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#"><span class="bi bi-pencil-square"></span> Modifier</a>
+                                    <a class="dropdown-item" href="{{ path('produit_produit_produit_delete_produitpanier', {'id': produitpanier.id }) }}"><span class="bi bi-trash"></span> Supprimer</a>
                                     
                                     </div>
                                 </div>
@@ -176,9 +202,131 @@
 </div>
 <!-- content-wrapper ends -->
 
-  
+<div class="modal fade" data-backdrop="false" id="modal-update-content" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLongTitle">Mise à jour du contenu</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+              <div class="input-field col-md-12">
+                <div class="wait-chargement-content-module-article" style="text-align: center;">
+                  Patientez un moment pendant le chargement de l'article</br>
+                  <img src="{{ asset('template/images/loader1.gif') }}" alt="image" style="height: 40px; width: 40px;">
+                </div>
+            
+                <div class="content-module-loading-article" style="display: none;">
+                
+                </div>
+              </div>
+          </div>
+        </div>
+      <div class="modal-footer" style="padding-top: 15px; z-index: 1;">
+      {% include 'Theme/General/Template/Menu/social.html.twig' %}
+      </div>
+    </div>
+    </div>
+  </div>
+
 {% endblock %}
 
 {% block javascripttemplate %}
 
+$('.quantity_produit_item').on('change', function(){
+    var id = $(this).attr('name');
+    var quantite = $(this).val();
+
+    var height = ($(window).height() + $(window).scrollTop());
+    var width = $(window).width() + 100;
+    var scrolltop = $(window).scrollTop();
+    $('.panel-result-action-hosting-user').show();
+    $('.content-alert-action-hosting-user').show();
+    $('.content-alert-action-hosting-user').html('<div style="position: fixed; top: 0px; margin-bottom: '+scrolltop+'px; left: 0px; z-index: 9000; width: '+width+'px; height: '+height+'px; background: rgba(0,0,0,0.5);"></div>');
+
+    $.get('{{ path('produit_produit_editer_courant_commande') }}',{ id: id, quantite: quantite }, function(data){
+      if(data == 1)
+      {
+          window.location.reload();
+          $('.panel-result-action-hosting-user').hide();
+          $('.content-alert-action-hosting-user').hide();
+      }else{
+          resetNotif();
+          alertify.alert("Echec, Une erreur a été rencontrée lors de la modification de la commande.");
+          $('.panel-result-action-hosting-user').hide();
+          $('.content-alert-action-hosting-user').hide();
+      }
+    });
+});
+
+$('.update_product_amount').on('blur', function() {
+    
+    var id = $(this).attr('name');
+    var montant = $(this).val();
+
+    var height = ($(window).height() + $(window).scrollTop());
+    var width = $(window).width() + 100;
+    var scrolltop = $(window).scrollTop();
+    $('.panel-result-action-hosting-user').show();
+    $('.content-alert-action-hosting-user').show();
+    $('.content-alert-action-hosting-user').html('<div style="position: fixed; top: 0px; margin-bottom: '+scrolltop+'px; left: 0px; z-index: 9000; width: '+width+'px; height: '+height+'px; background: rgba(0,0,0,0.5);"></div>');
+
+    $.get('{{ path('produit_produit_editer_courant_commande') }}',{ id: id, montant: montant }, function(data){
+      if(data == 1)
+      {
+          window.location.reload();
+          $('.panel-result-action-hosting-user').hide();
+          $('.content-alert-action-hosting-user').hide();
+      }else{
+          resetNotif();
+          alertify.alert("Echec, Une erreur a été rencontrée lors de la modification de la commande.");
+          $('.panel-result-action-hosting-user').hide();
+          $('.content-alert-action-hosting-user').hide();
+      }
+    });
+
+});
+
+$('.update_product_taxe').on('blur', function() {
+    
+    var id = $(this).attr('name');
+    var taxe = $(this).val();
+
+    var height = ($(window).height() + $(window).scrollTop());
+    var width = $(window).width() + 100;
+    var scrolltop = $(window).scrollTop();
+    $('.panel-result-action-hosting-user').show();
+    $('.content-alert-action-hosting-user').show();
+    $('.content-alert-action-hosting-user').html('<div style="position: fixed; top: 0px; margin-bottom: '+scrolltop+'px; left: 0px; z-index: 9000; width: '+width+'px; height: '+height+'px; background: rgba(0,0,0,0.5);"></div>');
+
+    $.get('{{ path('produit_produit_editer_courant_commande') }}',{ id: id, taxe: taxe }, function(data){
+      if(data == 1)
+      {
+          window.location.reload();
+          $('.panel-result-action-hosting-user').hide();
+          $('.content-alert-action-hosting-user').hide();
+      }else{
+          resetNotif();
+          alertify.alert("Echec, Une erreur a été rencontrée lors de la modification de la commande.");
+          $('.panel-result-action-hosting-user').hide();
+          $('.content-alert-action-hosting-user').hide();
+      }
+    });
+
+});
+
+$('.open-modal-update-panier').click(function(){
+	var id = $(this).attr('value');
+	$('.wait-chargement-content-module-article').show();
+	$('.content-module-loading-article').hide();
+	$('#modal-update-content').modal('show');
+	$.get('{{ path('produit_produit_panier_addnew_line') }}',{ id: id }, function(data){
+		$('.wait-chargement-content-module-article').hide();
+		$('.content-module-loading-article').show();
+		$('.content-module-loading-article').html(data);
+	});
+});
 {% endblock %}

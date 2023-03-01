@@ -248,14 +248,13 @@
         $('.services-typeorg-'+idType).show();
 
         $('#selection_service_organisation_'+idType+' option:eq(0)').prop('selected', true).change();
-
     });
 
     $('.selection_service_organisation').on('change', function(){
         var idType = $(this).val();
         $('.block-required-coustom-input').hide();
         $('.required-form-service-org-'+idType).show();
-    })
+    });
 
     $('#switch-optional-attr').change(function (i, value) {
         if(!$('#switch-optional-attr').prop('checked'))

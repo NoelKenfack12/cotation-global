@@ -313,3 +313,10 @@ users_adminuser_impression_fiche_cotation:
         id: 0
     requirements:
         id: \d+
+users_adminuser_produit_delete_produitorganisation:
+    path: /admin/produit/delete/produitorganisation/{id}
+    controller: App\Controller\Produit\Produit\ProduitorganisationController:deleteproduitorg
+    defaults:
+        id: 0
+    requirements:
+        id: \d+
