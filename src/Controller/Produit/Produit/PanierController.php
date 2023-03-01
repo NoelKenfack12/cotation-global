@@ -74,24 +74,24 @@ class PanierController extends AbstractController
             {
                 $serviceorgTab = explode('_', $_POST['serviceorg_'.$typeserviceorg->getId()]);
                 if(count($serviceorgTab) != 2)
-                    exit;
+                {
+                    $this->get('session')->getFlashBag()->add('information','Données invalides. Aucun service sélectionné');
+                    return $this->redirect($this->generateUrl('users_adminuser_nouvelle_cotation', array('id'=>$organisation->getId())));
+                }
 
-                    
                 $serviceorg = $em->getRepository(Serviceorganisation::class)
-                                ->find($serviceorgTab[1]);
+                                 ->find($serviceorgTab[1]);
 
                 $dataTab = array();
                 $failedRequired = false;
 
-                
                 if($typeserviceorg != null and $serviceorg != null)
                 {
-                    echo $typeserviceorg->getName();
-                    echo $serviceorg->getNom();
+                    //echo $typeserviceorg->getName();
+                    //echo $serviceorg->getNom();
 
                     foreach($serviceorg->getForminputs() as $forminput)
                     {
-                        
                         if(isset($_POST['required-input-'.$typeserviceorg->getId().'service'.$serviceorg->getId().'-input'.$forminput->getId()]))
                         {
                             $currentValue = $_POST['required-input-'.$typeserviceorg->getId().'service'.$serviceorg->getId().'-input'.$forminput->getId()];
