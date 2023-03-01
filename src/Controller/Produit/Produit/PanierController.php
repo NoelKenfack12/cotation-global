@@ -159,11 +159,12 @@ class PanierController extends AbstractController
                     $this->get('session')->getFlashBag()->add('information','Données invalides. Service introuvable');
                     return $this->redirect($this->generateUrl('users_adminuser_nouvelle_cotation', array('id'=>$organisation->getId())));
                 }
+            }else{
+                $this->get('session')->getFlashBag()->add('information','Données invalides. Service non spécifié');
+                return $this->redirect($this->generateUrl('users_adminuser_nouvelle_cotation', array('id'=>$organisation->getId())));
             }
-
-            
         }else{
-            $this->get('session')->getFlashBag()->add('information','Données invalides. Service non spécifié');
+            $this->get('session')->getFlashBag()->add('information','Données invalides. Type de service non spécifié');
             return $this->redirect($this->generateUrl('users_adminuser_nouvelle_cotation', array('id'=>$organisation->getId())));
         }
     }
