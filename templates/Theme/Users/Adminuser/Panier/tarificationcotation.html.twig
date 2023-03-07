@@ -179,7 +179,6 @@
                         <strong>{{ totalPanier }} {{ devise }}</strong>
                     </td>
                 </tr>
-
             </tbody>
             </table>
             </div>
@@ -194,7 +193,8 @@
         <button type="submit" class="btn btn-primary">
             Enregistrer et continuer <span class="bi bi-arrow-return-right"></span>
         </button>
-        <input type="hidden" name="panierId" value="{{ panier.id }}">
+        <input type="hidden" name="panierId" value="{{ panier.id }}"/>
+        <input type="hidden" name="amountPanier" value="{{ totalPanier }}"/>
     </div>
 
 </form>

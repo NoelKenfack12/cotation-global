@@ -64,4 +64,26 @@ class PanierRepository extends ServiceEntityRepository
 			->setMaxResults($nombreParPage);
 		return new Paginator($query);
 	}
+
+    public function findPanierAdminPagine($page, $nombreParPage)
+	{
+		if($page < 1){
+			throw new \InvalidArgumentException('Page inexistant');
+		}
+		$query = $this->createQueryBuilder('p')
+                    ->leftJoin('p.organisation', 'o')
+                    ->addSelect('o')
+					->orderBy('p.date','DESC')
+					->getQuery();
+		$query->setFirstResult(($page-1) * $nombreParPage)
+			->setMaxResults($nombreParPage);
+		return new Paginator($query);
+	}
+
+    public function findAmountCotationOrg($organisationId)
+    {
+        $query = $this->_em->createQuery('SELECT SUM(p.montant) FROM App\Entity\Produit\Produit\Panier p, App\Entity\Localisation\Organisation\Organisation o WHERE p.organisation  = o AND o.id = :idOrg');
+        $query->setParameter('idOrg', $organisationId);
+        return $query->getSingleScalarResult();
+    }
 }

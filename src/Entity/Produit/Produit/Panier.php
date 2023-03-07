@@ -45,7 +45,7 @@ class Panier
 
     /**
      * @ORM\Column(type="string", length=255)
-     * pending | active | corbeille | brouillon
+     * pending | active | corbeille | cancel
      */
     private $status;
 

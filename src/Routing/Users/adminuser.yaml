@@ -82,8 +82,12 @@ users_adminuser_gestion_organisations:
     requirements:
         id: \d+
 users_adminuser_cotation_global:
-    path: /admin/cotation/global
+    path: /admin/cotation/global/{page}
     controller: App\Controller\Produit\Produit\PanierController:cotationglobal
+    defaults:
+        page: 1
+    requirements:
+        page: \d+
 users_adminuser_cotation_organisation:
     path: /admin/cotation/organisation/{id}/{page}
     controller: App\Controller\Produit\Produit\PanierController:cotationorganisation
@@ -311,6 +315,14 @@ users_adminuser_impression_fiche_cotation:
     controller: App\Controller\Produit\Produit\PanierController:impressionfichecotation
     defaults:
         id: 0
+    requirements:
+        id: \d+
+users_adminuser_change_statut_panier_organisation:
+    path: /admin/change/statut/panier/organisation/{id}/{position}
+    controller: App\Controller\Produit\Produit\PanierController:changestatut
+    defaults:
+        id: 0
+        position: 'up'
     requirements:
         id: \d+
 users_adminuser_produit_delete_produitorganisation:

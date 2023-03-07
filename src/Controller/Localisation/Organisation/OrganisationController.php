@@ -13,7 +13,7 @@ use App\Entity\Localisation\Organisation\Typeorganisation;
 use App\Form\Localisation\Organisation\TypeorganisationType;
 use App\Entity\Localisation\Organisation\Organisation;
 use App\Form\Localisation\Organisation\OrganisationType;
-
+use App\Entity\Produit\Produit\Panier;
 use Doctrine\ORM\EntityManagerInterface;
 
 class OrganisationController extends AbstractController
@@ -34,10 +34,13 @@ class OrganisationController extends AbstractController
         array('formTypeOrg'=>$formTypeOrg->createView()));
     }
 
-    public function gestionorganisations(Organisation $organisation)
+    public function gestionorganisations(Organisation $organisation, EntityManagerInterface $em)
     {
+        $amountCotation = $em->getRepository(Panier::class)
+                                  ->findAmountCotationOrg($organisation->getId());
+
         return $this->render('Theme/Users/Adminuser/Organisation/gestionorganisations.html.twig', 
-        array('organisation'=>$organisation));
+        array('organisation'=>$organisation, 'amountCotation'=>$amountCotation));
     }
 
     public function nouvelleorganisation(Request $request, EntityManagerInterface $em)

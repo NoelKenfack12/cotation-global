@@ -28,9 +28,14 @@ class PanierController extends AbstractController
         $this->organisationService = $organisationService;
     }
 
-    public function cotationglobal(GeneralServicetext $service, Request $request)
+    public function cotationglobal(GeneralServicetext $service, Request $request, EntityManagerInterface $em, $page)
     {
-        return $this->render('Theme/Users/Adminuser/Panier/cotationglobal.html.twig');
+        
+        $panier_organisation = $em->getRepository(Panier::class)
+                                   ->findPanierAdminPagine($page, 12);
+
+        return $this->render('Theme/Users/Adminuser/Panier/cotationglobal.html.twig', 
+        array('panier_organisation'=>$panier_organisation, 'nombrepage' => ceil(count($panier_organisation)/12), 'page'=>$page));
     }
 
     public function cotationorganisation(Organisation $organisation, EntityManagerInterface $em, Request $request, $page)
@@ -44,8 +49,14 @@ class PanierController extends AbstractController
                 $panierId = $_POST['panierId'];
                 $panier = $em->getRepository(Panier::class)
                              ->find($panierId);
+                
                 if($panier != null)
                 {
+                    if(isset($_POST['amountPanier']))
+                    {
+                        $panier->setMontant($_POST['amountPanier']);
+                    }
+
                     $panier->setStatus('active');
                     $em->flush();
                 }
@@ -586,5 +597,27 @@ class PanierController extends AbstractController
             echo 'Echec ! Une erreur a été rencontrée.';
             exit;
         }
+    }
+
+    public function changestatut(Panier $panier, EntityManagerInterface $em, $position)
+    {
+        if($position == 'up')
+        {
+            if($panier->getStatus() == 'active')
+            {
+                $panier->setStatus('cancel');
+                $this->get('session')->getFlashBag()->add('information','Statut du produit changé avec succès !');
+            }else if($panier->getStatus() == 'cancel')
+            {
+                $panier->setStatus('active');
+                $this->get('session')->getFlashBag()->add('information','Statut du produit changé avec succès !');
+            }
+            $em->flush();
+        }else if($position == 'corbeille')
+        {
+            $panier->setStatus('corbeille');
+            $em->flush();
+        }
+        return $this->redirect($this->generateUrl('users_adminuser_cotation_organisation', array('id'=>$panier->getOrganisation()->getId())));
     }
 }

@@ -71,7 +71,7 @@
                 Montant Total Des cotations traitées
               </div>
               <div class="stat-item-card" style="color: #fff;">
-                269 050 000 XAF
+                {% if amountCotation != null and amountCotation > 0 %}{{ amountCotation }} {% else %} 269 050 000 {% endif %} XAF
               </div>
             </div>
           </div>
