@@ -71,4 +71,17 @@ class ContactRepository extends ServiceEntityRepository
 			  ->setMaxResults($nombreParPage);
 		return new Paginator($query);
     }
+
+    public function countContactOrganisation($organisationId)
+	{
+		$query = $this->_em->createQuery('SELECT COUNT(c.id) FROM App\Entity\Users\User\Contact c, App\Entity\Localisation\Organisation\Organisation o WHERE c.organisation  = o AND o.id = :idOrg');
+        $query->setParameter('idOrg', $organisationId);
+        return (int) $query->getSingleScalarResult();
+	}
+
+    public function countContactGlobal()
+    {
+        $query = $this->_em->createQuery('SELECT COUNT(c.id) FROM App\Entity\Users\User\Contact c, App\Entity\Localisation\Organisation\Organisation o WHERE c.organisation  = o');
+        return (int) $query->getSingleScalarResult();
+    }
 }

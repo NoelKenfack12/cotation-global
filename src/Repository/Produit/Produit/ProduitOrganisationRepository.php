@@ -64,4 +64,17 @@ class ProduitOrganisationRepository extends ServiceEntityRepository
         $query->setParameter('organisationId',$organisationId);
         return array_column($query->getArrayResult(), 'id');
     }
+
+    public function findProduitOrganisation($organisationId, $type)
+    {
+        if($type == 'all')
+        {
+            $query =  $this->_em->createQuery('SELECT COUNT(po.id) FROM App\Entity\Produit\Produit\ProduitOrganisation po, App\Entity\Localisation\Organisation\Organisation o, App\Entity\Produit\Produit\Produit p WHERE po.organisation = o AND po.produit = p AND o.id = :organisationId');
+        }else{
+            $query =  $this->_em->createQuery('SELECT COUNT(po.id) FROM App\Entity\Produit\Produit\ProduitOrganisation po, App\Entity\Localisation\Organisation\Organisation o, App\Entity\Produit\Produit\Produit p WHERE po.organisation = o AND po.produit = p AND o.id = :organisationId AND po.selectDefault = 1');
+        }
+        
+        $query->setParameter('organisationId',$organisationId);
+        return (int) $query->getSingleScalarResult();
+    }
 }

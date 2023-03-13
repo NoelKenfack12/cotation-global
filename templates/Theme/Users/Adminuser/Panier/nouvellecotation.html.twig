@@ -183,8 +183,7 @@
                         {% set serviceorganisation = typeorgServiceorg.serviceorganisation %}
                         <div class="block-required-coustom-input required-form-service-org-typeorg-{{ typeorg.id }}-typeorgServiceorg_{{ serviceorganisation.id }}" style="display: none; border: 1px dashed #999; background: #e8eff9; padding: 15px; border-radius: 10px;">
                             <h3>Attributs Optionnels</h3>
-                            
-                            <div class="" style="">
+                            <div class="">
                                 {% for forminput in serviceorganisation.getForminputs()|filter(forminput => forminput.required == false and forminput.position == 'indentification') %}
                                 <div class="row">
                                     <div class="col-md-4">

@@ -16,15 +16,15 @@
     <section style="min-height: 98px; padding: 15px 50px; background: #1e4a8b; color: #fff; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
         <div class="row">
             <div class="col-md-8">
-                <h1>Liste des organisations par type</h1>
+                <h1>Liste des organisations et Types d'opérations</h1>
                 <div>
                   <span class="bi bi-geo-alt"></span> Global - Administration
               </div>
             </div>
             <div class="col-md-4">
                 <span style="float: right;">
-                    <a href="#!" data-toggle="modal" data-target="#typeOrgModalCenter" class="btn btn-primary mt-2">Ajouter Un type d'organisation</a>
-                    <a href="#!" data-toggle="modal" data-target="#categoryModalCenter" class="btn btn-primary mt-2">Ajouter Une organisation</a>
+                    <a href="#!" data-toggle="modal" data-target="#typeOrgModalCenter" class="btn btn-primary mt-2">Ajouter un type d'opération</a>
+                    <a href="#!" data-toggle="modal" data-target="#categoryModalCenter" class="btn btn-primary mt-2">Ajouter une organisation</a>
                 </span>
             </div>
         </div>
@@ -35,7 +35,7 @@
     <ul class="breadcrumb_" itemprop="breadcrumb_">
       <li><a href="#">Tableau de bord</a></li>
       <li><a href="#">Localisation</a></li>
-      <li><h1>Listes des organisations</h1></li>
+      <li><h1>organisations et types d'opérations</h1></li>
     </ul>
 
     {% for infos in app.session.flashbag.get('information') %}
@@ -110,7 +110,7 @@
     {% endfor %}
 
     <div class="mb-3" style="background: #fff; padding: 20px;">
-        <h3>Type des organisations</h3>
+        <h3>Types d'opérations</h3>
         <hr/>
 
         <div class="accordion">
@@ -296,7 +296,7 @@
     <div class="modal-content">
       {{ form_start(formTypeOrg, {'attr': {'action': path('users_adminuser_type_organisation') }}) }}
       <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLongTitle">Ajouter un type d'organisation</h3>
+        <h3 class="modal-title" id="exampleModalLongTitle">Ajouter un type d'opération</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

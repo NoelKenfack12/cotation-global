@@ -15,6 +15,9 @@ use App\Entity\Localisation\Organisation\Organisation;
 use App\Form\Localisation\Organisation\OrganisationType;
 use App\Entity\Produit\Produit\Panier;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Produit\Produit\ProduitOrganisation;
+use App\Entity\Users\User\Contact;
+use App\Entity\Localisation\Organisation\Userorganisation;
 
 class OrganisationController extends AbstractController
 {
@@ -38,9 +41,38 @@ class OrganisationController extends AbstractController
     {
         $amountCotation = $em->getRepository(Panier::class)
                                   ->findAmountCotationOrg($organisation->getId());
+        $cotationAnnuler = $em->getRepository(Panier::class)
+                                  ->findCotationStatusOrg($organisation->getId(), 'cancel');
+        $cotationBruillon = $em->getRepository(Panier::class)
+                                  ->findCotationStatusOrg($organisation->getId(), 'pending');
+        $cotationActive = $em->getRepository(Panier::class)
+                                  ->findCotationStatusOrg($organisation->getId(), 'active');
+        $cotationCorbeille = $em->getRepository(Panier::class)
+                                  ->findCotationStatusOrg($organisation->getId(), 'corbeille');
+
+        $amountCotationAnnuler = $em->getRepository(Panier::class)
+                                  ->findAmountCotationStatusOrg($organisation->getId(), 'cancel');
+        $amountCotationActive = $em->getRepository(Panier::class)
+                                  ->findAmountCotationStatusOrg($organisation->getId(), 'active');
+        $amountCotationCorbeille = $em->getRepository(Panier::class)
+                                  ->findAmountCotationStatusOrg($organisation->getId(), 'corbeille');
+
+        $nbProduitOrganisation = $em->getRepository(ProduitOrganisation::class)
+                                  ->findProduitOrganisation($organisation->getId(), 'all');
+        $nbSelectProduitOrganisation = $em->getRepository(ProduitOrganisation::class)
+                                  ->findProduitOrganisation($organisation->getId(), 'select');
+
+        $nbAdmin = $em->getRepository(Userorganisation::class)
+                       ->findUserOrganisation($organisation->getId());
+
+        $nbClient = $em->getRepository(Contact::class)
+                        ->countContactOrganisation($organisation->getId());
 
         return $this->render('Theme/Users/Adminuser/Organisation/gestionorganisations.html.twig', 
-        array('organisation'=>$organisation, 'amountCotation'=>$amountCotation));
+        array('organisation'=>$organisation, 'amountCotation'=>$amountCotation, 'cotationAnnuler'=>$cotationAnnuler, 
+        'cotationBruillon'=>$cotationBruillon, 'cotationActive'=>$cotationActive, 'cotationCorbeille'=>$cotationCorbeille,
+        'amountCotationAnnuler'=>$amountCotationAnnuler, 'amountCotationActive'=>$amountCotationActive, 'amountCotationCorbeille'=>$amountCotationCorbeille,
+        'nbProduitOrganisation'=>$nbProduitOrganisation, 'nbSelectProduitOrganisation'=>$nbSelectProduitOrganisation, 'nbAdmin'=>$nbAdmin, 'nbClient'=>$nbClient));
     }
 
     public function nouvelleorganisation(Request $request, EntityManagerInterface $em)

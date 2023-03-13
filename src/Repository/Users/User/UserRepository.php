@@ -34,5 +34,4 @@ class UserRepository extends ServiceEntityRepository
 			->setMaxResults($nombreParPage);
 		return new Paginator($query);
 	}
-
 }

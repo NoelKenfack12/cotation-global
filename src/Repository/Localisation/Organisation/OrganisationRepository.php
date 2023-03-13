@@ -53,4 +53,9 @@ class OrganisationRepository extends ServiceEntityRepository
 		return new Paginator($query);
 	}
 
+    public function countOrganisationGlobal()
+    {
+        $query =  $this->_em->createQuery('SELECT COUNT(o.id) FROM App\Entity\Localisation\Organisation\Organisation o');
+        return (int) $query->getSingleScalarResult();
+    }
 }

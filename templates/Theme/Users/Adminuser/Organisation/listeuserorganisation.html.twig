@@ -100,7 +100,11 @@
                     {{ user.telephone }}
                 </td>
                 <td data-title="Rôles">ROLE_USER</td>
-                <td data-title="Organisation">Global Douala</td>
+                <td data-title="Organisation">
+                  {% for userorg in user.userorganisations %}
+                  {{ userorg.organisation.nom }};
+                  {% endfor %}
+                </td>
                 <td data-title="Création">
                     {{ user.dateins|date('d') }}/{{ user.dateins|date('m') }}/{{ user.dateins|date('Y') }} 
                 </td>

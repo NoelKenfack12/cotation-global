@@ -39,28 +39,16 @@ class UserorganisationRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Userorganisation[] Returns an array of Userorganisation objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findUserOrganisation($organisationId)
+    {
+        $query =  $this->_em->createQuery('SELECT COUNT(uo) FROM App\Entity\Localisation\Organisation\Userorganisation uo, App\Entity\Localisation\Organisation\Organisation o WHERE uo.organisation = o AND o.id = :organisationId');
+        $query->setParameter('organisationId',$organisationId);
+        return (int) $query->getSingleScalarResult();
+    }
 
-//    public function findOneBySomeField($value): ?Userorganisation
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function countAdminGlobal()
+    {
+        $query =  $this->_em->createQuery('SELECT COUNT(uo) FROM App\Entity\Localisation\Organisation\Userorganisation uo, App\Entity\Localisation\Organisation\Organisation o WHERE uo.organisation = o');
+        return (int) $query->getSingleScalarResult();
+    }
 }

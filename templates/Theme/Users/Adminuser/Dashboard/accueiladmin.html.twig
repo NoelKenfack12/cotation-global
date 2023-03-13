@@ -30,10 +30,10 @@
       <li><a href="#">Statistiques</a></li>
     </ul>
 
-        <form class="row">
+        <form action="{{ path('users_adminuser_accueil_admin_dashboard') }}" method="post" class="row">
           <div class="col-md-8 col-xs-12">
             <h3 class="typo3">
-              Activités 2022
+              Activités 2023
             </h3>
           </div>
     
@@ -45,15 +45,13 @@
                 </div>
               </div>
               <select class="form-control csu-input-append" name="">
-                <option value="">Année 2021</option>
-                <option value="">Année 2022</option>
                 <option value="">Année 2023</option>                
               </select>
             </div>
           </div>
     
           <div class="col-md-2 col-xs-4">
-            <button type="button" name="button" class="btn btn-primary btn-block csu-filter-btn">Filtrer</button>
+            <button type="submit" name="button" class="btn btn-primary btn-block csu-filter-btn">Filtrer</button>
           </div>
         </form>
     
@@ -64,24 +62,25 @@
                 Montant Total Des cotations traitées
               </div>
               <div class="stat-item-card" style="color: #fff;">
-                269 050 000 XAF
+                {% if amountCotation != null and amountCotation > 0 %}{{ amountCotation }} {% else %} 269 050 000 {% endif %} XAF
               </div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="card-dash-csu md-card-dash">
               <h3 class="table-description text-left">Status des cotations</h3>
+              
               <div class="row">
                 <div class="col-md-6">
                   <div class="stat-item-card">
-                    06
+                    {{ cotationAnnuler }}
                   </div>
                   <div class="libele-item-card pink-text-4">
                       <strong>Annuler</strong>
                   </div>
     
                   <div class="stat-item-card">
-                    02
+                    {{ cotationActive }}
                   </div>
                   <div class="libele-item-card pink-text-2">
                       <strong>Active</strong>
@@ -90,14 +89,14 @@
                 </div>
                 <div class="col-md-6">
                   <div class="stat-item-card">
-                    7
+                    {{ cotationBruillon }}
                   </div>
                   <div class="libele-item-card pink-text-1">
                       <strong>Brouillon</strong>
                   </div>
     
                   <div class="stat-item-card">
-                    01
+                    {{ cotationCorbeille }}
                   </div>
                   <div class="libele-item-card pink-text-3">
                       <strong>Corbeille</strong>
@@ -112,20 +111,20 @@
             <div class="card-dash-csu md-card-dash" style="">
               <h3 class="table-description text-left"> Services </h3>
               <div class="stat-item-card">
-                403 054
+                {{ nbProduitGlobal }}
               </div>
               <div class="libele-item-card">
                   Total
               </div>
     
               <div class="stat-item-card">
-                588
+                1
               </div>
               <div class="libele-item-card">
-                  Pré-Sélectionnés
+                Non alloués
               </div>
     
-              <a href="{{ path('users_adminuser_services_organisation', {'id': 1}) }}" class="more-infos">
+              <a href="{{ path('users_adminuser_type_produit') }}" class="more-infos">
                   Consulter <span class="bi bi-eye" style="color: green;"></span>
               </a>
             </div>
@@ -134,13 +133,13 @@
     
         <div class="row">
           <div class="col-md-8">
-              <div class="card-dash-csu md-card-dash" style="">
+              <div class="card-dash-csu md-card-dash">
                 <h3 class="table-description text-left"> Valeur des cotations</h3>
     
                 <div class="row mg-t-5">
                   <div class="col-md-6">
                     <div class="stat-item-card">
-                      50 000 XAF
+                      {{ amountCotationAnnuler }} XAF
                     </div>
                     <div class="libele-item-card pink-text-4">
                         <strong>Cotations Annulées</strong>
@@ -149,7 +148,7 @@
     
                   <div class="col-md-6">
                     <div class="stat-item-card">
-                      65 212 000 XAF
+                      {{ amountCotationActive }} XAF
                     </div>
                     <div class="libele-item-card pink-text-2">
                         <strong>Cotations Actives</strong>
@@ -158,7 +157,7 @@
 
                   <div class="col-md-6">
                     <div class="stat-item-card">
-                      212 000 XAF
+                      {{ amountCotationCorbeille }} XAF
                     </div>
                     <div class="libele-item-card pink-text-3">
                         <strong>Cotations Supprimées</strong>
@@ -166,7 +165,7 @@
                   </div>
                 </div>
     
-                <a href="{{ path('users_adminuser_cotation_organisation', {'id': 1}) }}" class="more-infos">
+                <a href="{{ path('users_adminuser_cotation_global') }}" class="more-infos">
                     Consulter l'historique des transactions  <span class="bi bi-eye" style="color: green;"></span>
                 </a>
               </div>
@@ -178,14 +177,14 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="stat-item-card">
-                    2
+                    {{ nbAdmin }}
                   </div>
                   <div class="libele-item-card">
                       Administrateurs
                   </div>
     
                   <div class="stat-item-card">
-                    27
+                    {{ nbClient }}
                   </div>
                   <div class="libele-item-card">
                       Clients
@@ -194,7 +193,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="stat-item-card">
-                    3
+                    {{ nbOrganisation }}
                   </div>
                   <div class="libele-item-card">
                       Organisations
@@ -231,10 +230,10 @@
                   </div>
     
                   <div class="offset-md-6 col-md-3 text-right">
-                    <a href="" class="card-stat-sub-title"><span class="bp-legende-dash bp-legende3"></span> 2018</a>
+                    <a href="" class="card-stat-sub-title"><span class="bp-legende-dash bp-legende3"></span> 2022</a>
                   </div>
                   <div class="col-md-3">
-                    <a href="" class="card-stat-sub-title"><span class="bp-legende-dash bp-legende1"></span> 2019</a>
+                    <a href="" class="card-stat-sub-title"><span class="bp-legende-dash bp-legende1"></span> 2023</a>
                   </div>
     
                   <canvas id="canvas" height="334" style="display: block; width: 358px; height: 167px;" width="716" class="chartjs-render-monitor"></canvas>
@@ -256,10 +255,10 @@
     
               <div class="row">
                 <div class="col-md-3 text-right">
-                  <a href="" class="card-stat-sub-title"><span class="bp-legende-dash bp-legende3"></span> 2018</a>
+                  <a href="" class="card-stat-sub-title"><span class="bp-legende-dash bp-legende3"></span> 2022</a>
                 </div>
                 <div class="col-md-3">
-                  <a href="" class="card-stat-sub-title"><span class="bp-legende-dash bp-legende1"></span> 2019</a>
+                  <a href="" class="card-stat-sub-title"><span class="bp-legende-dash bp-legende1"></span> 2023</a>
                 </div>
               </div>
               </div>

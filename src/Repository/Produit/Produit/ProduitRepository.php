@@ -67,4 +67,10 @@ class ProduitRepository extends ServiceEntityRepository
 			->setMaxResults($nombreParPage);
 		return new Paginator($query);
     }
+
+    public function countProduitGlobal()
+    {
+        $query =  $this->_em->createQuery('SELECT COUNT(p.id) FROM App\Entity\Produit\Produit\Produit p');
+        return (int) $query->getSingleScalarResult();
+    }
 }
