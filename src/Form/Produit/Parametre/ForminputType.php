@@ -29,7 +29,7 @@ class ForminputType extends AbstractType
                     'Champ Text' => 'text',
                     'Champ nombre' => 'number',
                     'Champ selection' => 'select',
-                    '1 month' => 'textarea',
+                    'Zone de texte' => 'textarea',
                 ],
                 'group_by' => function($choice, $key, $value) {
                     if ($choice <= new \DateTime('+3 days')) {
