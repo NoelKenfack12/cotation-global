@@ -15,6 +15,11 @@ users_user_ajout_super_admin:
     controller: App\Controller\Users\User\UserController::ajouteradmin
     requirements:
         id: \d+
+users_user_modification_parametres:
+    path: /update/parameters/{id}
+    controller: App\Controller\Users\User\UserController::updateparameters
+    requirements:
+        id: \d+
 logout:
     path: /logout
     controller: App\Controller\Users\User\SecurityController::logout

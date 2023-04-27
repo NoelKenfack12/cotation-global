@@ -57,7 +57,7 @@ class PanierController extends AbstractController
                         $panier->setMontant($_POST['amountPanier']);
                     }
 
-                    $panier->setStatus('active');
+                    $panier->setStatus('pending');
                     $em->flush();
                 }
                 $this->get('session')->getFlashBag()->add('generationFichier','La contation a été enregistrée avec succès !');
@@ -143,6 +143,7 @@ class PanierController extends AbstractController
                         $panier->setTypeorganisation($typeserviceorg);
                         $panier->setServiceorganisation($serviceorg);
                         $panier->setOrganisation($organisation);
+                        $panier->setUser($this->getUser());
                         $em->persist($panier);
                         for($i = 0; $i < count($dataTab); $i++)
                         {
@@ -158,6 +159,9 @@ class PanierController extends AbstractController
                             }
                         }
                         $em->flush();
+
+                        $session = $this->get('session');
+                        $session->set('_myCard',$panier->getId());
 
                         $this->organisationService->editDataCommande($panier, $organisation);
 
@@ -304,7 +308,7 @@ class PanierController extends AbstractController
                     }
                     $em->flush();
 
-                    return $this->redirect($this->generateUrl('users_adminuser_tarification_cotation', array('id'=>$panier->getId())));
+                    return $this->redirect($this->generateUrl('users_adminuser_tarification_cotation', array('id'=>$panier->getId(), 'addproduct'=>1)));
                 }
             }
         }
@@ -318,29 +322,33 @@ class PanierController extends AbstractController
         'liste_contact'=>$liste_contact, 'form_required'=>$form_required, 'form_optional'=>$form_optional));
     }
 
-    public function tarificationcotation(EntityManagerInterface $em, Panier $panier)
+    public function tarificationcotation(EntityManagerInterface $em, Panier $panier, $addproduct)
     {
         $liste_typeProd = $em->getRepository(Typeproduit::class)
                              ->myfindAll();
-        $produit_organisation = $em->getRepository(ProduitOrganisation::class)
-                                  ->FindBy(array('organisation'=>$panier->getOrganisation(), 'selectDefault'=>true));
-        foreach($produit_organisation as $produitorganisation)
+        
+        if($addproduct == 1)
         {
-            $oldProduitpanier = $em->getRepository(Produitpanier::class)
-                                  ->FindOneBy(array('produitOrganisation'=>$produitorganisation, 'panier'=>$panier), array('date'=>'desc'), 1);
-            
-            if($oldProduitpanier == null)
+            $produit_organisation = $em->getRepository(ProduitOrganisation::class)
+                                  ->FindBy(array('organisation'=>$panier->getOrganisation(), 'selectDefault'=>true));
+            foreach($produit_organisation as $produitorganisation)
             {
-                $produitpanier = new Produitpanier();
-                $produitpanier->setProduitOrganisation($produitorganisation)
-                              ->setPanier($panier)
-                              ->setMontant($produitorganisation->getMontant());
+                $oldProduitpanier = $em->getRepository(Produitpanier::class)
+                                    ->FindOneBy(array('produitOrganisation'=>$produitorganisation, 'panier'=>$panier), array('date'=>'desc'), 1);
                 
-                $em->persist($produitpanier);
+                if($oldProduitpanier == null)
+                {
+                    $produitpanier = new Produitpanier();
+                    $produitpanier->setProduitOrganisation($produitorganisation)
+                                ->setPanier($panier)
+                                ->setMontant($produitorganisation->getMontant());
+                    
+                    $em->persist($produitpanier);
+                }
+                $em->flush();
             }
-            $em->flush();
         }
-
+        
         $panier->setEm($em);
         
         $formsupp = $this->createFormBuilder()->getForm();
@@ -420,7 +428,7 @@ class PanierController extends AbstractController
             $totalSection = 0;
             foreach($currentProduits as $produitpanier)
             {
-                $totalRow = $produitpanier->getMontant()*$produitpanier->getQuantite() + $produitpanier->getTaxe();
+                $totalRow = $produitpanier->getMontant()*$produitpanier->getQuantite() + $produitpanier->getTaxe()*$produitpanier->getQuantite();
                 $total = $total + $totalRow;
 
                 $totalSection = $totalSection + $totalRow;
@@ -617,6 +625,46 @@ class PanierController extends AbstractController
         {
             $panier->setStatus('corbeille');
             $em->flush();
+        }
+        return $this->redirect($this->generateUrl('users_adminuser_cotation_organisation', array('id'=>$panier->getOrganisation()->getId())));
+    }
+
+    public function removeCollectionProduit(Panier $panier, EntityManagerInterface $em)
+    {
+        if(isset($_GET['chaine']))
+        {
+            $tabProdPan = explode(',', $_GET['chaine']);
+
+            if(count($tabProdPan) > 0)
+            {
+                $liste_ProdPan = $em->getRepository(Produitpanier::class)
+                                    ->findBy(array('panier'=>$panier->getId(),'id'=>$tabProdPan), array('date'=>'desc'));
+                foreach($liste_ProdPan as $prodPan)
+                {
+                    $em->remove($prodPan);
+                }
+                $em->flush();
+                echo 1;
+                exit;
+            }else{
+                echo -1;
+                exit;
+            }
+        }else{
+            echo 0;
+            exit;
+        }
+    }
+
+    public function activateStatusPanier(Panier $panier, EntityManagerInterface $em)
+    {
+        if($panier->getStatus() == 'pending' and $panier->getMontant() > 0)
+        {
+            $panier->setStatus('active');
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('information','Statut de la commande changé avec succès !');
+        }else{
+            $this->get('session')->getFlashBag()->add('information','Echec, Le status de la commande doit être en cours, pour pouvoir être activé !');
         }
         return $this->redirect($this->generateUrl('users_adminuser_cotation_organisation', array('id'=>$panier->getOrganisation()->getId())));
     }

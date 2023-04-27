@@ -7,6 +7,7 @@ use App\Entity\Localisation\Organisation\Serviceorganisation;
 use App\Entity\Localisation\Organisation\Typeorganisation;
 use App\Entity\Produit\Service\Pays;
 use App\Entity\Users\User\Contact;
+use App\Entity\Users\User\User;
 use App\Repository\Produit\Produit\PanierRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -93,6 +94,12 @@ class Panier
      * @ORM\OneToMany(targetEntity=Produitpanier::class, mappedBy="panier")
      */
     private $produitpaniers;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumn(nullable=true)
+    */
+    private $user;
 
     private $em;
 
@@ -315,5 +322,17 @@ class Panier
         $produit_panier = $this->em->getRepository(Produitpanier::class)
                              ->findProduitPanierType($this->getId(), $typeproduit->getId());
         return $produit_panier;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

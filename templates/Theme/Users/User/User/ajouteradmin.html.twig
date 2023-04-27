@@ -3,11 +3,12 @@
   <link rel="icon" href="{{ asset('template/images/logo.png') }}" sizes="32x32">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css" integrity="sha256-wT6CFc7EKRuf7uyVfi+MQNHUzojuHN2pSw0YWFt2K5E=" crossorigin="anonymous" />
 </head>
-<body style="background-color: purple">
+<body style="background-color: #1a4789;">
+  {{ render(controller("App\\Controller\\General\\Template\\MenuController:menubare", {'position': 'newadmin', 'organisationId': organisationId|default(0) })) }}
 <div class="ui stackable centered page grid">
 <div class="ui raised very padded center aligned text container segment">
- <img src="{{ asset('template/images/logo.png') }}" alt="Logo {{ site }}" style="height: 70px;width: 100px;">
-  <h5>Identifier le super administrateur configurer dans le système et connectez-vous en tantque surper admin!</h5>
+ <img src="{{ asset('templatedash/images/logoglobal.png') }}" alt="Logo {{ site }}" style="height: 70px; ">
+  <h5>Identifiez le super administrateur configuré dans le système pour ajouter un nouveau administrateur !</h5>
   <h4>
     <span style="color: red;">
       {% for infos in app.session.flashbag.get('information') %}
@@ -20,22 +21,33 @@
   <form action="{{ path('users_user_ajout_super_admin') }}" method="post">
   <div class="field">
    <div class="ui left icon input">
-  <i class="mail icon"></i>
-    <input type="text" placeholder="User name" id="username" name="_username" value="" required autofocus="true">
+    <i class="mail icon"></i>
+    <input type="text" placeholder="Root Username" id="username" name="_username" value="" required autofocus="true">
   </div>
   </div>
   <br>
+
+  
+  <div class="field">
+    <div class="ui left icon input">
+      <i class="lock icon"></i>
+      <input type="text" placeholder="Username Admin" id="identifiant" name="_identifiant" required>
+    </div>
+   </div>
+    <br>
+
   <div class="field">
   <div class="ui left icon input">
     <i class="lock icon"></i>
-    <input type="password" placeholder="Password" id="password" name="_password" required>
+    <input type="password" placeholder="Root Password" id="password" name="_password" required>
   </div>
   </div>
   <br>
+
   
 
   <div class="actions">
-    <button class="ui large violet button" type="submit">Ajouter le rôle super admin</button>
+    <button class="ui large button" type="submit" style="background: #1a4789; color: #fff;">Ajouter le rôle super admin</button>
   </div>
   </form>
   <br>

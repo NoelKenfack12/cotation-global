@@ -77,6 +77,7 @@
             </th>
             <th>Numéro du client</th>
             <th>Client</th>
+            <th>Commercial</th>
             <th>Montant</th>
             <th>Création</th>
             <th>Status</th>
@@ -92,6 +93,7 @@
                 </td>
                 <td data-title="Numéro du client">{{ panier.clientNumber }}</td>
                 <td data-title="Client">{% if panier.contact != null %}{{ panier.contact.nom }}{% else %}-{% endif %}</td>
+                <td data-title="Commercial">{% if panier.user != null %}{{ panier.user.name(30) }}{% else %}-{% endif %}</td>
                 <td data-title="Montant">{{ panier.montant }} XAF</td>
                 <td data-title="Création">
                     {{ panier.date|date('d') }}/{{ panier.date|date('m') }}/{{ panier.date|date('Y') }} 
@@ -119,6 +121,8 @@
                           <a class="dropdown-item" href="{{ path('users_adminuser_change_statut_panier_organisation', {'id': panier.id}) }}"><span class="bi bi-tropical-storm"></span> Annuler</a>
                           {% elseif(panier.status == 'cancel') %}
                           <a class="dropdown-item" href="{{ path('users_adminuser_change_statut_panier_organisation', {'id': panier.id}) }}"><span class="bi bi-arrow-up-circle"></span> Valider</a>
+                          {% elseif(panier.status == 'pending') %}
+                          <a class="dropdown-item" href="{{ path('users_adminuser_activate_status_panier', {'id': panier.id}) }}"><span class="bi bi-arrow-up-circle"></span> Valider</a>
                           {% endif %}
                           <a class="dropdown-item" href="{{ path('users_adminuser_change_statut_panier_organisation', {'id': panier.id, 'position': 'corbeille'}) }}"><span class="bi bi-trash"></span> Supprimer</a>
                         </div>

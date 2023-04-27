@@ -80,6 +80,21 @@
     {% endif %}
     {% endfor %}
 
+    {% set id = '' %}
+    {% for infos in app.session.flashbag.get('supprime_option_forminput') %}
+    {% if loop.last %}
+    <div style="background: #f2f2f2; padding: 5px; border-left: 4px solid #3565ae;">
+      <strong style="color: red;"><span class="fa fa-warning"></span> {{ 'Êtes vous certain de vouloir supprimer l\'option '|trans }} {{ infos|trans|lower|raw }} </strong>
+      <form action="{{ path('users_adminuser_parametre_delete_option_formimput',{'id': id }) }}" method="post" style="display: inline;">
+        <input type="submit" value="{{ 'Supprimer'|trans }}" style="background: red;"/>
+        {{ form_rest(formsupp) }}
+      </form>
+    </div>
+    {% else %}
+    {% set id = infos %}
+    {% endif %}
+    {% endfor %}
+
     <div class="mb-3" style="background: #fff; padding: 20px;">
         <h3>Secteurs d'activités</h3>
         <hr/>
@@ -120,7 +135,7 @@
                                 <h4>Liste des options</h4>
                                 <ul>
                                   {% for option in input.optionFormInputs %}
-                                  <li><span>{{ option.libelle }}</span></li>
+                                  <li><span>{{ option.libelle }}</span> <a href="{{ path('users_adminuser_parametre_delete_option_formimput', {'id': option.id}) }}" style="float: right;"><span class="bi bi-x-lg"></span></a></li>
                                   {% else %}
                                   <li><span>Aucune option trouvée actuellement</span></li>
                                   {% endfor %}

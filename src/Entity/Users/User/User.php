@@ -276,22 +276,22 @@ class User implements UserInterface, \Serializable
     }
 	
 	public function addRole($role)
-                                     {
-                                         if (!in_array($role, $this->roles)) {
-                                             $this->roles[] = $role;
-                                         }
-                                 
-                                         return $this;
-                                     }
+    {
+        if (!in_array($role, $this->roles)) {
+            $this->roles[] = $role;
+        }
+
+        return $this;
+    }
 	public function removeRole($role)
-                                     {
-                                         if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
-                                             unset($this->roles[$key]);
-                                             $this->roles = array_values($this->roles);
-                                         }
-                                 
-                                         return $this;
-                                     }
+    {
+        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+            unset($this->roles[$key]);
+            $this->roles = array_values($this->roles);
+        }
+
+        return $this;
+    }
 	
 	/**
      * Set salt

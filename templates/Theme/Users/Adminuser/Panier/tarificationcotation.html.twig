@@ -82,8 +82,11 @@
 
     <form action="{{ path('users_adminuser_cotation_organisation', {'id': panier.organisation.id}) }}" method="post">
     <div class="mb-3" style="background: #fff; padding: 20px; min-height: 400px;">
+        <span style="float: right;" >
+            <a href="#!" class="btn btn-primary open-modal-update-panier" value="{{ panier.id }}" title="Ajouter une ligne"><span class="bi bi-cloud-plus"></span> Ajouter</a>
+            <a href="#!" class="btn disabled-btn open-modal-delete-panier" value="{{ panier.id }}" title="Supprimer une ligne"><span class="bi bi-cloud-minus"></span> Supprimer</a>
+        </span>
         <h3>
-            <a href="#!" class="open-modal-update-panier" style="float: right;" value="{{ panier.id }}"><span class="bi bi-node-plus"></span> Ajouter une ligne</a>
             Client N°: <strong>{{ panier.clientNumber }}</strong> <span class="bi bi-circle"></span> Référence: <strong>{{ panier.reference }}</strong>
         </h3>
         <hr/>
@@ -93,7 +96,14 @@
             <table id="table" class="table table-hover table-mc-light-blue" style="margin: 0px 0px 15px 0px;">
             <thead>
             <tr>
-            <th>Eléments</th>
+            <th>
+                <div class="mb-1">
+                    <div class="br-checkbox">
+                        <input id="checkbox-ind1" name="checkbox-ind1" type="checkbox" aria-label="TITRE" checked="checked" indeterminate="indeterminate" data-parent="check-01" />
+                        <label for="checkbox-ind1">Eléments</label>
+                    </div>
+                </div>
+            </th>
             <th>Montant UHT</th>
             <th>Quantité</th>
             <th>Taxes</th>
@@ -101,7 +111,7 @@
             <th>Action</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="table-checkbox-items">
                 {% set totalPanier = 0 %}
                 {% for typeproduit in liste_typeProd %}
 
@@ -115,7 +125,14 @@
                         {% set totalSection = 0 %}
                         {% for produitpanier in currentProduits %}
                         <tr>
-                            <td data-title="Produit">{{ produitpanier.produitOrganisation.produit.nom }}</td>
+                            <td data-title="Produit">
+                                <div class="mb-1">
+                                    <div class="br-checkbox">
+                                        <input id="checkbox-0{{ produitpanier.id }}" name="checkbox-01" type="checkbox" aria-label="{{ produitpanier.produitOrganisation.produit.nom }}" data-child="check-01" value="{{ produitpanier.id }}"/>
+                                        <label for="checkbox-0{{ produitpanier.id }}">{{ produitpanier.produitOrganisation.produit.nom }}</label>
+                                    </div>
+                                </div>
+                            </td>
                             <td data-title="Montant UHT">
                                 <input type="number" class="form-control update_product_amount" placeholder="Montant" value="{{ produitpanier.montant }}" name="{{ produitpanier.id }}"/>
                             </td>
@@ -232,6 +249,7 @@
     </div>
   </div>
 
+  <script src="{{ asset('templatedash/js/core-init.js') }}"></script>
 {% endblock %}
 
 {% block javascripttemplate %}
@@ -250,7 +268,7 @@ $('.quantity_produit_item').on('change', function(){
     $.get('{{ path('produit_produit_editer_courant_commande') }}',{ id: id, quantite: quantite }, function(data){
       if(data == 1)
       {
-          window.location.reload();
+        document.location.href= '{{ path('users_adminuser_tarification_cotation', {'id': panier.id}) }}';
           $('.panel-result-action-hosting-user').hide();
           $('.content-alert-action-hosting-user').hide();
       }else{
@@ -277,7 +295,7 @@ $('.update_product_amount').on('blur', function() {
     $.get('{{ path('produit_produit_editer_courant_commande') }}',{ id: id, montant: montant }, function(data){
       if(data == 1)
       {
-          window.location.reload();
+        document.location.href= '{{ path('users_adminuser_tarification_cotation', {'id': panier.id}) }}';
           $('.panel-result-action-hosting-user').hide();
           $('.content-alert-action-hosting-user').hide();
       }else{
@@ -305,7 +323,7 @@ $('.update_product_taxe').on('blur', function() {
     $.get('{{ path('produit_produit_editer_courant_commande') }}',{ id: id, taxe: taxe }, function(data){
       if(data == 1)
       {
-          window.location.reload();
+        document.location.href= '{{ path('users_adminuser_tarification_cotation', {'id': panier.id}) }}';
           $('.panel-result-action-hosting-user').hide();
           $('.content-alert-action-hosting-user').hide();
       }else{
@@ -328,5 +346,72 @@ $('.open-modal-update-panier').click(function(){
 		$('.content-module-loading-article').show();
 		$('.content-module-loading-article').html(data);
 	});
+});
+
+$('input[name="checkbox-01"]').change(function(){
+    var selected = [];
+    $('#table-checkbox-items input[name="checkbox-01"]:checked').each(function() {
+        selected.push($(this).attr('value'));
+    });
+    if(selected.length > 0)
+    {
+        $('.open-modal-delete-panier').removeClass('disabled-btn');
+        $('.open-modal-delete-panier').addClass('btn-danger');
+    }else{
+        $('.open-modal-delete-panier').addClass('disabled-btn');
+        $('.open-modal-delete-panier').removeClass('btn-danger');
+    }
+});
+
+$('.open-modal-delete-panier').click(function(){
+    var selected = [];
+    $('#table-checkbox-items input[name="checkbox-01"]:checked').each(function() {
+        selected.push($(this).attr('value'));
+    });
+
+    let chaine = selected.toString();
+    if(selected.length > 0)
+    {
+        resetNotif();
+        alertify.confirm("Êtes-vous certain de vouloir supprimer les lignes sélectionnées ?</br></br>- Ces éléments seront supprimer de manière permanente sur cette commande !", function (e) {
+            if(e){
+                var height = ($(window).height() + $(window).scrollTop());
+                var width = $(window).width() + 100;
+                var scrolltop = $(window).scrollTop();
+                $('.panel-result-action-hosting-user').show();
+                $('.content-alert-action-hosting-user').show();
+                $('.content-alert-action-hosting-user').html('<div style="position: fixed; top: 0px; margin-bottom: '+scrolltop+'px; left: 0px; z-index: 9000; width: '+width+'px; height: '+height+'px; background: rgba(0,0,0,0.5);"></div>');
+
+
+                $.get('{{ path('produit_produit_remove_collection_produit_commande', {'id': panier.id }) }}',{ chaine: chaine }, function(data){
+                    if(data == 1)
+                    {
+                        document.location.href= '{{ path('users_adminuser_tarification_cotation', {'id': panier.id}) }}';
+
+                        $('.panel-result-action-hosting-user').hide();
+                        $('.content-alert-action-hosting-user').hide();
+                    }else{
+                        if(data == -1)
+                        {
+                            resetNotif();
+                            alertify.alert("Echec, Une erreur a été rencontrée: Données manquant");
+                            $('.panel-result-action-hosting-user').hide();
+                            $('.content-alert-action-hosting-user').hide();
+                        }else{
+                            resetNotif();
+                            alertify.alert("Echec, Une erreur a été rencontrée: Aucune donnée reçue.");
+                            $('.panel-result-action-hosting-user').hide();
+                            $('.content-alert-action-hosting-user').hide();
+                        }
+                    }
+                  });
+
+            } else {
+                alertify.success("Opération annulée avec succès !");
+            }
+        });
+    }else{
+        alertify.alert("Echec, Aucun élément de la commande n\'a été sélectionné !");
+    }
 });
 {% endblock %}

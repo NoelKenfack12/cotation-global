@@ -97,7 +97,7 @@ class PanierRepository extends ServiceEntityRepository
 
     public function findAmountCotationStatusOrg($organisationId, $status)
     {
-        $query = $this->_em->createQuery('SELECT SUM(p.id) FROM App\Entity\Produit\Produit\Panier p, App\Entity\Localisation\Organisation\Organisation o WHERE p.organisation  = o AND o.id = :idOrg AND p.status LIKE :status');
+        $query = $this->_em->createQuery('SELECT SUM(p.montant) FROM App\Entity\Produit\Produit\Panier p, App\Entity\Localisation\Organisation\Organisation o WHERE p.organisation  = o AND o.id = :idOrg AND p.status LIKE :status');
         $query->setParameter('idOrg', $organisationId);
         $query->setParameter('status', '%'.$status.'%');
         return (int) $query->getSingleScalarResult();
@@ -119,7 +119,7 @@ class PanierRepository extends ServiceEntityRepository
 
     public function findAmountCotationStatusGlobal($status)
     {
-        $query = $this->_em->createQuery('SELECT SUM(p.id) FROM App\Entity\Produit\Produit\Panier p, App\Entity\Localisation\Organisation\Organisation o WHERE p.organisation  = o AND p.status LIKE :status');
+        $query = $this->_em->createQuery('SELECT SUM(p.montant) FROM App\Entity\Produit\Produit\Panier p, App\Entity\Localisation\Organisation\Organisation o WHERE p.organisation  = o AND p.status LIKE :status');
         $query->setParameter('status', '%'.$status.'%');
         return (int) $query->getSingleScalarResult();
     }

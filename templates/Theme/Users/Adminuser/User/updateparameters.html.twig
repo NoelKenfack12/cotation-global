@@ -1,0 +1,149 @@
+{% set organisationId = organisation.id %}
+{% extends "Theme/Users/Adminuser/layoutbaseorg.html.twig" %}
+{% block meta %}
+	{{ parent() }}
+	<meta name="author" content="Sprint-pay"/>
+	<meta name="description" content="{{ site }} - Connexion"/>
+{% endblock %}
+
+{% block title %}
+	{{ parent() }} | Connexion
+{% endblock %}
+
+{% block userblog_body %}
+<section class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
+    <section style="min-height: 98px; padding: 15px 50px; background: #1e4a8b; color: #fff; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Liste des services</h1>
+                <div>
+                  <span class="bi bi-geo-alt"></span> Global - Buéa - Entrepot
+              </div>
+            </div>
+            <div class="col-md-4">
+                <span style="float: right;">
+                   <a href="{{ path('users_adminuser_nouvelle_cotation', {'id': organisation.id}) }}" class="btn btn-primary mt-2">Ajouter une cotation</a>
+                </span>
+            </div>
+        </div>
+    </section>
+</section>
+
+<div class="container" style="min-height: calc(100vh - 150px);">
+    <ul class="breadcrumb_" itemprop="breadcrumb_">
+      <li><a href="#">Dashboard</a></li>
+      <li><a href="#">Paramètres</a></li>
+      <li><h1>{{ app.user.name(20) }}</h1></li>
+    </ul>
+
+    {% for infos in app.session.flashbag.get('information') %}
+      {% if loop.last %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ infos }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+
+    <div class="mt-3 mb-3 text-left" style="background: #fff; padding: 20px;">
+        <div class="row">
+            <div class="col-md-8 text-left">
+                <h3>Coordonnées</h3>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="">Nom</label>
+            </div>
+            <div class="col-md-8">
+                <strong>{{ app.user.nom }}</strong>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="">Prenom</label>
+            </div>
+            <div class="col-md-8">
+                <strong>{{ app.user.prenom }}</strong>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="">Téléphone</label>
+            </div>
+            <div class="col-md-8">
+                <strong>{{ app.user.telephone }}</strong>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="">Email</label>
+            </div>
+            <div class="col-md-8">
+                <strong>{{ app.user.username }}</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3 mb-3 text-left" style="background: #fff; padding: 20px;">
+        <div class="row">
+            <div class="col-md-8 text-left">
+                <h3>Mettre à jour le mot de passe</h3>
+            </div>
+        </div>
+        <hr>
+        <form action="{{ path('users_user_modification_parametres', {'id': app.user.id}) }}" method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="">Atuel Mot de passe</label>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="oldmdp" placeholder="Atuel Mot de passe" required/>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="">Nouveau Mot de passe</label>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="newmdp" placeholder="Nouveau Mot de passe" required/>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="">Reprendre le nouveau Mot de passe</label>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="repeatmdp" placeholder="Reprendre le nouveau Mot de passe" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Enregistrer le mot de passe</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+<!-- content-wrapper ends -->
+
+{% endblock %}
+
+{% block javascripttemplate %}
+
+
+{% endblock %}

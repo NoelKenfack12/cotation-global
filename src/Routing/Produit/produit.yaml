@@ -17,3 +17,8 @@ produit_produit_panier_addnew_line:
         id: 0
     requirements:
         id: \d+
+produit_produit_remove_collection_produit_commande:
+    path: /remove/collection/produit/commande/{id}
+    controller: App\Controller\Produit\Produit\PanierController:removeCollectionProduit
+    requirements:
+        id: \d+

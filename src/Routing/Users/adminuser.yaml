@@ -95,6 +95,11 @@ users_adminuser_cotation_organisation:
         page: 1
     requirements:
         id: \d+
+users_adminuser_activate_status_panier:
+    path: /admin/activate/status/panier/{id}
+    controller: App\Controller\Produit\Produit\PanierController:activateStatusPanier
+    requirements:
+        id: \d+
 users_adminuser_produit_organisation:
     path: /admin/cotation/services/organisation/{id}/{page}
     controller: App\Controller\Produit\Produit\ProduitorganisationController:servicesorganisation
@@ -134,8 +139,10 @@ users_adminuser_cotation_description:
     requirements:
         id: \d+
 users_adminuser_tarification_cotation:
-    path: /admin/tarification/cotation/{id}
+    path: /admin/tarification/cotation/{id}/{addproduct}
     controller: App\Controller\Produit\Produit\PanierController:tarificationcotation
+    defaults:
+        addproduct: 0
     requirements:
         id: \d+
 users_adminuser_contacts_succursale_global:
@@ -330,5 +337,10 @@ users_adminuser_produit_delete_produitorganisation:
     controller: App\Controller\Produit\Produit\ProduitorganisationController:deleteproduitorg
     defaults:
         id: 0
+    requirements:
+        id: \d+
+users_adminuser_parametre_delete_option_formimput:
+    path: /admin/parametre/delete/option/formimput/{id}
+    controller: App\Controller\Produit\Parametre\OptionFormInputController:deleteoption
     requirements:
         id: \d+

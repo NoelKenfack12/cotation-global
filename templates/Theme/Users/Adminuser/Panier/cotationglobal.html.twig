@@ -14,14 +14,10 @@
     <section style="min-height: 98px; padding: 15px 50px; background: #1e4a8b; color: #fff; box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
         <div class="row">
             <div class="col-md-8">
-                <h1>Une bonne affaire</h1>
-                <div>Une bonne affaire</div>
-            </div>
-            <div class="col-md-4">
-                <span style="float: right;">
-                    <a href="#!" data-toggle="modal" data-target="#articleModalCenter" class="btn btn-primary mt-2">Ajouter Un Article</a>
-                    <a href="#!" data-toggle="modal" data-target="#categoryModalCenter" class="btn btn-primary mt-2">Ajouter Une catégorie</a>
-                  </span>
+                <h1>Liste de toutes les cotations</h1>
+                <div>
+                  <span class="bi bi-geo-alt"></span> Global - Buéa - Entrepot
+              </div>
             </div>
         </div>
     </section>
@@ -61,6 +57,7 @@
             </th>
             <th>Numéro du client</th>
             <th>Client</th>
+            <th>Organisation</th>
             <th>Montant</th>
             <th>Création</th>
             <th>Status</th>
@@ -76,6 +73,7 @@
                 </td>
                 <td data-title="Numéro du client">{{ panier.clientNumber }}</td>
                 <td data-title="Client">{% if panier.contact != null %}{{ panier.contact.nom }}{% else %}-{% endif %}</td>
+                <td data-title="Organisation">{% if panier.organisation != null %}{{ panier.organisation.nom }}{% else %}-{% endif %}</td>
                 <td data-title="Montant">{{ panier.montant }} XAF</td>
                 <td data-title="Création">
                     {{ panier.date|date('d') }}/{{ panier.date|date('m') }}/{{ panier.date|date('Y') }} 

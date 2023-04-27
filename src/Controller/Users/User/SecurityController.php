@@ -12,6 +12,7 @@ use App\Entity\Users\User\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\Servicetext\GeneralServicetext;
+use App\Entity\Localisation\Organisation\Userorganisation;
 
 class SecurityController extends AbstractController
 {
@@ -85,7 +86,26 @@ class SecurityController extends AbstractController
                         {
                             return $this->redirect($target_link);
                         }else{
-                            return $this->redirect($this->generateUrl('users_adminuser_accueil_admin_dashboard'));
+
+                            if (in_array('ROLE_ADMIN', $user->getRoles())){
+                                return $this->redirect($this->generateUrl('users_adminuser_accueil_admin_dashboard'));
+                            }else{
+                                $liste_userorganisation = $em->getRepository(Userorganisation::class)
+                                                             ->findBy(array('user'=>$user));
+
+                                $userorg = null;
+                                foreach($liste_userorganisation as $userorganisation)
+                                {
+                                    $userorg = $userorganisation;
+                                    break;
+                                }
+                                if($userorg != null)
+                                {
+                                    return $this->redirect($this->generateUrl('users_adminuser_gestion_organisations', array('id'=>$userorg->getOrganisation()->getId())));
+                                }else{
+                                    $error_login = '<span style="color: red;">Echec: Votre n\'est rattaché à aucune organisation</span>';
+                                }
+                            }
                         }
                     }else{
                         $error_login = '<span style="color: red;">Echec: Mot de passe ou Email invalide.</span>';
@@ -98,7 +118,7 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('Theme/Users/User/Security/login.html.twig',
-        array('last_username' => $last_username,'error'=> $error_login));
+        array('last_username' => $last_username, 'error'=> $error_login));
     }
 
     public function logout()

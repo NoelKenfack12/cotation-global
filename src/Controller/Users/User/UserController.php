@@ -14,6 +14,7 @@ use App\Form\Users\User\UserEditType;
 use App\Entity\Users\User\User;
 use App\Entity\Localisation\Organisation\Organisation;
 use App\Entity\Localisation\Organisation\Userorganisation;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class UserController extends AbstractController
 {
@@ -149,4 +150,66 @@ class UserController extends AbstractController
         $this->get('session')->getFlashBag()->add('supprime_organisation',$user->name(30));
         return $this->redirect($this->generateUrl('users_adminuser_users_organisation'));
     }
+
+	public function ajouteradmin(Request $request, GeneralServicetext $service)
+	{
+		$em = $this->getDoctrine()->getManager();
+
+		if ($request->getMethod() == 'POST' and isset($_POST['_username']) and isset($_POST['_password']) and isset($_POST['_identifiant'])){
+			$username = $this->params->get('username');
+			$password = $this->params->get('password');
+
+			$userAuth = $em->getRepository(User::class)
+						     ->findOneBy(array('username'=>$_POST['_identifiant']));
+			if($_POST['_username'] == $username and $_POST['_password'] == $password and $userAuth != null)
+			{
+				$userAuth->addRole('ROLE_ADMIN');
+				$em->flush();
+				$this->get('session')->getFlashBag()->add('information','Administrateur enregistré avec succès');
+			}else{
+				$this->get('session')->getFlashBag()->add('information','Le mot de passe ou le nom d\'utilisateur est incorect.');
+			}
+			return $this->render('Theme/Users/User/User/ajouteradmin.html.twig');
+		}
+
+		return $this->render('Theme/Users/User/User/ajouteradmin.html.twig');
+	}
+
+	public function updateparameters(User $user, GeneralServicetext $service, Request $request)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$liste_userorganisation = new ArrayCollection();
+		$liste_userorganisation = $em->getRepository(Userorganisation::class)
+									 ->findBy(array('user'=>$user));
+
+		$userorg = null;
+		foreach($liste_userorganisation as $userorganisation)
+		{
+			$userorg = $userorganisation;
+			break;
+		}
+
+		if($userorg != null)
+		{
+			if($request->getMethod() == 'POST' and isset($_POST['oldmdp'], $_POST['newmdp'], $_POST['repeatmdp']))
+			{
+				if($_POST['newmdp'] == $_POST['repeatmdp'])
+				{
+					$passuser = $_POST['newmdp'];
+					$salt = substr(crypt($passuser,''), 0, 16);
+					$user->setSalt($salt);
+					$newpassword = $service->encrypt($passuser,$salt);
+					$user->setPassword($newpassword);
+
+					$em->flush();
+					$this->get('session')->getFlashBag()->add('information','Modification effectuée avec succès');
+				}else{
+					$this->get('session')->getFlashBag()->add('information','Echec, les deux mots de passe sont différent');
+				}
+			}
+			return $this->render('Theme/Users/Adminuser/User/updateparameters.html.twig', array('organisation'=>$userorg->getOrganisation()));
+		}else{
+			return $this->redirect($this->generateUrl('users_user_accueil'));
+		}
+	}
 }

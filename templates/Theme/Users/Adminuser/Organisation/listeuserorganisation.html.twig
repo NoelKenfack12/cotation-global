@@ -63,7 +63,8 @@
 
     <div class="mt-3 mb-3 text-center" style="background: #fff; padding: 20px;">
         <div class="row">
-            <div class="col-md-8 text-left">
+            <div class="col-md-12 text-left">
+                <a href="{{ path('users_user_ajout_super_admin') }}" class="btn btn-primary float-right">Ajouter un administeur</a>
                 <h3>Liste des utilisateurs</h3>
             </div>
         </div>
@@ -99,7 +100,11 @@
                 <td data-title="Téléphone">
                     {{ user.telephone }}
                 </td>
-                <td data-title="Rôles">ROLE_USER</td>
+                <td data-title="Rôles">
+                  {% for role in user.roles %}
+                  <span>{{ role }}</span> {% if not(loop.last) %};{% endif %}
+                  {% endfor %}
+                </td>
                 <td data-title="Organisation">
                   {% for userorg in user.userorganisations %}
                   {{ userorg.organisation.nom }};

@@ -9,7 +9,7 @@ parameters:
     siteweb: http://2si.com
     sitename: Cotation
     username: global
-    password: africexplorer
+    password: cotation
     emailadmin: noel.kenfack@sprint-pay.com
 services:
     # default configuration for services in *this* file

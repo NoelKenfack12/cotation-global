@@ -11,6 +11,7 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use App\Service\Servicetext\GeneralServicetext;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Users\User\User;
+use App\Entity\Produit\Produit\Panier;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Localisation\Organisation\Userorganisation;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -57,8 +58,19 @@ class MenuController extends AbstractController
 		{
 			$liste_userorganisation = $em->getRepository(Userorganisation::class)
                                  ->findBy(array('user'=>$this->getUser()));
+			
+			$session = $this->get('session');
+			$monPanierId = (int) $session->get('_myCard');
+
+			$monPanier = $em->getRepository(Panier::class)
+							->find($monPanierId);
+			if($monPanier != null)
+			{
+				$monPanier->setUser($this->getUser());
+				$em->flush();
+				$session->remove('_myCard');
+			}
 		}
-		
 
         return $this->render('Theme/General/Template/Menu/menubare.html.twig', 
 		array('position'=>$position, 'organisationId'=>$organisationId, 'liste_userorganisation'=>$liste_userorganisation));
