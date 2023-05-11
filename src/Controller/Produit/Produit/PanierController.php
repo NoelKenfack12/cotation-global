@@ -12,6 +12,7 @@ use App\Entity\Localisation\Organisation\Serviceorganisation;
 use App\Entity\Produit\Produit\Panier;
 use App\Entity\Produit\Produit\PanierInput;
 use App\Entity\Produit\Parametre\Forminput;
+use App\Entity\Produit\Parametre\OptionFormInput;
 use App\Service\Localisation\Organisation\OrganisationService;
 use App\Entity\Produit\Service\Pays;
 use App\Entity\Users\User\Contact;
@@ -111,8 +112,21 @@ class PanierController extends AbstractController
                                 $arrayTab = array();
                                 $arrayTab['id'] = $forminput->getId();
                                 $arrayTab['libelle'] = $forminput->getLibelle();
-                                $arrayTab['valeur'] = $currentValue;
 
+                                if($forminput->getTypeInput() == 'select')
+                                {
+                                    $optionFormInput = $em->getRepository(OptionFormInput::class)
+                                                          ->find($currentValue);
+                                    if($optionFormInput != null)
+                                    {
+                                        $arrayTab['valeur'] = $optionFormInput->getLibelle();
+                                    }else{
+                                        $arrayTab['valeur'] = $currentValue;
+                                    }
+                                }else{
+                                    $arrayTab['valeur'] = $currentValue;
+                                }
+                                
                                 $dataTab[] = $arrayTab;
                             }else{
                                 $failedRequired = true;
@@ -127,7 +141,20 @@ class PanierController extends AbstractController
                                 $arrayTab = array();
                                 $arrayTab['id'] = $forminput->getId();
                                 $arrayTab['libelle'] = $forminput->getLibelle();
-                                $arrayTab['valeur'] = $currentValue;
+
+                                if($forminput->getTypeInput() == 'select')
+                                {
+                                    $optionFormInput = $em->getRepository(OptionFormInput::class)
+                                                          ->find($currentValue);
+                                    if($optionFormInput != null)
+                                    {
+                                        $arrayTab['valeur'] = $optionFormInput->getLibelle();
+                                    }else{
+                                        $arrayTab['valeur'] = $currentValue;
+                                    }
+                                }else{
+                                    $arrayTab['valeur'] = $currentValue;
+                                }
                                 $dataTab[] = $arrayTab;
                             }
                         }
@@ -259,7 +286,20 @@ class PanierController extends AbstractController
                             $arrayTab = array();
                             $arrayTab['id'] = $forminput->getId();
                             $arrayTab['libelle'] = $forminput->getLibelle();
-                            $arrayTab['valeur'] = $currentValue;
+
+                            if($forminput->getTypeInput() == 'select')
+                            {
+                                $optionFormInput = $em->getRepository(OptionFormInput::class)
+                                                        ->find($currentValue);
+                                if($optionFormInput != null)
+                                {
+                                    $arrayTab['valeur'] = $optionFormInput->getLibelle();
+                                }else{
+                                    $arrayTab['valeur'] = $currentValue;
+                                }
+                            }else{
+                                $arrayTab['valeur'] = $currentValue;
+                            }
 
                             $dataTab[] = $arrayTab;
                         }else{
@@ -284,7 +324,20 @@ class PanierController extends AbstractController
                             $arrayTab = array();
                             $arrayTab['id'] = $forminput->getId();
                             $arrayTab['libelle'] = $forminput->getLibelle();
-                            $arrayTab['valeur'] = $currentValue;
+
+                            if($forminput->getTypeInput() == 'select')
+                            {
+                                $optionFormInput = $em->getRepository(OptionFormInput::class)
+                                                        ->find($currentValue);
+                                if($optionFormInput != null)
+                                {
+                                    $arrayTab['valeur'] = $optionFormInput->getLibelle();
+                                }else{
+                                    $arrayTab['valeur'] = $currentValue;
+                                }
+                            }else{
+                                $arrayTab['valeur'] = $currentValue;
+                            }
 
                             $dataTab[] = $arrayTab;
                         }
@@ -388,7 +441,7 @@ class PanierController extends AbstractController
         $pdf->SetY($currentPosition);
         foreach($liste_input_one as $input)
         {
-            $pdf->addLeftHeding($service->retireAccent($input->getForminput()->name(18)), $service->retireAccent($input->name(35)));
+            $pdf->addLeftHeding($service->retireAccent($input->getForminput()->name(25)), $service->retireAccent($input->name(35)));
         }
 
         $currentYIndex = $pdf->GetY();
@@ -582,9 +635,9 @@ class PanierController extends AbstractController
                     if($oldProdPan == null)
                     {
                         $produitpanier = new Produitpanier();
-                        $produitpanier->setProduitOrganisation($produitorganisation)
+                        $produitpanier->setProduitOrganisation($produitOrganisation)
                                     ->setPanier($panier)
-                                    ->setMontant($produitorganisation->getMontant());
+                                    ->setMontant($produitOrganisation->getMontant());
                         
                         $em->persist($produitpanier);
                         $em->flush();

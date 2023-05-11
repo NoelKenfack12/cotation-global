@@ -161,15 +161,15 @@
                             </div>
                             {% elseif(forminput.typeInput == 'text') %}
                             <div class="form-group">
-                                <input type="text" name="optional-input{{ forminput.id }}" class="form-control" placeholder="valeur"/>
+                                <input type="text" name="optional-input-{{ forminput.id }}" class="form-control" placeholder="valeur"/>
                             </div>
                             {% elseif(forminput.typeInput == 'textarea') %}
                             <div class="form-group">
-                                <textarea name="optional-input{{ forminput.id }}" class="form-control input-lg" rows="10"></textarea>
+                                <textarea name="optional-input-{{ forminput.id }}" class="form-control input-lg" rows="10"></textarea>
                             </div>
                             {% elseif(forminput.typeInput == 'select') %}
                             <div class="form-group">
-                                <select name="optional-input{{ forminput.id }}" id="" class="form-control">
+                                <select name="optional-input-{{ forminput.id }}" id="" class="form-control">
                                     {% for option in forminput.optionFormInputs %}
                                     <option value="{{ option.id }}">{{ option.libelle }}</option>
                                     {% endfor %}

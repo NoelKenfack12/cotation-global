@@ -46,7 +46,7 @@ class ProduitRepository extends ServiceEntityRepository
 			throw new \InvalidArgumentException('Page inexistant');
 		}
 		$query = $this->createQueryBuilder('p')
-					->orderBy('p.nom','ASC')
+					->orderBy('p.date','DESC')
 					->getQuery();
 		$query->setFirstResult(($page-1) * $nombreParPage)
 			->setMaxResults($nombreParPage);

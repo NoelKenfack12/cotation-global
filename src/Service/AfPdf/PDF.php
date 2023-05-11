@@ -131,11 +131,11 @@ function addLeftHeding($reference, $value)
 	$y = $this->GetY();
 	$this->SetY($y);
 	$this->SetX(10);
-	$this->MultiCell(25,6,$reference.' : ',0,1);
+	$this->MultiCell(55,6,$reference.' : ',0,1);
 	
 	$this->SetFont('Arial','',8);
 	$this->SetY($y);
-	$this->SetX(35);
+	$this->SetX(45);
 	$this->MultiCell(50,6,$value,0,1);
 }
 
@@ -150,7 +150,7 @@ function addRightHeding($reference, $value)
 	
 	$this->SetFont('Arial','',8);
 	$this->SetY($y);
-	$this->SetX(155);
+	$this->SetX(160);
 	$this->MultiCell(50,6,$value,0,1);
 }
 

@@ -1,7 +1,7 @@
 <form action="{{ path('users_adminuser_targuer_nouveau_produit', {'organisation': organisation.id, 'id': produit.id }) }}" method="post">
     <h3>Entrez les informations spécifique de ce produit pour {{ organisation.nom }}</h3>
     <div class="form-group">
-    <input type="text" class="form-control" name="montant" placeholder="Entrez le montant" value="{% if produitOrganisation != null %}{{ produitOrganisation.montant }}{% endif %}"/>
+    <input type="text" class="form-control" name="montant" placeholder="Entrez le montant" value="{% if produitOrganisation != null %}{{ produitOrganisation.montant }}{% else %}{{ produit.montant }}{% endif %}"/>
     </div>
     <div class="form-group">
     <label for="selectionDefault"> <input type="checkbox" id="selectionDefault" name="selectionDefault"> Mettre le dans la cotation par défaut</label>

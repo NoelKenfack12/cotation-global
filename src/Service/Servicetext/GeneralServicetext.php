@@ -55,8 +55,8 @@ class GeneralServicetext
 	// cette fonction recherche les éléments de tab1 dans la variable texte et remplace par les éléments de tab2 de la même position.
 	public function retireAccent($text)
 	{
-		$tab1 = array('é','è','à','ù','ç','_','ô','ê','î','+','/','\\');
-		$tab2 = array('e','e','a','u','c','-','o','e','i','1','2','3');
+		$tab1 = array('é','è','à','ù','ç','_','ô','ê','î','+','/','\\','°','Ë', 'Ê', 'À', 'Ù');
+		$tab2 = array('e','e','a','u','c','-','o','e','i','1','/','_','*', 'E', 'E', 'A', 'U');
 		$text = str_ireplace($tab1, $tab2, $text);
 		return $text;
 	}

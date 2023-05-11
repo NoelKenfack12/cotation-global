@@ -68,7 +68,7 @@ class SecurityController extends AbstractController
 
                         // Verifie si le cookie n existe pas
                         if((!isset($_COOKIE["PIDSESSREM"]) or $_COOKIE["PIDSESSREM"] == 'delete') or true) //and isset($_POST['_remember_me']) and $_POST['_remember_me'] == true
-                        {
+                        { 
                             // Stock les infos du cookie
                             $cookie_info = array(
                                 'name'  => 'PIDSESSREM',

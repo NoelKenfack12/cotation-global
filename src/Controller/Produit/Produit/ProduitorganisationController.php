@@ -61,18 +61,32 @@ class ProduitorganisationController extends AbstractController
                                       ->findOneBy(array('produit'=>$produit, 'organisation'=>$organisation), array('date'=>'desc'), 1);
 
             if($request->getMethod() == 'POST'){
-                if(isset($_POST['montant']) and isset($_POST['selectionDefault']))
+                if(isset($_POST['montant']))
                 {
                     if($produitOrganisation != null)
                     {
                         $produitOrganisation->setMontant($_POST['montant']);
-                        $produitOrganisation->setSelectDefault($_POST['selectionDefault']);
+
+                        if(isset($_POST['selectionDefault']))
+                        {
+                            $produitOrganisation->setSelectDefault($_POST['selectionDefault']);
+                        }else{
+                            $produitOrganisation->setSelectDefault(false);
+                        }
+                        
                     }else{
                         $newProduitOrganisation = new ProduitOrganisation();
                         $newProduitOrganisation->setProduit($produit);
                         $newProduitOrganisation->setOrganisation($organisation);
                         $newProduitOrganisation->setMontant($_POST['montant']);
-                        $newProduitOrganisation->setSelectDefault($_POST['selectionDefault']);
+
+                        if(isset($_POST['selectionDefault']))
+                        {
+                            $newProduitOrganisation->setSelectDefault($_POST['selectionDefault']);
+                        }else{
+                            $newProduitOrganisation->setSelectDefault(false);
+                        }
+                        
                         $em->persist($newProduitOrganisation);
                     }
                     $em->flush();
