@@ -103,11 +103,17 @@ class Panier
 
     private $em;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Forfaitpanier::class, mappedBy="panier", orphanRemoval=true)
+     */
+    private $forfaitpaniers;
+
     public function __construct()
     {
         $this->panierInputs = new ArrayCollection();
         $this->date = new \Datetime();
         $this->produitpaniers = new ArrayCollection();
+        $this->forfaitpaniers = new ArrayCollection();
     }
 
     public function getEm()
@@ -332,6 +338,36 @@ class Panier
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Forfaitpanier>
+     */
+    public function getForfaitpaniers(): Collection
+    {
+        return $this->forfaitpaniers;
+    }
+
+    public function addForfaitpanier(Forfaitpanier $forfaitpanier): self
+    {
+        if (!$this->forfaitpaniers->contains($forfaitpanier)) {
+            $this->forfaitpaniers[] = $forfaitpanier;
+            $forfaitpanier->setPanier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeForfaitpanier(Forfaitpanier $forfaitpanier): self
+    {
+        if ($this->forfaitpaniers->removeElement($forfaitpanier)) {
+            // set the owning side to null (unless already changed)
+            if ($forfaitpanier->getPanier() === $this) {
+                $forfaitpanier->setPanier(null);
+            }
+        }
 
         return $this;
     }
