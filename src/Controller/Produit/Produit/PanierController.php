@@ -16,6 +16,7 @@ use App\Entity\Produit\Parametre\OptionFormInput;
 use App\Service\Localisation\Organisation\OrganisationService;
 use App\Entity\Produit\Service\Pays;
 use App\Entity\Users\User\Contact;
+use App\Entity\Produit\Produit\Forfaitpanier;
 use App\Entity\Produit\Produit\Typeproduit;
 use App\Entity\Produit\Produit\ProduitOrganisation;
 use App\Entity\Produit\Produit\Produitpanier;
@@ -406,6 +407,35 @@ class PanierController extends AbstractController
         
         $formsupp = $this->createFormBuilder()->getForm();
 
+        foreach($liste_typeProd as $typeProd)
+        {
+            $currentProduits = $panier->getProduitOrganisationType($typeProd);
+
+            $totalSection = 0;
+            if(count($currentProduits) > 0)
+            {
+                foreach($currentProduits as $produitpanier)
+                {
+                    $totalItem = ($produitpanier->getMontant() * $produitpanier->getQuantite()) + ($produitpanier->getTaxe() * $produitpanier->getQuantite());
+                    $totalSection = $totalSection + $totalItem;
+                }
+            }
+
+            $oldForfaitpanier = $em->getRepository(Forfaitpanier::class)
+                                   ->FindOneBy(array('typeproduit'=>$typeProd, 'panier'=>$panier), array('date'=>'desc'), 1);
+            if($oldForfaitpanier != null)
+            {
+                $oldForfaitpanier->setMontant($totalSection);
+            }else{
+                $faitpanier = new Forfaitpanier();
+                $faitpanier->setPanier($panier);
+                $faitpanier->setTypeproduit($typeProd);
+                $faitpanier->setMontant($totalSection);
+                $em->persist($faitpanier);
+            }
+            $em->flush();
+        }
+
         return $this->render('Theme/Users/Adminuser/Panier/tarificationcotation.html.twig',
         array('organisation'=>$panier->getOrganisation(), 'panier'=>$panier, 'liste_typeProd'=>$liste_typeProd,
         'formsupp'=>$formsupp->createView()));
@@ -538,6 +568,109 @@ class PanierController extends AbstractController
 
             $nbligne++;
         }
+        $pdf->addProduct('Total ','', '', '', $total, true);
+
+        if($addpagedeux == true)
+        {
+            $pdf->AddPage();
+            $addpagedeux = false;
+        }
+
+        $pdf->statistique('0'.$nbarticle, '0,00',$total, 'Livraison : Yaoundé','Quartier: Biyem-Assi', 'Tel: 693839823',$total,$page, $clientName,$panier->getOrganisation()->getNom(),'La Direction De Transit ');
+        $pdf->Output();
+    }
+
+    public function downloadForfaitcotation(EntityManagerInterface $em, GeneralServicetext $service, Panier $panier)
+    {
+        $liste_typeProd = $em->getRepository(Typeproduit::class)
+                             ->myfindAll();
+        $panier->setEm($em);
+
+        $pdf = new PDF('P','mm','A4');
+        $addpagedeux = false;
+
+        $pdf->AliasNbPages();
+        $pdf->AddPage();
+        $page = 1;
+
+        if($panier->getContact() != null)
+        {
+            $clientName = $panier->getContact()->getNom();
+        }else{
+            $clientName = 'Noel K.';
+        }
+        $pdf->myheader('Facture N: '.$panier->getReference().' du: '.$panier->getDate()->format('Y-m-d H:i:s'),$clientName,'N. Client: '.$panier->getClientNumber());
+
+        $liste_input_one = $em->getRepository(PanierInput::class)
+                              ->findInputPanier($panier->getId(), 'indentification');
+        $liste_input_two = $em->getRepository(PanierInput::class)
+                              ->findInputPanier($panier->getId(), 'detailcontenu');
+
+        $currentPosition = $pdf->GetY() +5;
+        $pdf->SetY($currentPosition);
+        foreach($liste_input_one as $input)
+        {
+            $pdf->addLeftHeding($service->retireAccent($input->getForminput()->name(25)), $service->retireAccent($input->name(35)));
+        }
+
+        $currentYIndex = $pdf->GetY();
+
+        $pdf->setY($currentPosition);
+        foreach($liste_input_two as $input)
+        {
+            $pdf->addRightHeding($service->retireAccent($input->getForminput()->name(18)), $service->retireAccent($input->name(35)));
+        }
+
+        if($panier->getPaysorigin() != null)
+        {
+            $pdf->addRightHeding('Pays d\'origin', $panier->getPaysorigin()->getNom());
+        }
+        if($panier->getPaysprovenance() != null)
+        {
+            $pdf->addRightHeding('Pays de provenance', $panier->getPaysprovenance()->getNom());
+        }
+
+        if($pdf->GetY() < $currentYIndex)
+        {
+            $pdf->setY($currentYIndex);
+        }
+
+        $pdf->headerdescription();
+
+        
+        $nbligne = 0;
+        $total = 0;
+        $nbarticle = 0;
+        
+
+            $liste_forfait = $em->getRepository(Forfaitpanier::class)
+                                ->findBy(array('panier'=>$panier));
+
+            $totalSection = 0;
+            foreach($liste_forfait as $forfaitpanier)
+            {
+                $totalRow = $forfaitpanier->getMontant();
+                $total = $total + $totalRow;
+                $nbarticle = $nbarticle + 1; 
+                $nomProduit = $forfaitpanier->getTypeproduit()->getNom();
+                $pdf->addProduct($service->retireAccent($nomProduit),$forfaitpanier->getMontant(), 1, 0, $totalRow);
+
+                if($nbligne >= 30 and $nbligne <= 36)
+                {
+                    $addpagedeux = true;
+                    $y = $pdf->GetY();
+                    if ($y  >= 250){
+                        $pdf->AddPage();
+                        $pdf->setY(15);
+                        $addpagedeux = false;
+                    }
+                }else{
+                    $addpagedeux = false;
+                }
+
+                $nbligne++;
+            }
+
         $pdf->addProduct('Total ','', '', '', $total, true);
 
         if($addpagedeux == true)

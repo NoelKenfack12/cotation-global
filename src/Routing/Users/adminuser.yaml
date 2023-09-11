@@ -344,3 +344,10 @@ users_adminuser_parametre_delete_option_formimput:
     controller: App\Controller\Produit\Parametre\OptionFormInputController:deleteoption
     requirements:
         id: \d+
+users_adminuser_download_forfait_cotation:
+    path: /admin/download/forfait/cotation/{id}
+    controller: App\Controller\Produit\Produit\PanierController:downloadForfaitcotation
+    defaults:
+        id: 0
+    requirements:
+        id: \d+

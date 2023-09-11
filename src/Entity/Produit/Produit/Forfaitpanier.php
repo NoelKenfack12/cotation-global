@@ -35,6 +35,11 @@ class Forfaitpanier
      */
     private $typeproduit;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $montant;
+
     public function __construct()
     {
         $this->date = new \Datetime();
@@ -77,6 +82,18 @@ class Forfaitpanier
     public function setTypeproduit(?Typeproduit $typeproduit): self
     {
         $this->typeproduit = $typeproduit;
+
+        return $this;
+    }
+
+    public function getMontant(): ?float
+    {
+        return $this->montant;
+    }
+
+    public function setMontant(?float $montant): self
+    {
+        $this->montant = $montant;
 
         return $this;
     }

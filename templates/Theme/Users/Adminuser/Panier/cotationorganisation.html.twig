@@ -117,6 +117,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                           <a class="dropdown-item" href="{{ path('users_adminuser_tarification_cotation', {'id': panier.id }) }}"><span class="bi bi-pencil-square"></span> Modifier</a>
                           <a class="dropdown-item" href="{{ path('users_adminuser_impression_fiche_cotation', {'id': panier.id}) }}" target="_blank"><span class="bi bi-cloud-download"></span> Télécharger</a>
+                          <a class="dropdown-item" href="{{ path('users_adminuser_download_forfait_cotation', {'id': panier.id}) }}" target="_blank"><span class="bi bi-cloud-download"></span> Forfait</a>
                           {% if panier.status == 'active' %}
                           <a class="dropdown-item" href="{{ path('users_adminuser_change_statut_panier_organisation', {'id': panier.id}) }}"><span class="bi bi-tropical-storm"></span> Annuler</a>
                           {% elseif(panier.status == 'cancel') %}
